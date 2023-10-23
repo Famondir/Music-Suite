@@ -1,13 +1,23 @@
 import pyglet
 from pyglet.window import key
+from pyglet import shapes
 
 window = pyglet.window.Window()
+pyglet.gl.glClearColor(1,1,1,1)
 
 label = pyglet.text.Label('Hello, world',
                           font_name='Times New Roman',
                           font_size=36,
                           x=window.width//2, y=window.height//2,
                           anchor_x='center', anchor_y='center')
+label.color = (0, 0, 0, 255)
+
+circle = shapes.Circle(x=100, y=150, radius=100)
+circle.color = (0, 0, 0, 255)
+circle2 = shapes.Circle(x=100, y=150, radius=95)
+circle2.color = (255, 255, 255, 255)
+
+batch = pyglet.graphics.Batch()
 
 # player = pyglet.media.Player()
 # player2 = pyglet.media.Player()
@@ -24,8 +34,55 @@ keymapping = {
     121: 59, 50: 59, 
     119: 60, 
     115: 61, 
-    120: 62, 51: 62
+    120: 62, 51: 62,
+    101: 63,
+    100: 64,
+    99: 65, 52: 65,
+    114: 66,
+    102: 67,
+    118: 68, 53: 68,
+    116: 69,
+    103: 70,
+    98: 71, 54: 71,
+    122: 72,
+    104: 73,
+    110: 74, 55: 74,
+    117: 75,
+    106: 76,
+    109: 77, 56: 77,
+    105: 78,
+    107: 79,
+    44: 80, 57: 80,
+    111: 81,
+    108: 82,
+    46: 83, 48: 84,
+    112: 85,
+    824633720832: 86,
+    45: 87, 940597837824: 87,
+    798863917056: 88,
+    953482739712: 89,
+    65506: 90, 949187772416: 90,
+    43: 91,
+    35: 92,
+    65288: 93
     }
+
+class BorderedCircle:
+    def __init__(self, x, y, radius, borderwidth, color, fill, batch):
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.borderwidth = borderwidth
+        self.color = color
+        self. fill = fill
+
+        self.circle = shapes.Circle(x=self.x, y=self.y, radius=self.radius, batch=batch)
+        self.circle.color = color
+        self.innerCircle = shapes.Circle(x=self.x, y=self.y, radius=self.radius-borderwidth, batch=batch)
+        self.innerCircle.color = fill
+
+    def changeFill(self, fill):
+        self.innerCircle.color = fill
 
 class TonePlayer:
     def __init__(self, midiTone):
@@ -43,10 +100,16 @@ class TonePlayer:
     def getmidiTone(self):
         return self.midiTone    
 
+bordCircle = BorderedCircle(300, 400, 100, 1, (0, 255, 0, 255), (255, 0, 0, 255), batch)
+# del bordCircle
+
 @window.event
 def on_draw():
     window.clear()
     label.draw()
+    circle.draw()
+    circle2.draw()
+    batch.draw()
 
 @window.event
 def on_key_press(symbol, modifiers):
@@ -55,6 +118,7 @@ def on_key_press(symbol, modifiers):
         player = TonePlayer(keymapping[symbol])
         playerlist.append(player)
         player.playTone()
+        bordCircle.changeFill((255,255,0,255))
 """     if symbol == key.A:
         print('The "A" key was pressed.')
         music = pyglet.media.load("wav/Accordion 058.wav", streaming=False)
@@ -75,6 +139,7 @@ def on_key_release(symbol, modifiers):
             if keymapping[symbol] == player.getmidiTone():
                 player.stopTone()
                 del player
+                bordCircle.changeFill((255,0,0,255))
 """     if symbol == key.A:
         print("Stop")
         player.pause()

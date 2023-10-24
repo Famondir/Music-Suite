@@ -65,10 +65,10 @@ class Button:
         self.borderedCircle = BorderedCircle(x, y, radius, borderwidth, color, self.fill, batch)
         self.label = pyglet.text.Label(text=label,
                           font_name='Times New Roman',
-                          font_size=18,
+                          font_size=12,
                           x=x, y=y,
                           anchor_x='center', anchor_y='center', 
-                          color=(0,0,0,255),
+                          color=(255-fill[0],255-fill[1],255-fill[2],255),
                           batch=batch)
         self.tone = tone
         
@@ -87,13 +87,18 @@ class ButtonBoard:
         self.startingTone = 60
 
         self.buttonList = []
-        self.buttonList.append(Button(60, "c4", 100, 100, 20, 1, (0,0,0,255), (255,255,255,255), batch))
+        self.buttonList.append((Button(60, "c4", self.x+3*self.width/15, self.y-1*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch),))
+        self.buttonList.append((Button(61, "c#4", self.x+3*self.width/15, self.y-2*self.height/4, self.width/(2*15), 1, (0,0,0,255), (0,0,0,255), batch),))
+        self.buttonList.append((Button(62, "d4", self.x+3*self.width/15, self.y-3*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch),))
+        self.buttonList.append((Button(63, "d#4", self.x+4*self.width/15, self.y-1*self.height/4, self.width/(2*15), 1, (0,0,0,255), (0,0,0,255), batch),))
 
     def pressButton(self, tone):
-        self.buttonList[tone-self.startingTone].pressButton()
+        for button in self.buttonList[tone-self.startingTone]:
+            button.pressButton()
 
     def releaseButton(self, tone):
-        self.buttonList[tone-self.startingTone].releaseButton()
+        for button in self.buttonList[tone-self.startingTone]:
+            button.releaseButton()
 
 class TonePlayer:
     def __init__(self, midiTone):

@@ -5,10 +5,6 @@ from pyglet import shapes
 window = pyglet.window.Window()
 pyglet.gl.glClearColor(1,1,1,1)
 
-batch = pyglet.graphics.Batch()
-
-playerlist = []
-
 keymapping = {
     944892805120: 53, 65505: 53, 
     65289: 54, 
@@ -64,7 +60,7 @@ class BorderedCircle:
         self.innerCircle.color = fill
 
 class Button:
-    def __init__(self, key, label, x, y, radius, borderwidth, color, fill, batch):
+    def __init__(self, tone, label, x, y, radius, borderwidth, color, fill, batch):
         self.fill = fill
         self.borderedCircle = BorderedCircle(x, y, radius, borderwidth, color, self.fill, batch)
         self.label = pyglet.text.Label(text=label,
@@ -74,13 +70,30 @@ class Button:
                           anchor_x='center', anchor_y='center', 
                           color=(0,0,0,255),
                           batch=batch)
-        self.key = key
+        self.tone = tone
         
     def pressButton(self):
         self.borderedCircle.changeFill((255,180,90,255))
 
     def releaseButton(self):
         self.borderedCircle.changeFill(self.fill)
+
+class ButtonBoard:
+    def __init__(self, x, y, width, height, batch):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.startingTone = 60
+
+        self.buttonList = []
+        self.buttonList.append(Button(60, "c4", 100, 100, 20, 1, (0,0,0,255), (255,255,255,255), batch))
+
+    def pressButton(self, tone):
+        self.buttonList[tone-self.startingTone].pressButton()
+
+    def releaseButton(self, tone):
+        self.buttonList[tone-self.startingTone].releaseButton()
 
 class TonePlayer:
     def __init__(self, midiTone):
@@ -98,7 +111,9 @@ class TonePlayer:
     def getmidiTone(self):
         return self.midiTone    
 
-button_c4 = Button(60, "c4", 100, 100, 20, 1, (0,0,0,255), (255,255,255,255), batch)
+batch = pyglet.graphics.Batch()
+buttonBoard = ButtonBoard(100,300,400,200,batch)
+playerlist = []
 
 @window.event
 def on_draw():
@@ -112,13 +127,13 @@ def on_key_press(symbol, modifiers):
         # player = TonePlayer(keymapping[symbol])
         # playerlist.append(player)
         # player.playTone()
-        button_c4.pressButton()
+        buttonBoard.pressButton(keymapping[symbol])
 
 @window.event
 def on_key_release(symbol, modifiers):
     print(f'The key {symbol} was released')
     if symbol in keymapping:
-        button_c4.releaseButton()
+        buttonBoard.releaseButton(keymapping[symbol])
 """         for player in playerlist:
             if keymapping[symbol] == player.getmidiTone():
                 player.stopTone()

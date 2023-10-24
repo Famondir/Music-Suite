@@ -69,16 +69,9 @@ keymapping = {
 
 class BorderedCircle:
     def __init__(self, x, y, radius, borderwidth, color, fill, batch):
-        self.x = x
-        self.y = y
-        self.radius = radius
-        self.borderwidth = borderwidth
-        self.color = color
-        self. fill = fill
-
-        self.circle = shapes.Circle(x=self.x, y=self.y, radius=self.radius, batch=batch)
+        self.circle = shapes.Circle(x=x, y=y, radius=radius, batch=batch)
         self.circle.color = color
-        self.innerCircle = shapes.Circle(x=self.x, y=self.y, radius=self.radius-borderwidth, batch=batch)
+        self.innerCircle = shapes.Circle(x=x, y=y, radius=radius-borderwidth, batch=batch)
         self.innerCircle.color = fill
 
     def changeFill(self, fill):
@@ -115,37 +108,20 @@ def on_draw():
 def on_key_press(symbol, modifiers):
     print(f'The key {symbol} was pressed')
     if symbol in keymapping:
-        player = TonePlayer(keymapping[symbol])
-        playerlist.append(player)
-        player.playTone()
+        # player = TonePlayer(keymapping[symbol])
+        # playerlist.append(player)
+        # player.playTone()
         bordCircle.changeFill((255,255,0,255))
-"""     if symbol == key.A:
-        print('The "A" key was pressed.')
-        music = pyglet.media.load("wav/Accordion 058.wav", streaming=False)
-        player.queue(music)
-        player.play()
-    if symbol == key.B:
-        print('The "B" key was pressed.')
-        music = pyglet.media.load("wav/Accordion 076.wav", streaming=False)
-        # music = pyglet.media.synthesis.Sine(3.0, frequency=440, sample_rate=44800)
-        player2.queue(music)
-        player2.play() """
 
 @window.event
 def on_key_release(symbol, modifiers):
     print(f'The key {symbol} was released')
     if symbol in keymapping:
-        for player in playerlist:
+        bordCircle.changeFill((255,0,0,255))
+"""         for player in playerlist:
             if keymapping[symbol] == player.getmidiTone():
                 player.stopTone()
                 del player
-                bordCircle.changeFill((255,0,0,255))
-"""     if symbol == key.A:
-        print("Stop")
-        player.pause()
-    if symbol == key.B:
-        print("Stop")
-        player2.pause() """
-        
+ """        
 
 pyglet.app.run()

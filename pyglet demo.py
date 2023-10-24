@@ -9,8 +9,7 @@ keymapping = {
     944892805120: 53, 65505: 53, 
     65289: 54, 
     65509: 55, 
-    60: 56, 
-    49: 56, 
+    60: 56, 49: 56, 
     113: 57, 
     97: 58, 
     121: 59, 50: 59, 
@@ -37,16 +36,16 @@ keymapping = {
     44: 80, 57: 80,
     111: 81,
     108: 82,
-    46: 83, 48: 84,
-    112: 85,
-    824633720832: 86,
-    45: 87, 940597837824: 87,
-    798863917056: 88,
-    953482739712: 89,
-    65506: 90, 949187772416: 90,
-    43: 91,
-    35: 92,
-    65288: 93
+    46: 83, 48: 83,
+    112: 84,
+    824633720832: 85,
+    45: 86, 940597837824: 86,
+    798863917056: 87,
+    953482739712: 88,
+    65506: 89, 949187772416: 89,
+    43: 90,
+    35: 91,
+    65288: 92
     }
 
 class BorderedCircle:
@@ -86,11 +85,22 @@ class ButtonBoard:
         self.height = height
         self.startingTone = 60
 
+        scale = ["c","c#","d","d#","e","f","f#","g","g#","a","a#","h"]
+        bigScale = []
+        for i in range(3,7):
+            for s in [s + str(i) for s in scale]:
+                bigScale.append(s)
+        bigScale = bigScale[5:-3]
+        for i in range(0,40):
+            bigScale[i] = (i+53, bigScale[i])
+        print(bigScale)
+
         self.buttonList = []
-        self.buttonList.append((Button(60, "c4", self.x+3*self.width/15, self.y-1*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch),))
-        self.buttonList.append((Button(61, "c#4", self.x+3*self.width/15, self.y-2*self.height/4, self.width/(2*15), 1, (0,0,0,255), (0,0,0,255), batch),))
-        self.buttonList.append((Button(62, "d4", self.x+3*self.width/15, self.y-3*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch),))
-        self.buttonList.append((Button(63, "d#4", self.x+4*self.width/15, self.y-1*self.height/4, self.width/(2*15), 1, (0,0,0,255), (0,0,0,255), batch),))
+        self.buttonList.append((Button(60, "c4", self.x+3*self.width/14, self.y-1*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch),))
+        self.buttonList.append((Button(61, "c#4", self.x+3.3*self.width/14, self.y-2*self.height/4, self.width/(2*15), 1, (0,0,0,255), (0,0,0,255), batch),))
+        self.buttonList.append((Button(62, "d4", self.x+3.6*self.width/14, self.y-3*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch),
+                                Button(62, "d4", self.x+3.6*self.width/14, self.y-0*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch)))
+        self.buttonList.append((Button(63, "d#4", self.x+4*self.width/14, self.y-1*self.height/4, self.width/(2*15), 1, (0,0,0,255), (0,0,0,255), batch),))
 
     def pressButton(self, tone):
         for button in self.buttonList[tone-self.startingTone]:
@@ -129,20 +139,19 @@ def on_draw():
 def on_key_press(symbol, modifiers):
     print(f'The key {symbol} was pressed')
     if symbol in keymapping:
-        # player = TonePlayer(keymapping[symbol])
-        # playerlist.append(player)
-        # player.playTone()
+        player = TonePlayer(keymapping[symbol])
+        playerlist.append(player)
+        player.playTone()
         buttonBoard.pressButton(keymapping[symbol])
 
 @window.event
 def on_key_release(symbol, modifiers):
     print(f'The key {symbol} was released')
     if symbol in keymapping:
-        buttonBoard.releaseButton(keymapping[symbol])
-"""         for player in playerlist:
+        for player in playerlist:
             if keymapping[symbol] == player.getmidiTone():
                 player.stopTone()
                 del player
- """        
+        buttonBoard.releaseButton(keymapping[symbol])
 
 pyglet.app.run()

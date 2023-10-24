@@ -5,22 +5,8 @@ from pyglet import shapes
 window = pyglet.window.Window()
 pyglet.gl.glClearColor(1,1,1,1)
 
-label = pyglet.text.Label('Hello, world',
-                          font_name='Times New Roman',
-                          font_size=36,
-                          x=window.width//2, y=window.height//2,
-                          anchor_x='center', anchor_y='center')
-label.color = (0, 0, 0, 255)
-
-circle = shapes.Circle(x=100, y=150, radius=100)
-circle.color = (0, 0, 0, 255)
-circle2 = shapes.Circle(x=100, y=150, radius=95)
-circle2.color = (255, 255, 255, 255)
-
 batch = pyglet.graphics.Batch()
 
-# player = pyglet.media.Player()
-# player2 = pyglet.media.Player()
 playerlist = []
 
 keymapping = {
@@ -77,6 +63,25 @@ class BorderedCircle:
     def changeFill(self, fill):
         self.innerCircle.color = fill
 
+class Button:
+    def __init__(self, key, label, x, y, radius, borderwidth, color, fill, batch):
+        self.fill = fill
+        self.borderedCircle = BorderedCircle(x, y, radius, borderwidth, color, self.fill, batch)
+        self.label = pyglet.text.Label(text=label,
+                          font_name='Times New Roman',
+                          font_size=18,
+                          x=x, y=y,
+                          anchor_x='center', anchor_y='center', 
+                          color=(0,0,0,255),
+                          batch=batch)
+        self.key = key
+        
+    def pressButton(self):
+        self.borderedCircle.changeFill((255,180,90,255))
+
+    def releaseButton(self):
+        self.borderedCircle.changeFill(self.fill)
+
 class TonePlayer:
     def __init__(self, midiTone):
         self.midiTone = midiTone
@@ -93,15 +98,11 @@ class TonePlayer:
     def getmidiTone(self):
         return self.midiTone    
 
-bordCircle = BorderedCircle(300, 400, 100, 1, (0, 255, 0, 255), (255, 0, 0, 255), batch)
-# del bordCircle
+button_c4 = Button(60, "c4", 100, 100, 20, 1, (0,0,0,255), (255,255,255,255), batch)
 
 @window.event
 def on_draw():
     window.clear()
-    label.draw()
-    circle.draw()
-    circle2.draw()
     batch.draw()
 
 @window.event
@@ -111,13 +112,13 @@ def on_key_press(symbol, modifiers):
         # player = TonePlayer(keymapping[symbol])
         # playerlist.append(player)
         # player.playTone()
-        bordCircle.changeFill((255,255,0,255))
+        button_c4.pressButton()
 
 @window.event
 def on_key_release(symbol, modifiers):
     print(f'The key {symbol} was released')
     if symbol in keymapping:
-        bordCircle.changeFill((255,0,0,255))
+        button_c4.releaseButton()
 """         for player in playerlist:
             if keymapping[symbol] == player.getmidiTone():
                 player.stopTone()

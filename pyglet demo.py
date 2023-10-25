@@ -1,8 +1,9 @@
 import pyglet
 from pyglet.window import key
 from pyglet import shapes
+import math
 
-window = pyglet.window.Window()
+window = pyglet.window.Window(960, 540)
 pyglet.gl.glClearColor(1,1,1,1)
 
 keymapping = {
@@ -83,7 +84,7 @@ class ButtonBoard:
         self.y = y
         self.width = width
         self.height = height
-        self.startingTone = 60
+        self.startingTone = 53
 
         scale = ["c","c#","d","d#","e","f","f#","g","g#","a","a#","h"]
         bigScale = []
@@ -93,14 +94,35 @@ class ButtonBoard:
         bigScale = bigScale[5:-3]
         for i in range(0,40):
             bigScale[i] = (i+53, bigScale[i])
-        print(bigScale)
 
         self.buttonList = []
-        self.buttonList.append((Button(60, "c4", self.x+3*self.width/14, self.y-1*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch),))
-        self.buttonList.append((Button(61, "c#4", self.x+3.3*self.width/14, self.y-2*self.height/4, self.width/(2*15), 1, (0,0,0,255), (0,0,0,255), batch),))
-        self.buttonList.append((Button(62, "d4", self.x+3.6*self.width/14, self.y-3*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch),
-                                Button(62, "d4", self.x+3.6*self.width/14, self.y-0*self.height/4, self.width/(2*15), 1, (0,0,0,255), (255,255,255,255), batch)))
-        self.buttonList.append((Button(63, "d#4", self.x+4*self.width/14, self.y-1*self.height/4, self.width/(2*15), 1, (0,0,0,255), (0,0,0,255), batch),))
+        buttonRows = math.ceil(len(bigScale)/3)
+        radius = self.width/(2*buttonRows+1)
+        color = (0,0,0,255) # black
+        borderwidth = 1
+        xOffset = radius*5/3
+        xShift = self.width/buttonRows
+        yShift = radius*2
+
+        for el in bigScale:
+            tone = el[0]
+            label = el[1]
+            fill = (255,255,255,255)
+            if "#" in label:
+                fill = (0,0,0,255)
+
+            if tone%3 == 2:
+                button1 = Button(tone, label, self.x+xOffset+((tone-53)//3+2/3)*xShift, self.y-3*yShift, radius, borderwidth, color, fill, batch)
+                button2 = Button(tone, label, self.x+xOffset+((tone-53)//3-1/3)*xShift, self.y-0*yShift, radius, borderwidth, color, fill, batch)
+                self.buttonList.append((button1, button2))
+            elif tone%3 == 1:
+                button1 = Button(tone, label, self.x+xOffset+((tone-53)//3+1/3)*xShift, self.y-2*yShift, radius, borderwidth, color, fill, batch)
+                self.buttonList.append((button1,))
+            elif tone%3 == 0:
+                button1 = Button(tone, label, self.x+xOffset+((tone-53)//3+0/3)*xShift, self.y-1*yShift, radius, borderwidth, color, fill, batch)
+                self.buttonList.append((button1,))
+
+        self.buttonList[-1] = (self.buttonList[-1][1],)
 
     def pressButton(self, tone):
         for button in self.buttonList[tone-self.startingTone]:
@@ -127,7 +149,7 @@ class TonePlayer:
         return self.midiTone    
 
 batch = pyglet.graphics.Batch()
-buttonBoard = ButtonBoard(100,300,400,200,batch)
+buttonBoard = ButtonBoard(0,300,window.width,200,batch)
 playerlist = []
 
 @window.event

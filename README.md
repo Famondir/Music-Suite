@@ -12,7 +12,7 @@ It might be better to not use a JS-Python bridge for easyness. Maybe this is jus
 
 ```mermaid
 ---
-title: Music Player
+title: Accordion Simulator
 ---
 classDiagram
     ShapeBase <|-- Circle
@@ -21,6 +21,10 @@ classDiagram
     Button "1" o-- "1" Label
     DocumentLabel <|-- Label
     ButtonBoard "1" o-- "*" Button
+    TonePlayer "1" o-- "1" Player
+    Window "1" -- "*" TonePlayer : controls
+    Window "1" -- "1" ButtonBoard : controls
+    ButtonBoard "1" -- "1" Batch
 
     class BorderedCircle {
         +circle : Circle
@@ -137,4 +141,19 @@ classDiagram
             +radius : float
         }
     }
+```
+
+```plantuml
+left to right direction
+skinparam packageStyle rectangle
+actor user
+actor "music teacher"
+actor manager
+actor developer
+rectangle "Music Learning Suite" {
+  user -- (Music Learning Suite)
+  (checkout) .> (payment) : include
+  (help) .> (checkout) : extends
+  (checkout) -- manager
+}
 ```

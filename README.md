@@ -16,32 +16,70 @@ title: Music Player
 ---
 classDiagram
     ShapeBase <|-- Circle
-    BorderedCircle o-- Circle
-    Button o-- BorderedCircle
-    Button o-- Label
+    BorderedCircle "1" o-- "2" Circle
+    Button "1" o-- "1" BorderedCircle
+    Button "1" o-- "1" Label
+    DocumentLabel <|-- Label
+    ButtonBoard "1" o-- "*" Button
 
-    ShapeBase : +float x
-    ShapeBase : +float y
-    ShapeBase : +floattuple position
-    ShapeBase : +float rotation
-    ShapeBase : +float anchor_x
-    ShapeBase : +float anchor_y
-    ShapeBase : +floattuple anchor_position
-    ShapeBase : +inttuple color
-    ShapeBase : +int opacity
-    ShapeBase : +bool visible
-    ShapeBase : +Batch batch
-    ShapeBase : +Group group
-    ShapeBase : draw()
-    ShapeBase : delete()
+    class ShapeBase {
+        +x : float
+        +y : float
+        +position : float tuple
+        +rotation: flaot
+        +anchor_x : float
+        +anchor_y : float
+        +anchor_position : float tuple
+        +color : int tuple
+        +opacity : int
+        +visible : bool
+        +batch : Batch
+        +group : Group
+        +draw()
+        +delete()
+    }
 
-    Circle : +fload radius
+    class Circle {
+        +radius : float
+    }
 
-    BorderedCircle : +Circle circle
-    BorderedCircle : +Circle innerCircle
-    BorderedCircle : changeFill(fill)
-  
-    Button : +inttuple fill
+    class BorderedCircle {
+        +circle : Circle
+        +innerCircle : Circle
+        +changeFill()
+    }
+    
+    class Button {
+        +fill : int tuple
+        +borderedCircle : BorderedCircle
+        +label : Label
+        +tone : int
+        +pressButton()
+        +releaseButton()
+    }
 
-    Label : +str text
+    class Label {
+
+    }
+
+    class DocumentLabel {
+        +bold : bool
+        +font_name : str
+        +font_size : float
+        +opacity : int
+        +text : str
+        +get_style()
+        +set_style()
+    }
+
+    class ButtonBoard {
+        +x : float
+        +y : float
+        +width : float
+        +height : float
+        +startingTone : int
+        +buttonList : Button[]
+        +pressButton()
+        +releaseButton()
+    }
 ```

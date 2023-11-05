@@ -22,27 +22,6 @@ classDiagram
     DocumentLabel <|-- Label
     ButtonBoard "1" o-- "*" Button
 
-    class ShapeBase {
-        +x : float
-        +y : float
-        +position : float tuple
-        +rotation: flaot
-        +anchor_x : float
-        +anchor_y : float
-        +anchor_position : float tuple
-        +color : int tuple
-        +opacity : int
-        +visible : bool
-        +batch : Batch
-        +group : Group
-        +draw()
-        +delete()
-    }
-
-    class Circle {
-        +radius : float
-    }
-
     class BorderedCircle {
         +circle : Circle
         +innerCircle : Circle
@@ -58,20 +37,6 @@ classDiagram
         +releaseButton()
     }
 
-    class Label {
-
-    }
-
-    class DocumentLabel {
-        +bold : bool
-        +font_name : str
-        +font_size : float
-        +opacity : int
-        +text : str
-        +get_style()
-        +set_style()
-    }
-
     class ButtonBoard {
         +x : float
         +y : float
@@ -81,5 +46,95 @@ classDiagram
         +buttonList : Button[]
         +pressButton()
         +releaseButton()
+    }
+
+    class TonePlayer {
+        +midiTone : int
+        +player : Player
+        +music : Source
+        +playTone()
+        +stopTone()
+        +getMidiTone()
+    }
+
+    namespace pyglet {
+        class Window {
+            +width
+            +height
+            +caption
+            +resizable
+            +style
+            +fullscreen
+            +visible
+            +vsynch
+            +file_drops
+            +display
+            +screen
+            +config
+            +context
+            +mode
+            +activate()
+            +clear()
+            +close()
+            +dispatch_event()
+            +dispatch_events()
+            +draw_mouse_cursor()
+            +flip()
+            +on_draw()
+            +on_key_press()
+            +on_key_release()
+            ...
+        }
+
+        class Batch {
+            +draw()
+            +draw_subset()
+            +get_domain()
+            +invalidate()
+            +migrate()
+        }
+
+        class Player {
+            +play()
+            +pause()
+            +queue()
+            +delete()
+            ...
+        }
+
+            class Label {
+
+        }
+
+        class DocumentLabel {
+            +bold : bool
+            +font_name : str
+            +font_size : float
+            +opacity : int
+            +text : str
+            +get_style()
+            +set_style()
+        }
+
+        class ShapeBase {
+            +x : float
+            +y : float
+            +position : float tuple
+            +rotation: flaot
+            +anchor_x : float
+            +anchor_y : float
+            +anchor_position : float tuple
+            +color : int tuple
+            +opacity : int
+            +visible : bool
+            +batch : Batch
+            +group : Group
+            +draw()
+            +delete()
+        }
+
+        class Circle {
+            +radius : float
+        }
     }
 ```

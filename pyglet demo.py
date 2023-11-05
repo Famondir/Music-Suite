@@ -85,6 +85,7 @@ class ButtonBoard:
         self.width = width
         self.height = height
         self.startingTone = 53
+        self.buttonList = []
 
         scale = ["c","c#","d","d#","e","f","f#","g","g#","a","a#","h"]
         bigScale = []
@@ -95,7 +96,6 @@ class ButtonBoard:
         for i in range(0,40):
             bigScale[i] = (i+53, bigScale[i])
 
-        self.buttonList = []
         buttonRows = math.ceil(len(bigScale)/3)
         radius = self.width/(2*buttonRows+1)
         color = (0,0,0,255) # black
@@ -145,7 +145,7 @@ class TonePlayer:
     def stopTone(self):
         self.player.pause()
 
-    def getmidiTone(self):
+    def getMidiTone(self):
         return self.midiTone    
 
 batch = pyglet.graphics.Batch()
@@ -171,7 +171,7 @@ def on_key_release(symbol, modifiers):
     print(f'The key {symbol} was released')
     if symbol in keymapping:
         for player in playerlist:
-            if keymapping[symbol] == player.getmidiTone():
+            if keymapping[symbol] == player.getMidiTone():
                 player.stopTone()
                 del player
         buttonBoard.releaseButton(keymapping[symbol])

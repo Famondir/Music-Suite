@@ -14,31 +14,64 @@ It might be better to not use a JS-Python bridge for easyness. Maybe this is jus
 left to right direction
 skinparam packageStyle rectangle
 actor user
+actor student
 actor "music teacher" as teacher
 actor manager
 actor developer
+actor support
+user <|-- teacher
+user <|-- student
 rectangle "Music Learning Suite" as MLS {
   together {
     user --> (analyse music)
     user --> (compose music)
-    user --> (learn music theory)
+    student --> (learn music theory)
     user --> (rent a midi instrument)
     user --> (share compositions)
-    user --> (book lessons)
+    student --> (book lessons)
     user --> (practice)
     user --> (play music together)
+    teacher --> (billing)
+    teacher --> (offer lessons)
+    teacher --> (create learning content)
   }
 
   together {
-    (billing) <-- teacher
-    (offer lessons) <-- teacher
-    (create learning content) <-- teacher
+    (accessing learning\npath information) <-- developer
     (add new instrument) <-- developer
+    (managing user information) <-- support
     (seeing buisness stats) <-- manager
   }
 
-  (analyse music) -[hidden]- (billing)
+  (analyse music) -[hidden]- (add new instrument)
 }
+```
+
+```plantuml
+database "MySQL" {
+    [user data]
+    [course data]
+    [lessons]
+}
+
+component "Music Suite" {
+    [Music Analyser]
+    [Instrument Simulator]
+}
+
+[Accountmanagement] --> [user data]
+[Authentification] --> [user data]
+[Authentification] -- [Dashboard GUI]
+[Lesson Booking] -- [Dashboard GUI]
+[Learning Package] -- [Dashboard GUI]
+[Learning Package] --> [course data]
+[Learning Package] -- [lessons]
+[Buisness Inteligence] -- [Dashboard GUI]
+[Accountmanagement] -- [Dashboard GUI]
+[Database Manager] -- [Dashboard GUI]
+[Accounting] -- [Dashboard GUI]
+
+[Music Suite] -- [Dashboard GUI]
 ```
 
 ```mermaid

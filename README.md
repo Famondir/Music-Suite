@@ -10,6 +10,37 @@ Pyglet seems to be a proper framework to catch multiple key presses and play mul
 
 It might be better to not use a JS-Python bridge for easyness. Maybe this is just a architectural burden. The data processing and visualisation part might be low in this project and so Python benefits might be not used at all.
 
+```plantuml
+left to right direction
+skinparam packageStyle rectangle
+actor user
+actor "music teacher" as teacher
+actor manager
+actor developer
+rectangle "Music Learning Suite" as MLS {
+  together {
+    user --> (analyse music)
+    user --> (compose music)
+    user --> (learn music theory)
+    user --> (rent a midi instrument)
+    user --> (share compositions)
+    user --> (book lessons)
+    user --> (practice)
+    user --> (play music together)
+  }
+
+  together {
+    (billing) <-- teacher
+    (offer lessons) <-- teacher
+    (create learning content) <-- teacher
+    (add new instrument) <-- developer
+    (seeing buisness stats) <-- manager
+  }
+
+  (analyse music) -[hidden]- (billing)
+}
+```
+
 ```mermaid
 ---
 title: Accordion Simulator
@@ -141,19 +172,4 @@ classDiagram
             +radius : float
         }
     }
-```
-
-```plantuml
-left to right direction
-skinparam packageStyle rectangle
-actor user
-actor "music teacher"
-actor manager
-actor developer
-rectangle "Music Learning Suite" {
-  user -- (Music Learning Suite)
-  (checkout) .> (payment) : include
-  (help) .> (checkout) : extends
-  (checkout) -- manager
-}
 ```

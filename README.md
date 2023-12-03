@@ -11,6 +11,7 @@ Pyglet seems to be a proper framework to catch multiple key presses and play mul
 It might be better to not use a JS-Python bridge for easyness. Maybe this is just a architectural burden. The data processing and visualisation part might be low in this project and so Python benefits might be not used at all.
 
 ```plantuml
+@startuml
 left to right direction
 skinparam packageStyle rectangle
 actor user
@@ -45,9 +46,11 @@ rectangle "Music Learning Suite" as MLS {
 
   (analyse music) -[hidden]- (add new instrument)
 }
+@enduml
 ```
 
 ```plantuml
+@startuml
 database "MySQL" {
     [user data]
     [course data]
@@ -72,6 +75,7 @@ component "Music Suite" {
 [Accounting] -- [Dashboard GUI]
 
 [Music Suite] -- [Dashboard GUI]
+@enduml
 ```
 
 ```mermaid
@@ -90,39 +94,41 @@ classDiagram
     Window "1" -- "1" ButtonBoard : controls
     ButtonBoard "1" -- "1" Batch
 
-    class BorderedCircle {
-        +circle : Circle
-        +innerCircle : Circle
-        +changeFill()
-    }
-    
-    class Button {
-        +fill : int tuple
-        +borderedCircle : BorderedCircle
-        +label : Label
-        +tone : int
-        +pressButton()
-        +releaseButton()
-    }
+    namespace accordionSimulator {
+        class BorderedCircle {
+            +circle : Circle
+            +innerCircle : Circle
+            +changeFill()
+        }
+        
+        class Button {
+            +fill : int tuple
+            +borderedCircle : BorderedCircle
+            +label : Label
+            +tone : int
+            +pressButton()
+            +releaseButton()
+        }
 
-    class ButtonBoard {
-        +x : float
-        +y : float
-        +width : float
-        +height : float
-        +startingTone : int
-        +buttonList : Button[]
-        +pressButton()
-        +releaseButton()
-    }
+        class ButtonBoard {
+            +x : float
+            +y : float
+            +width : float
+            +height : float
+            +startingTone : int
+            +buttonList : Button[]
+            +pressButton()
+            +releaseButton()
+        }
 
-    class TonePlayer {
-        +midiTone : int
-        +player : Player
-        +music : Source
-        +playTone()
-        +stopTone()
-        +getMidiTone()
+        class TonePlayer {
+            +midiTone : int
+            +player : Player
+            +music : Source
+            +playTone()
+            +stopTone()
+            +getMidiTone()
+        }
     }
 
     namespace pyglet {

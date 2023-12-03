@@ -1,5 +1,10 @@
 # Music Suite
 
+## Links to the sections to assess
+
+1. [UML](#uml-diagrams)
+1. [DDD](#ddd)
+
 ## Pet project
 
 ### Setting up the environment
@@ -27,6 +32,10 @@ Things to add:
 It would be aesome if there could be something like in Guitar Hero where notes move toward a play area and have to be pressed at the right time.
 
 ## The big idea
+
+With the Music Suite one should be able to find music teacher, find learning material, rent MIDI instruments and practice online as one would in the same room. Also one could play as a band together. Especially useful for less common instruments (like Great Highland Bagpipe or button accordion) and in far-distance-travel nations (like USA) where a possible teacher might be hours of car driving away.
+
+A direct competitor would be [Yousician](https://yousician.com/) from whom I just found an Black Friday offer in my mailbox. But I think they just support MIDI instruments for piano till now and have no real one-to-one music teacher placement service. A better stand alone [accordion app](https://play.google.com/store/apps/details?id=com.egert.buttonaccordion&pli=1) can be found in the playstore already.
 
 ### UML diagrams
 
@@ -243,3 +252,7 @@ classDiagram
         }
     }
 ```
+
+### DDD
+
+Please find my [DDD process documentation on Miro](https://miro.com/app/board/uXjVNS_z_ZA=/?share_link_id=225977659710).

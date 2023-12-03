@@ -7,43 +7,43 @@ window = pyglet.window.Window(960, 540)
 pyglet.gl.glClearColor(1,1,1,1)
 
 keymapping = {
-    944892805120: 53, 65505: 53, 
+    944892805120: 53, 60: 53, 
     65289: 54, 
     65509: 55, 
-    60: 56, 49: 56, 
+    121: 56, 49: 56, 
     113: 57, 
     97: 58, 
-    121: 59, 50: 59, 
+    120: 59, 50: 59, 
     119: 60, 
     115: 61, 
-    120: 62, 51: 62,
+    99: 62, 51: 62,
     101: 63,
     100: 64,
-    99: 65, 52: 65,
+    118: 65, 52: 65,
     114: 66,
     102: 67,
-    118: 68, 53: 68,
+    98: 68, 53: 68,
     116: 69,
     103: 70,
-    98: 71, 54: 71,
+    110: 71, 54: 71,
     122: 72,
     104: 73,
-    110: 74, 55: 74,
+    109: 74, 55: 74,
     117: 75,
     106: 76,
-    109: 77, 56: 77,
+    44: 77, 56: 77,
     105: 78,
     107: 79,
-    44: 80, 57: 80,
+    46: 80, 57: 80,
     111: 81,
     108: 82,
-    46: 83, 48: 83,
+    45: 83, 48: 83,
     112: 84,
     824633720832: 85,
-    45: 86, 940597837824: 86,
+    65506: 86, 940597837824: 86,
     798863917056: 87,
     953482739712: 88,
-    65506: 89, 949187772416: 89,
+    949187772416: 89,
     43: 90,
     35: 91,
     65288: 92
@@ -69,6 +69,8 @@ class Button:
                           x=x, y=y,
                           anchor_x='center', anchor_y='center', 
                           color=(255-fill[0],255-fill[1],255-fill[2],255),
+                          #multiline = True,
+                          #width = 20,
                           batch=batch)
         self.tone = tone
         
@@ -94,7 +96,7 @@ class ButtonBoard:
                 bigScale.append(s)
         bigScale = bigScale[5:-3]
         for i in range(0,40):
-            bigScale[i] = (i+53, bigScale[i])
+            bigScale[i] = (i+53, bigScale[i], key.symbol_string(list(keymapping.keys())[list(keymapping.values()).index(i+53)]))
 
         buttonRows = math.ceil(len(bigScale)/3)
         radius = self.width/(2*buttonRows+1)
@@ -106,7 +108,7 @@ class ButtonBoard:
 
         for el in bigScale:
             tone = el[0]
-            label = el[1]
+            label = f"{el[1]}"#\n{el[2]}"
             fill = (255,255,255,255)
             if "#" in label:
                 fill = (0,0,0,255)

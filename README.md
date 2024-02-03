@@ -1,5 +1,9 @@
 # Music Suite
 
+## notes
+
+../sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner   -Dsonar.projectKey=musicsuitmusicsuite:2024e   -Dsonar.sources=.   -Dsonar.host.url=http://localhost:9000   -Dsonar.token=sqp_86f7b684ce396ebe0ce7533c08076a68bc9da4cf
+
 ## Links to the sections to assess
 
 1. [UML](#uml-diagrams)
@@ -7,15 +11,19 @@
 
 ## Pet project
 
-### Setting up the environment
+### Setting up the environment and about programming language choice
 
 In the task it is recommended to use Python as a programming language since it is important for the data scientists. Since I'm most fluently with R and JS right now I try to bridge Python code (to learn something new) with JS to use my skills in GUI design.
 
 Pyglet seems to be a proper framework to catch multiple key presses and play multiple sounds at once so it might be useful for the live music app part of this project. But can it be integrated in the browsers view port? I will try Pyodide for this.
 
-It might be better to not use a JS-Python bridge for easyness. Maybe this is just a architectural burden. The data processing and visualisation part might be low in this project and so Python benefits might be not used at all.
+It might be better to not use a JS-Python bridge for easyness. Maybe this is just a architectural burden. The data processing and visualisation part might be low in this project and so data science related Python benefits might be not used at all.
 
 In the end I decided to go with the pyglet framework for the accordion simulator and don't use Pyodide for building the online dashboard structure because the accordion simulator might become handy for my hobby.
+
+For the tasks about **Build** and **Continuous Delivery** writing in C or C++ might have been interesting as well. But there I realy have super low experiecne. Java would be good thee too. But to be honest I like that Python, R, JS are not so cumbersome about types.
+
+But I have to admit that I haven't worked on realy big projects and most of the time without object orientation. In the *Programmierung II* module from *Medieninformatik* study program here at BHT I started to get a glimpse on how Java can be benefitial for (larger) object oriented projects (like creating a sheduler app or music database).
 
 ### Accordion Simulator
 
@@ -36,6 +44,27 @@ It would be aesome if there could be something like in Guitar Hero where notes m
 With the Music Suite one should be able to find music teacher, find learning material, rent MIDI instruments and practice online as one would in the same room. Also one could play as a band together. Especially useful for less common instruments (like Great Highland Bagpipe or button accordion) and in far-distance-travel nations (like USA) where a possible teacher might be hours of car driving away.
 
 A direct competitor would be [Yousician](https://yousician.com/) from whom I just found an Black Friday offer in my mailbox. But I think they just support MIDI instruments for piano till now and have no real one-to-one music teacher placement service. A better stand alone [accordion app](https://play.google.com/store/apps/details?id=com.egert.buttonaccordion&pli=1) can be found in the playstore already.
+
+Another interesting feature shows the [moises app](https://moises.ai/de/). It claims being able to record music and to show when to play which chord. I tried it with the theme of *Der Pate* and it did not work correctly mixing up if a chord is Dur or mol. For some songs it can seperate the different instruments. An extension would be not only getting the chords but the whole sheet music.
+
+### Buisness model
+
+The core idea is to create a platform where people can learn to play an instrument. The music suite should provide possibilites to support the learning on your own and the learning phases between the lessons with a real music teacher. It is the core software product (for managing and creating learning courses we probably can adjust a ready learn content management system).
+
+People can suscribe for different plans. A cheaper **learning on your own** version where you get access to the music suite and self study learning material. But there are also add on plans like **music lessons** with real teachers and maybe **band sessions** for excessive online meet-up times. So the core bussiness model ides is **subscription**.
+
+Alternative bussinessmodels might be: 
+* **freemium**: get some music time for free, maybe even extend the free time with sharing content on social media or by achieving goals
+* **rent instead of buy**: rent the MIDI instrument and get the music suite for free
+* **razor and blade**: sell the MIDI instrument pretty cheap but require the music suite subscription to use it
+
+To increase their engagement with the platform it should be free to share your progression, compositions and sound samples with other people. Inside and outside the platform (since we might attract new customers this way).
+
+Later one we want ot **leverage customer data** to create better self learning material to attract more customers and reduce dependency from music teachers.
+
+Also part of our bussiness are:
+* **virtualisation**: getting paid for the possibility for high quality music lessons for rare instruments due to MIDI instruments instead of homebrew camera / mic set-ups
+* **affiliation**: music teachers can promote their lessons on our platform and reach more students
 
 ### UML diagrams
 
@@ -102,17 +131,18 @@ component "Music Suite" {
 
 [Accountmanagement] --> [user data]
 [Authentification] --> [user data]
-[Authentification] -- [Dashboard GUI]
-[Lesson Booking] -- [Dashboard GUI]
-[Learning Package] -- [Dashboard GUI]
+[Authentification] -- [Customer Dashboard GUI]
+[Authentification] -- [Staff Dashboard GUI]
+[Lesson Booking] -- [Customer Dashboard GUI]
+[Learning Package] -- [Customer Dashboard GUI]
 [Learning Package] --> [course data]
 [Learning Package] -- [lessons]
-[Buisness Inteligence] -- [Dashboard GUI]
-[Accountmanagement] -- [Dashboard GUI]
-[Database Manager] -- [Dashboard GUI]
-[Accounting] -- [Dashboard GUI]
+[Buisness Inteligence] -- [Staff Dashboard GUI]
+[Accountmanagement] -- [Staff Dashboard GUI]
+[Database Manager] -- [Staff Dashboard GUI]
+[Accounting] -- [Staff Dashboard GUI]
 
-[Music Suite] -- [Dashboard GUI]
+[Music Suite] -- [Customer Dashboard GUI]
 @enduml
 ```
 

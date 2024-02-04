@@ -341,7 +341,7 @@ It was difficult for me to distinguish sharply between a component UML diagram a
 <!-- thumbnail image wrapped in a link -->
 <div id="eventstorming_original" style="width: 100%; max-width: 800px; margin: auto;">
     <a href="#eventstorming">
-    <img src="./miro_images/Event Storming - Event Storming.jpg">
+    <img src="./miro_images/Event Storming - Event Storming.jpg" alt="Eventstorming result from Miro">
     </a>
     <i>click for fullscreen image</i>
 </div>
@@ -354,7 +354,7 @@ It was difficult for me to distinguish sharply between a component UML diagram a
 <!-- thumbnail image wrapped in a link -->
 <div id="coredomainchart_original" style="width: 100%; max-width: 800px; margin: auto;">
     <a href="#coredomainchart">
-    <img src="./miro_images/Event Storming - Core Domain Chart.jpg" style="width: 100%; max-width: 800px;">
+    <img src="./miro_images/Event Storming - Core Domain Chart.jpg" alt="Core Domain Chart from Miro">
     </a>
     <i>click for fullscreen image</i>
 </div>
@@ -408,6 +408,11 @@ Until now I still miss a team project where I get used to working with git in a 
 When I wanted to upload our work I was faced with the problem that the archive was 1 GB but we only saw 50 MB. It took until last weeks lecture in *Computer Science for Big Data* that we learned how git works in the background (not how to use it). I always thought it saves only changes. But it changes new copies of the whole file every time. NOW I understand why it could be interesting to use something else to versionise data instead of git. I didn't get the point before at all.
 
 In *Data Science Platforms* we used a git system inside Dataiku but here one can't handle differences. It just overwrotes all changes from the other one. At least one could see in the history what was overwritten.
+
+Most often the rename command is used on the terminal:
+```
+git mv OLD-FILENAME NEW-FILENAME
+```
 
 ### Clean Code Developement
 

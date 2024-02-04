@@ -3,50 +3,6 @@ from pyglet import shapes
 from pyglet.window import key
 import math
 
-# maps the keys on a computer keyboard to the buttons on a button accordion
-keymapping = {
-    944892805120: 53, 94: 53, 65505: 53, 
-    65289: 54, 
-    65509: 55, 
-    60: 56, 49: 56, 
-    113: 57, 
-    97: 58,     
-    121: 59, 50: 59, 
-    119: 60, 
-    115: 61, 
-    120: 62, 51: 62,
-    101: 63,
-    100: 64,
-    99: 65, 52: 65,
-    114: 66,
-    102: 67,
-    118: 68, 53: 68,
-    116: 69,
-    103: 70,
-    98: 71, 54: 71,
-    122: 72,
-    104: 73,
-    110: 74, 55: 74,
-    117: 75,
-    106: 76,
-    109: 77, 56: 77,
-    105: 78,
-    107: 79,
-    44: 80, 57: 80,
-    111: 81,
-    108: 82,
-    46: 83, 48: 83,
-    112: 84,
-    824633720832: 85, 201863462912: 85,
-    45: 86, 940597837824: 86, 85899345920: 86,
-    798863917056: 87, 146028888064: 87,
-    953482739712: 88, 206158430208: 88,
-    949187772416: 89, 90194313216: 89, 65506: 89,
-    43: 90,
-    35: 91,
-    65288: 92
-}
-
 class BorderedCircle:
     def __init__(self, x, y, radius, borderwidth, color, fill, batch):
         self.circle = shapes.Circle(x=x, y=y, radius=radius, batch=batch)
@@ -72,7 +28,7 @@ class Button:
         self.tone = tone
         
     def press_button(self):
-        self.bordered_circle.change_fill((255,180,90,255))
+        self.bordered_circle.change_fill((240,170,70,255)) # kind of orange color
 
     def release_button(self):
         self.bordered_circle.change_fill(self.fill)
@@ -154,4 +110,49 @@ class TonePlayer:
         self.player.pause()
 
     def get_midi_tone(self):
-        return self.midi_tone    
+        return self.midi_tone
+    
+
+# maps the keys on a computer keyboard to the buttons on a button accordion
+keymapping = {
+    944892805120: 53, 94: 53, 65505: 53, 
+    65289: 54, 
+    65509: 55, 
+    60: 56, 49: 56, 
+    113: 57, 
+    97: 58,     
+    121: 59, 50: 59, 
+    119: 60, 
+    115: 61, 
+    120: 62, 51: 62,
+    101: 63,
+    100: 64,
+    99: 65, 52: 65,
+    114: 66,
+    102: 67,
+    118: 68, 53: 68,
+    116: 69,
+    103: 70,
+    98: 71, 54: 71,
+    122: 72,
+    104: 73,
+    110: 74, 55: 74,
+    117: 75,
+    106: 76,
+    109: 77, 56: 77,
+    105: 78,
+    107: 79,
+    44: 80, 57: 80,
+    111: 81,
+    108: 82,
+    46: 83, 48: 83,
+    112: 84,
+    824633720832: 85, 201863462912: 85,
+    45: 86, 940597837824: 86, 85899345920: 86,
+    798863917056: 87, 146028888064: 87,
+    953482739712: 88, 206158430208: 88,
+    949187772416: 89, 90194313216: 89, 65506: 89,
+    43: 90,
+    35: 91,
+    65288: 92
+}

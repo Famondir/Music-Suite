@@ -424,14 +424,40 @@ A realy important topic is: using names for varaibles and function that make cle
 
 Alos one should choose and stick a single style of variable casing. I tend to mix camel and snake case. E.g. at the moment of writing this passage I used a lot of camel case which SonarCube is complaining as code smell because in Python snake case is more common. And I used snake case at two places: e.g. `on_key_press()`. I find snake case easier to read but harder to write. But since one should focus on the people reading your code I will convert everything to snake case for everything but class names now. Following [PEP8](https://realpython.com/python-pep8/) I also added a second line break after class definitions.
 
+It is also helping a lot to create intermediate variables instead of using a long command. E.g.:
+
+```python
+# bad
+key_symbol_string = key.symbol_string(list(keymapping.keys())[list(keymapping.values()).index(i+self.starting_tone)])
+
+# better
+keys = list(keymapping.keys())
+values = list(keymapping.values())
+position = values.index(i+self.starting_tone) # get the position of the value that equals the tone
+key_symbol_string = key.symbol_string(keys[position])
+```
+
+No magic numbers:
+
+```python
+# bad:
+window = pyglet.window.Window(960, 540)
+
+# better:
+window_width = 960
+window_height = 540
+window = pyglet.window.Window(window_width, window_height)
+```
+
 #### Clean Code Cheat Sheet
 
-* decide to use either camel or snake case
+* decide to use either camel or snake case for each type (class, variable, function, ...)
 * use clear naming
   * verbs for functions
   * nouns for variables
 * use indentation
 * use spare lines to group code on the same indentation level
+* use intermediate variables instead of very nested structures (and comment them if necessary)
 
 ### Build
 
@@ -443,6 +469,7 @@ Alos one should choose and stick a single style of variable casing. I tend to mi
 
 ### Functional Programming
 
-## Programming issues
+# Programming issues
 
 * mapping of keyboard keys on linux and windows different (and also for different layouts / languages) => one would need a option to adjust the mapping in the settings / in an external file
+* text on buttons should be property of button as it's color should be to chang it on button press as well as the background color

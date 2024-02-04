@@ -40,10 +40,6 @@
 
 # Music Suite
 
-## notes
-
-../sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner   -Dsonar.projectKey=musicsuitmusicsuite:2024e   -Dsonar.sources=.   -Dsonar.host.url=http://localhost:9000   -Dsonar.token=sqp_86f7b684ce396ebe0ce7533c08076a68bc9da4cf
-
 ## Links to the sections to assess
 
 1. [Git](#git)

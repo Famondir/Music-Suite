@@ -139,7 +139,46 @@
             <span id="markdown-mermaid" aria-hidden="true"
                     data-dark-mode-theme="dark"
                     data-light-mode-theme="default"></span>
-                <h1 id="music-suite">Music Suite</h1>
+                <style>
+/** LIGHTBOX MARKUP **/
+
+.lightbox {
+  /* Default to hidden */
+  display: none;
+
+  /* Overlay entire screen */
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  /* A bit of padding around image */
+  padding: 1em;
+
+  /* Translucent background */
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Unhide the lightbox when it's the target */
+.lightbox:target {
+  display: block;
+}
+
+.lightbox span {
+  /* Full width and height */
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  /* Size and position background image */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+</style>
+<h1 id="music-suite">Music Suite</h1>
 <h2 id="notes">notes</h2>
 <p>../sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner   -Dsonar.projectKey=musicsuitmusicsuite:2024e   -Dsonar.sources=.   -Dsonar.host.url=<a href="http://localhost:9000">http://localhost:9000</a>   -Dsonar.token=sqp_86f7b684ce396ebe0ce7533c08076a68bc9da4cf</p>
 <h2 id="links-to-the-sections-to-assess">Links to the sections to assess</h2>
@@ -347,8 +386,28 @@ classDiagram
     }</div></pre>
 <h3 id="ddd">DDD</h3>
 <p>It was difficult for me to distinguish sharply between a component UML diagram and the DDD-mapping. They still feel somewhat similar to me. A point where they differ is the question where the database for the LMS is placed (physically) and which team is responsible for it. Probably it will be in the same place as the other databases but there probably is a special team for the LMS database and one more general for managing the user information and accounting stuff.</p>
-<img src="file:////home/simon/Dokumente/data_science/1st_semester/software_engineering/Music-Suite/miro_images/Event Storming - Core Domain Chart.jpg" style="max-width: 1600x;">
-<img src="file:////home/simon/Dokumente/data_science/1st_semester/software_engineering/Music-Suite/miro_images/Event Storming - Event Storming.jpg" style="max-width: 1600px;">
+<!-- thumbnail image wrapped in a link -->
+<div id="eventstorming_original" style="width: 100%; max-width: 800px; margin: auto;">
+    <a href="#eventstorming">
+    <img src="file:////home/simon/Dokumente/data_science/1st_semester/software_engineering/Music-Suite/miro_images/Event Storming - Event Storming.jpg">
+    </a>
+    <i>click for fullscreen image</i>
+</div>
+<!-- lightbox container hidden with CSS -->
+<a href="#eventstorming_original" class="lightbox" id="eventstorming">
+  <span style="background-image: url('./miro_images/Event Storming - Event Storming.jpg')"></span>
+</a>
+<!-- thumbnail image wrapped in a link -->
+<div id="coredomainchart_original" style="width: 100%; max-width: 800px; margin: auto;">
+    <a href="#coredomainchart">
+    <img src="file:////home/simon/Dokumente/data_science/1st_semester/software_engineering/Music-Suite/miro_images/Event Storming - Core Domain Chart.jpg" style="width: 100%; max-width: 800px;">
+    </a>
+    <i>click for fullscreen image</i>
+</div>
+<!-- lightbox container hidden with CSS -->
+<a href="#coredomainchart_original" class="lightbox" id="coredomainchart">
+  <span style="background-image: url('./miro_images/Event Storming - Core Domain Chart.jpg')"></span>
+</a>
 <p>Please find my <a href="https://miro.com/app/board/uXjVNS_z_ZA=/?share_link_id=232588702866">DDD process documentation on Miro</a>.</p>
 <h2 id="coding">Coding</h2>
 <h3 id="visual-studio-code">Visual Studio Code</h3>

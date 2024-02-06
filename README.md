@@ -466,6 +466,9 @@ window = pyglet.window.Window(window_width, window_height)
 
 ### Unit tests
 
+* How to test functions like playing a note. Testing playing attribute or returning informative string? 
+* What about other functions with side effects? Mock package to get print messages?
+
 ### DSL
 
 ### Functional Programming

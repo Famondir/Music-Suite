@@ -2,3 +2,5 @@ wav
 sonar_cube_history/
 __pycache__/
 target/
+.coverage
+.scannerwork/report-task.txt

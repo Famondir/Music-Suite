@@ -2,5 +2,5 @@ projectKey=musicsuitmusicsuite:2024e
 serverUrl=http://localhost:9000
 serverVersion=10.3.0.82913
 dashboardUrl=http://localhost:9000/dashboard?id=musicsuitmusicsuite%3A2024e
-ceTaskId=AY19Ny3P5itNJes6b6MG
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AY19Ny3P5itNJes6b6MG
+ceTaskId=AY19fWmU5itNJes6b6MJ
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AY19fWmU5itNJes6b6MJ

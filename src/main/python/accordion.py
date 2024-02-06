@@ -100,7 +100,7 @@ class TonePlayer:
     def __init__(self, midi_tone):
         self.midi_tone = midi_tone
         self.player = pyglet.media.Player()
-        self.music = pyglet.media.load("wav/Accordion 0"+str(self.midi_tone)+".wav", streaming=False)
+        self.music = pyglet.media.load("./src/main/data/wav/Accordion 0"+str(self.midi_tone)+".wav", streaming=False)
 
     def play_tone(self):
         self.player.queue(self.music)

@@ -1,5 +1,6 @@
 <style>
 /** LIGHTBOX MARKUP **/
+/* source: https://codepen.io/gschier/pen/kyRXVx */
 
 .lightbox {
   /* Default to hidden */
@@ -341,27 +342,27 @@ It was difficult for me to distinguish sharply between a component UML diagram a
 <!-- thumbnail image wrapped in a link -->
 <div id="eventstorming_original" style="width: 100%; max-width: 800px; margin: auto;">
     <a href="#eventstorming">
-    <img src="./miro_images/Event Storming - Event Storming.jpg" alt="Eventstorming result from Miro">
+    <img src="./docs/miro_images/Event Storming - Event Storming.jpg" alt="Eventstorming result from Miro">
     </a>
     <i>click for fullscreen image</i>
 </div>
 
 <!-- lightbox container hidden with CSS -->
 <a href="#eventstorming_original" class="lightbox" id="eventstorming">
-  <span style="background-image: url('./miro_images/Event Storming - Event Storming.jpg')"></span>
+  <span style="background-image: url('./docs/miro_images/Event Storming - Event Storming.jpg')"></span>
 </a>
 
 <!-- thumbnail image wrapped in a link -->
 <div id="coredomainchart_original" style="width: 100%; max-width: 800px; margin: auto;">
     <a href="#coredomainchart">
-    <img src="./miro_images/Event Storming - Core Domain Chart.jpg" alt="Core Domain Chart from Miro">
+    <img src="./docs/miro_images/Event Storming - Core Domain Chart.jpg" alt="Core Domain Chart from Miro">
     </a>
     <i>click for fullscreen image</i>
 </div>
 
 <!-- lightbox container hidden with CSS -->
 <a href="#coredomainchart_original" class="lightbox" id="coredomainchart">
-  <span style="background-image: url('./miro_images/Event Storming - Core Domain Chart.jpg')"></span>
+  <span style="background-image: url('./docs/miro_images/Event Storming - Core Domain Chart.jpg')"></span>
 </a>
 
 Please find my [DDD process documentation on Miro](https://miro.com/app/board/uXjVNS_z_ZA=/?share_link_id=232588702866).

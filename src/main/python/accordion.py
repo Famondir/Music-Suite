@@ -156,3 +156,6 @@ keymapping = {
     35: 91,
     65288: 92
 }
+
+def integration_test_dummy_fct():
+    return True

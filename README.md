@@ -469,6 +469,13 @@ window = pyglet.window.Window(window_width, window_height)
 * How to test functions like playing a note. Testing playing attribute or returning informative string? 
 * What about other functions with side effects? Mock package to get print messages?
 
+Tasks that have not be accomplished now:
+* Getting pytest to work with PyBuilder instead of unittest framework
+  * unittests for pyglet
+* Getting SonarCube and PyBuilder connected
+  * SonarCube does not recognize tests
+  * SonarCube should be called automatically
+
 ### DSL
 
 ### Functional Programming

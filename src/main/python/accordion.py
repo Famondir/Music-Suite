@@ -2,12 +2,18 @@ import pyglet
 from pyglet import shapes
 from pyglet.window import key
 import math
+from os.path import exists
+
 
 class BorderedCircle:
     def __init__(self, x, y, radius, borderwidth, color, fill, batch):
         self.circle = shapes.Circle(x=x, y=y, radius=radius, batch=batch)
         self.circle.color = color
-        self.inner_circle = shapes.Circle(x=x, y=y, radius=radius-borderwidth, batch=batch)
+
+        self.inner_circle = shapes.Circle(
+            x=x, y=y, radius=radius-borderwidth, batch=batch
+            )
+
         self.inner_circle.color = fill
 
     def change_fill(self, fill):
@@ -15,20 +21,27 @@ class BorderedCircle:
 
 
 class Button:
-    def __init__(self, tone, label, x, y, radius, borderwidth, color, fill, batch):
+    def __init__(self, tone, label, x, y,
+                 radius, borderwidth, color, fill, batch):
         self.fill = fill
-        self.bordered_circle = BorderedCircle(x, y, radius, borderwidth, color, self.fill, batch)
-        self.label = pyglet.text.Label(text=label,
-                          font_name='Times New Roman',
-                          font_size=12,
-                          x=x, y=y,
-                          anchor_x='center', anchor_y='center', 
-                          color=(255-fill[0],255-fill[1],255-fill[2],255),
-                          batch=batch)
+
+        self.bordered_circle = BorderedCircle(
+            x, y, radius, borderwidth, color, self.fill, batch
+            )
+
+        self.label = pyglet.text.Label(
+            text=label,
+            font_name='Times New Roman', font_size=12,
+            x=x, y=y,
+            anchor_x='center', anchor_y='center',
+            color=(255-fill[0], 255-fill[1], 255-fill[2], 255),
+            batch=batch
+            )
+
         self.tone = tone
-        
+
     def press_button(self):
-        self.bordered_circle.change_fill((240,170,70,255)) # kind of orange color
+        self.bordered_circle.change_fill((240, 170, 70, 255))  # kind of orange color
 
     def release_button(self):
         self.bordered_circle.change_fill(self.fill)
@@ -43,25 +56,33 @@ class ButtonBoard:
         self.starting_tone = 53
         self.button_list = []
 
-        scale = ["c","c#","d","d#","e","f","f#","g","g#","a","a#","h"]
+        scale = [
+            "c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "h"
+            ]
         big_scale = []
 
-        for octave_index in range(3,7): # scale covers tones from octave 3 to 7
-            for note_and_octave in [note_and_octave + str(octave_index) for note_and_octave in scale]:
+        for octave_index in range(3, 7):  # scale covers tones from octave 3 to 7
+            for note_and_octave in [note_and_octave + str(octave_index)
+                                    for note_and_octave in scale]:
                 big_scale.append(note_and_octave)
-        big_scale = big_scale[5:-3] # but not all tones from 3rd and 7th octave
 
-        for i in range(0,40):
+        big_scale = big_scale[5:-3]  # but not all tones from 3rd and 7th octave
+
+        tone_nr = len(big_scale)
+
+        for i in range(0, tone_nr):
             keys = list(keymapping.keys())
             values = list(keymapping.values())
-            position = values.index(i+self.starting_tone) # get the position of the value that equals the tone
+            position = values.index(i+self.starting_tone)  # get the position of the value that equals the tone
             key_symbol_string = key.symbol_string(keys[position])
-            
-            big_scale[i] = (i+self.starting_tone, big_scale[i], key_symbol_string)
+
+            big_scale[i] = (
+                i+self.starting_tone, big_scale[i], key_symbol_string
+                )
 
         button_rows = math.ceil(len(big_scale)/3)
         radius = self.width/(2*button_rows+1)
-        color = (0,0,0,255) # black
+        color = (0, 0, 0, 255)  # black
         borderwidth = 1
         x_offset = radius*5/3
         x_shift = self.width/button_rows
@@ -69,20 +90,42 @@ class ButtonBoard:
 
         for big_scale_entry in big_scale:
             tone = big_scale_entry[0]
-            label = f"{big_scale_entry[1]}"#\n{el[2]}"
-            fill = (255,255,255,255)
+            label = f"{big_scale_entry[1]}"  # \n{el[2]}"
+            fill = (255, 255, 255, 255)
             if "#" in label:
-                fill = (0,0,0,255)
+                fill = (0, 0, 0, 255)
 
-            if tone%3 == 2:
-                button1 = Button(tone, label, self.x+x_offset+((tone-self.starting_tone)//3-1/3)*x_shift, self.y-3*y_shift, radius, borderwidth, color, fill, batch)
-                button2 = Button(tone, label, self.x+x_offset+((tone-self.starting_tone)//3-1/3)*x_shift, self.y-0*y_shift, radius, borderwidth, color, fill, batch)
+            if tone % 3 == 2:
+                button1 = Button(
+                    tone, label, self.x+x_offset
+                    + ((tone-self.starting_tone)//3-1/3)*x_shift,
+                    self.y-3*y_shift, radius, borderwidth, color, fill, batch
+                    )
+
+                button2 = Button(
+                    tone, label, self.x+x_offset
+                    + ((tone-self.starting_tone)//3-1/3)*x_shift,
+                    self.y-0*y_shift, radius, borderwidth, color, fill, batch
+                    )
+
                 self.button_list.append((button1, button2))
-            elif tone%3 == 1:
-                button1 = Button(tone, label, self.x+x_offset+((tone-self.starting_tone)//3+1/3)*x_shift, self.y-2*y_shift, radius, borderwidth, color, fill, batch)
+
+            elif tone % 3 == 1:
+                button1 = Button(
+                    tone, label, self.x+x_offset
+                    + ((tone-self.starting_tone)//3+1/3)*x_shift,
+                    self.y-2*y_shift, radius, borderwidth, color, fill, batch
+                    )
+
                 self.button_list.append((button1,))
-            elif tone%3 == 0:
-                button1 = Button(tone, label, self.x+x_offset+((tone-self.starting_tone)//3+0/3)*x_shift, self.y-1*y_shift, radius, borderwidth, color, fill, batch)
+
+            elif tone % 3 == 0:
+                button1 = Button(
+                    tone, label, self.x+x_offset
+                    ((tone-self.starting_tone)//3+0/3)*x_shift,
+                    self.y-1*y_shift, radius, borderwidth, color, fill, batch
+                    )
+
                 self.button_list.append((button1,))
 
         self.button_list[-1] = (self.button_list[-1][1],)
@@ -100,7 +143,16 @@ class TonePlayer:
     def __init__(self, midi_tone):
         self.midi_tone = midi_tone
         self.player = pyglet.media.Player()
-        self.music = pyglet.media.load("./src/main/data/wav/Accordion 0"+str(self.midi_tone)+".wav", streaming=False)
+        path_to_file = "./src/main/data/wav/Accordion 0" + str(self.midi_tone)\
+            + ".wav"
+        wav_exists = exists(path_to_file)
+        if wav_exists:
+            self.music = pyglet.media.load(path_to_file, streaming=False)
+        else:
+            raise FileNotFoundError(
+                f"The wav file for midi tone number {self.midi_tone} is missing.\n\
+                    It should be placed at: {path_to_file}"
+                )
 
     def play_tone(self):
         self.player.queue(self.music)
@@ -111,19 +163,19 @@ class TonePlayer:
 
     def get_midi_tone(self):
         return self.midi_tone
-    
+
 
 # maps the keys on a computer keyboard to the buttons on a button accordion
 keymapping = {
-    944892805120: 53, 94: 53, 65505: 53, 
-    65289: 54, 
-    65509: 55, 
-    60: 56, 49: 56, 
-    113: 57, 
-    97: 58,     
-    121: 59, 50: 59, 
-    119: 60, 
-    115: 61, 
+    944892805120: 53, 94: 53, 65505: 53,
+    65289: 54,
+    65509: 55,
+    60: 56, 49: 56,
+    113: 57,
+    97: 58,
+    121: 59, 50: 59,
+    119: 60,
+    115: 61,
     120: 62, 51: 62,
     101: 63,
     100: 64,
@@ -156,6 +208,3 @@ keymapping = {
     35: 91,
     65288: 92
 }
-
-def integration_test_dummy_fct():
-    return True

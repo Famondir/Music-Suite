@@ -18,15 +18,19 @@ x_pos = 0
 y_pos = 300
 button_board_width = window.width
 button_board_height = 200
-buttonBoard = accordion.ButtonBoard(x_pos, y_pos, button_board_width, button_board_height, accordion_batch)
+buttonBoard = accordion.ButtonBoard(
+    x_pos, y_pos, button_board_width, button_board_height, accordion_batch
+)
 
 keymapping = accordion.keymapping
 playerlist = []
+
 
 @window.event
 def on_draw():
     window.clear()
     accordion_batch.draw()
+
 
 @window.event
 def on_key_press(symbol, modifiers):
@@ -39,6 +43,7 @@ def on_key_press(symbol, modifiers):
         # highlights button corresponding to the pressed key
         buttonBoard.press_button(accordion.keymapping[symbol])
 
+
 @window.event
 def on_key_release(symbol, modifiers):
     print(f'The key {symbol} was released')
@@ -50,5 +55,6 @@ def on_key_release(symbol, modifiers):
                 del player
         # removes highlighting of button corresponding to the released key
         buttonBoard.release_button(keymapping[symbol])
+
 
 pyglet.app.run()

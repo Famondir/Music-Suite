@@ -1,16 +1,17 @@
 name: Test and Lint
 run-name: ${{ github.actor }} triggers tests and linting after last push
 on: 
-  push:
-    paths:
-      - 'src/main/**.py'
+  [push]
+  # push:
+  #   paths:
+  #     - 'src/main/**.py'
 jobs:
   testing:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        # os: [ubuntu-latest, windows-latest]
         python-version: [3.12, 3.11, '3.10', 3.9]
-        # os: [ubuntu-latest]
+        os: [windows-latest]
         # python-version: [3.12]
     runs-on: ${{ matrix.os }}
     steps:
@@ -26,11 +27,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          sudo apt-get install xvfb
       - name: Test with pytest
-        run: |
-          pip install pytest pytest-cov
-          xvfb-run pytest --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: |
+            pip install pytest pytest-cov
+            xvfb-run pytest --junitxml=junit/test-results.xml --cov=com --cov-report=xml --cov-report=html
   linting:
     runs-on: ubuntu-latest
     steps:

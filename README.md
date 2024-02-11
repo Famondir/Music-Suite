@@ -703,6 +703,8 @@ After some trouble I was able to link PyBuilder with my local Docker image of So
 
 ### Continuous Delivery
 
+For the unittests `xvfb` is needed because pyglet requires a display. Unfortunately xvfb is not working on Windows machines - thus I could not test my program there easily.
+
 ### Unit tests
 
 * How to test functions like playing a note. Testing playing attribute or returning informative string? 

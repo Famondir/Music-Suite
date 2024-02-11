@@ -1,6 +1,9 @@
 name: Test and Lint
 run-name: ${{ github.actor }} triggers tests and linting after last push
-on: [push]
+on: 
+  push:
+    paths:
+      - 'src/main/**.py'
 jobs:
   testing:
     strategy:

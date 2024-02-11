@@ -6,6 +6,7 @@ from os.path import exists
 
 
 class BorderedCircle:
+    print("hey")
     def __init__(self, x, y, radius, borderwidth, color, fill, batch):
         self.circle = shapes.Circle(x=x, y=y, radius=radius, batch=batch)
         self.circle.color = color

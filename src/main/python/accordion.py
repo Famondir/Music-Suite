@@ -46,9 +46,9 @@ class ButtonBoard:
         scale = ["c","c#","d","d#","e","f","f#","g","g#","a","a#","h"]
         big_scale = []
 
-        for i in range(3,7): # scale covers tones from octave 3 to 7
-            for s in [s + str(i) for s in scale]:
-                big_scale.append(s)
+        for octave_index in range(3,7): # scale covers tones from octave 3 to 7
+            for note_and_octave in [note_and_octave + str(octave_index) for note_and_octave in scale]:
+                big_scale.append(note_and_octave)
         big_scale = big_scale[5:-3] # but not all tones from 3rd and 7th octave
 
         for i in range(0,40):
@@ -67,9 +67,9 @@ class ButtonBoard:
         x_shift = self.width/button_rows
         y_shift = radius*2
 
-        for el in big_scale:
-            tone = el[0]
-            label = f"{el[1]}"#\n{el[2]}"
+        for big_scale_entry in big_scale:
+            tone = big_scale_entry[0]
+            label = f"{big_scale_entry[1]}"#\n{el[2]}"
             fill = (255,255,255,255)
             if "#" in label:
                 fill = (0,0,0,255)

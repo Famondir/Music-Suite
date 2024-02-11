@@ -1,44 +1,3 @@
-<style>
-/** LIGHTBOX MARKUP **/
-/* source: https://codepen.io/gschier/pen/kyRXVx */
-
-.lightbox {
-  /* Default to hidden */
-  display: none;
-
-  /* Overlay entire screen */
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  
-  /* A bit of padding around image */
-  padding: 1em;
-
-  /* Translucent background */
-  background: rgba(0, 0, 0, 0.8);
-}
-
-/* Unhide the lightbox when it's the target */
-.lightbox:target {
-  display: block;
-}
-
-.lightbox span {
-  /* Full width and height */
-  display: block;
-  width: 100%;
-  height: 100%;
-
-  /* Size and position background image */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-</style>
-
 # Music Suite
 
 ## Links to the sections to assess
@@ -419,11 +378,92 @@ git mv OLD-FILENAME NEW-FILENAME
 
 Clean code is important because not only computers have to be able to interpret code - but so do humans. This might be you in near or far future or a team member. Therefore, one should follow some clean code guidelines.
 
-Using Python you are forced to use helpful intendation. I think this is one of the easiest points to follow. In my opinion it is harder to build a common grounding at the question where one should use a spare line or not. I like to group comments with this technique. But I often come back later and rearrange the groupings. I'm not very consistent there - not even with my self.
+Using Python you are forced to use helpful intendation. I think this is one of the easiest points to follow. Thus it is not possible to write things like (dummy code for bad practice one might find possible in JS and so on):
 
-A realy important topic is: using names for varaibles and function that make clear what they do or what information/data they hold. This should be done in a manner that most of your comments become unneccasary. One example where I decided to rename a variable was changing **batch** to **accordionBatch** because it is used to group all shapes of the accordion only. Thus we are able to add another batch for the presenataion of staff and music tones in another area and easily could implement a function to toggle the visibility of those groups or rearrange their positions.
+```python
+# bad
+def test(x):
+if (x > 3):
+for i in range(x):
+print(x*x)
+return (True)
+else:
+print("Mühe lohnt nicht.")
+return(False)
+def test2(y):
+return(y+2)
 
-Alos one should choose and stick a single style of variable casing. I tend to mix camel and snake case. E.g. at the moment of writing this passage I used a lot of camel case which SonarCube is complaining as code smell because in Python snake case is more common. And I used snake case at two places: e.g. `on_key_press()`. I find snake case easier to read but harder to write. But since one should focus on the people reading your code I will convert everything to snake case for everything but class names now. Following [PEP8](https://realpython.com/python-pep8/) I also added a second line break after class definitions.
+# better
+def test(x):
+  if (x > 3):
+    for i in range(x):
+      print(x*x)
+    return (True)
+  else:
+    print("Mühe lohnt nicht.")
+    return(False)
+def test2(y):
+  return(y+2)
+```
+
+In my opinion it is harder to build a common grounding at the question where one should use a spare line or not. I like to group comments with this technique. But I often come back later and rearrange the groupings. I'm not very consistent there - not even with my self. To continue the previous example there should be a spare line between the two `def`s. (Following *PEP8* there even should be two after class definitions.) If the spare line after the for loop helps to see where the return statement is placed is not clear to me.
+
+```python
+# even better
+def test(x):
+  if (x > 3):
+    for i in range(x):
+      print(x*x)
+    return (True)
+  else:
+    print("Mühe lohnt nicht.")
+    return(False)
+
+def test2(y):
+  return(y+2)
+
+# or aybe with an additional line break after the for loop?
+def test(x):
+  if (x > 3):
+    for i in range(x):
+      print(x*x)
+
+    return (True)
+  else:
+    print("Mühe lohnt nicht.")
+    return(False)
+    
+def test2(y):
+  return(y+2)
+```
+
+A realy important topic is: using names for varaibles and function that make clear what they do or what information/data they hold. This should be done in a manner that most of your comments become unneccasary. One example where I decided to rename a variable was changing **batch** to **accordionBatch** because it is used to group all shapes of the accordion only. Thus we are able to add another batch for the presenataion of staff and music tones in another area and easily could implement a function to toggle the visibility of those groups or rearrange their positions. Example:
+
+```python
+# bad
+batch = pyglet.graphics.Batch() # batch to pass to the ButtonBoard constructor to hold all shapes for the accordion there
+batch2 = pyglet.graphics.Batch() # batch to pass to the Staff constructor to hold all shapes for the staff there
+
+# better
+accordion_batch = pyglet.graphics.Batch()
+staff_batch = pyglet.graphics.Batch()
+```
+
+Another place where I like to use not so clear variables isin loops. For simple integer variables I like to use `i`, `j`, `k`. But then it comes to an end and `i` and `j` look somewhat similar. And I used `s` for a string iterator. Lets fix this right now:
+
+```python
+# bad
+for i in range(3,7): # scale covers tones from octave 3 to 7
+  for s in [s + str(i) for s in scale]:
+      big_scale.append(s)
+
+# better
+for octave_index in range(3,7): # scale covers tones from octave 3 to 7
+  for note_and_octave in [note_and_octave + str(octave_index) for note_and_octave in scale]:
+    big_scale.append(note_and_octave)
+```
+
+Also one should choose and stick a single style of variable casing. I tend to mix camel and snake case. E.g. at the moment of writing this passage I used a lot of camel case which SonarCube is complaining as code smell because in Python snake case is more common. And I used snake case at two places: e.g. `on_key_press()`. I find snake case easier to read but harder to write. But since one should focus on the people reading your code I will convert everything to snake case for everything but class names now. Following [PEP8](https://realpython.com/python-pep8/) I also added a second line break after class definitions.
 
 It is also helping a lot to create intermediate variables instead of using a long command. E.g.:
 
@@ -482,3 +522,44 @@ Tasks that have not be accomplished now:
 
 * mapping of keyboard keys on linux and windows different (and also for different layouts / languages) => one would need a option to adjust the mapping in the settings / in an external file
 * text on buttons should be property of button as it's color should be to chang it on button press as well as the background color
+
+<style>
+/** LIGHTBOX MARKUP **/
+/* source: https://codepen.io/gschier/pen/kyRXVx */
+
+.lightbox {
+  /* Default to hidden */
+  display: none;
+
+  /* Overlay entire screen */
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  /* A bit of padding around image */
+  padding: 1em;
+
+  /* Translucent background */
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Unhide the lightbox when it's the target */
+.lightbox:target {
+  display: block;
+}
+
+.lightbox span {
+  /* Full width and height */
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  /* Size and position background image */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+</style>

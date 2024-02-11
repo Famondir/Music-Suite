@@ -139,47 +139,7 @@
             <span id="markdown-mermaid" aria-hidden="true"
                     data-dark-mode-theme="dark"
                     data-light-mode-theme="default"></span>
-                <style>
-/** LIGHTBOX MARKUP **/
-/* source: https://codepen.io/gschier/pen/kyRXVx */
-
-.lightbox {
-  /* Default to hidden */
-  display: none;
-
-  /* Overlay entire screen */
-  position: fixed;
-  z-index: 999;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  
-  /* A bit of padding around image */
-  padding: 1em;
-
-  /* Translucent background */
-  background: rgba(0, 0, 0, 0.8);
-}
-
-/* Unhide the lightbox when it's the target */
-.lightbox:target {
-  display: block;
-}
-
-.lightbox span {
-  /* Full width and height */
-  display: block;
-  width: 100%;
-  height: 100%;
-
-  /* Size and position background image */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-</style>
-<h1 id="music-suite">Music Suite</h1>
+                <h1 id="music-suite">Music Suite</h1>
 <h2 id="links-to-the-sections-to-assess">Links to the sections to assess</h2>
 <ol>
 <li><a href="#git">Git</a></li>
@@ -487,6 +447,15 @@ window = pyglet.window.Window(window_width, window_height)
 <li>How to test functions like playing a note. Testing playing attribute or returning informative string?</li>
 <li>What about other functions with side effects? Mock package to get print messages?</li>
 </ul>
+<p>Tasks that have not be accomplished now:</p>
+<ul>
+<li>Pytest unittests for pyglet</li>
+<li>Getting SonarCube and PyBuilder connected
+<ul>
+<li>SonarCube should be called automatically</li>
+</ul>
+</li>
+</ul>
 <h3 id="dsl">DSL</h3>
 <h3 id="functional-programming">Functional Programming</h3>
 <h1 id="programming-issues">Programming issues</h1>
@@ -494,7 +463,46 @@ window = pyglet.window.Window(window_width, window_height)
 <li>mapping of keyboard keys on linux and windows different (and also for different layouts / languages) =&gt; one would need a option to adjust the mapping in the settings / in an external file</li>
 <li>text on buttons should be property of button as it's color should be to chang it on button press as well as the background color</li>
 </ul>
+<style>
+/** LIGHTBOX MARKUP **/
+/* source: https://codepen.io/gschier/pen/kyRXVx */
 
+.lightbox {
+  /* Default to hidden */
+  display: none;
+
+  /* Overlay entire screen */
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  
+  /* A bit of padding around image */
+  padding: 1em;
+
+  /* Translucent background */
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* Unhide the lightbox when it's the target */
+.lightbox:target {
+  display: block;
+}
+
+.lightbox span {
+  /* Full width and height */
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  /* Size and position background image */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+</style>
             
             <script async type="text/javascript">
 /* From extension bierner.markdown-mermaid */

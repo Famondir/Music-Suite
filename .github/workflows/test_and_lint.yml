@@ -18,7 +18,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: set pythonpath
         run: |
-          echo "PYTHONPATH=mlprepare" >> $GITHUB_ENV/src/main/python
+          echo "PYTHONPATH=src/main/python" >> $GITHUB_ENV
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip

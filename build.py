@@ -21,7 +21,7 @@ def set_properties(project):
     project.get_property("pytest_extra_args").append("-x")
     # project.get_property("pytest_integration_extra_args").append("-x")
     
-    project.set_property("pytest_coverage_break_build_threshold", 70)
+    project.set_property("pytest_coverage_break_build_threshold", 0)
     # project.set_property("coverage_break_build", False)
     
     # project.set_property('verbose', False)

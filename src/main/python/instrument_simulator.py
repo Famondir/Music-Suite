@@ -34,14 +34,16 @@ def on_draw():
 
 @window.event
 def on_key_press(symbol, modifiers):
-    print(f'The key {symbol} was pressed')
     if symbol in keymapping:
+        print(f'The key {symbol} was pressed -> MIDI tone {keymapping[symbol]}.')
         # adds an audio player corresponding to the pressed key
         player = accordion.TonePlayer(keymapping[symbol])
         playerlist.append(player)
         player.play_tone()
         # highlights button corresponding to the pressed key
         buttonBoard.press_button(accordion.keymapping[symbol])
+    else:
+        print("This key is not supported.")
 
 
 @window.event
@@ -57,4 +59,5 @@ def on_key_release(symbol, modifiers):
         buttonBoard.release_button(keymapping[symbol])
 
 
-pyglet.app.run()
+if __name__ == "__main__":
+    pyglet.app.run()

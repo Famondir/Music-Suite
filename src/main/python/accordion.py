@@ -121,7 +121,7 @@ class ButtonBoard:
 
             elif tone % 3 == 0:
                 button1 = Button(
-                    tone, label, self.x+x_offset
+                    tone, label, self.x+x_offset +
                     ((tone-self.starting_tone)//3+0/3)*x_shift,
                     self.y-1*y_shift, radius, borderwidth, color, fill, batch
                     )

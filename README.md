@@ -347,6 +347,7 @@ I also installed the SinoarCubeLint plugin to connect the Sonar Cube Server and 
 11. F2: rename variable everywhere in scope
 12. Alt+Up/Down: swap lines
 13. Alt+Shift+Up/Down: create copy of line above / below
+14. Ctrl+PageUp/PageDown: Go to first/last line of code
 
 ### Metrics
 

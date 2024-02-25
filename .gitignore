@@ -5,3 +5,4 @@ target/
 .coverage
 .scannerwork/
 !Accordion 053.wav
+.vscode/tasks.json

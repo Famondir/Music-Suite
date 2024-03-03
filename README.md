@@ -14,6 +14,23 @@
 10. [DSL](#dsl)
 11. [Functional Programming](#functinal-programming)
 
+## Todo-List
+
+1. Write text on Functional Programming
+   1. final data structures / don't reassign <-- pipeing?
+   2. no state dependency
+   3. side effect free functions
+   4. higher order functions
+      1. function factory build in and custom (funtions as return parameters)
+      2. map (functions as arguments)
+   5. lambda expressions
+2. Finish Functional Programming code
+3. Redo the UML diagrams
+4. Finish the DDD diagram
+5. Extend the clean code cheat sheet
+6. Change order of text according tesk order
+7. add a red thread
+
 ## Pet project
 
 ### Setting up the environment and about programming language choice
@@ -402,6 +419,11 @@ Most often the rename command is used on the terminal:
 git mv OLD-FILENAME NEW-FILENAME
 ```
 
+Sometimes I make a commit but forgot to add all the files I wrote about in the commit message. Often I was pretty sloppy and made another commit with those files and a message like "see commit message before". It would be better to undo the last (not already pushed) commit and redo it with all files and the appropriate message. The command to use is:
+```
+git reset --soft HEAD~1
+```
+
 ### Clean Code Developement
 
 Clean code is important because not only computers have to be able to interpret code - but so do humans. This might be you in near or far future or a team member. Therefore, one should follow some clean code guidelines.
@@ -742,12 +764,33 @@ Tasks that have not be accomplished now:
 
 ### DSL
 
+A domain specific language (DSL) is used to efficiently communicate inside a specific domain.
+
+For this project I created two versions of an external DSL that can be used to encode the tones and accords that have to be played for simple songs. Simple means that a lot of features are not implemented yet like triplets, tones that continue over the borders of a measure and so on. Right now only songs in C major are supported in the dialect where one writes down the tone name. A simple song in this version looks like this:
+
+```
+{bpm:80,beat_measure:4,time_signature:4/4,scale:Cmajor}
+(C4,4,C)(D4,4)(E4,4)(C4,8)(G3,8)|(A3,4,F)(B3,4,G)(C4,2,C)(F4,4,F)|(E4,4)(D4,4,G)(D4,4)(E4,1,C)|(E4,4)(F4,4)(G4,4.)(G4,8)|(F4,4)(E4,4)(D4,2,G)|(G3,4,C)(C4,4)(D4,4,G)(D4,4)|(C4,1,C)
+```
+
+In curly brackets meta data is given that defines how fast a song should be played what key it is in and so on. Following one finds the notation of tones to play and their duration wrapped in parentheses. If a new accord is to play it is statet as the third element of the tuple. The same accord is played as long as there is no new accord noted but it starts over at the transition from one measure to the next. The border between measures can be noted with a `|`.
+
+The duration is noted as the inverse of the usually used fraction. Thus we note `8` instead of `1/8` or <span style="font-size:2em;">♪</span> and a dot is used to add half of the base length `4.` instead of <span style="font-size:2em;">♩</span><span style="margin-left:-1.25rem; margin-right: 0.5rem; font-size:1.5em;">.</span>. One could stick to the easy `F4` notation even in keys other than C major - e.g. C major where one playes `F#4` instead of `F4` - if the melody translator uses the information about the key from the curly bracket part. Thus one only has to use `#` or `b` if one playes a note outside the scale. This makes notation very efficient and human readable.
+
+The second dialect uses the MIDI numbers of tones instead, e.g. `(60,4)` instead of `(C4,4)`. This is the version that is used by the `melodyplayer.py`. The translation of one dialect into the other is easily possible. Currently the translation from the MIDI version to the tone version is implemented (as an example for [functional programming](#functinal-programming)).
+
+Thus with this DSL one can use to denote simple songs which can be simpley played. For a further evolved program one could implement that the tones that have to be played get colored at the right moment without playing a tone except when the musician presses the key. This could help to learn to play a song - even though one don't understands the DSL used on regular music sheets.
+
+For standard users of the software one would display the notation of a song in the classical way on a stave. But internally one could use this DSL - and advanced users might be faster in digitalizing a song with this DSL directly compared to dragging notes around on the stave (as I did at [MuseScore](https://musescore.org/de) some years ago).
+
+It should be marked that there are a lot of special notations for music sheets and integrating everything into this DSL but keeping it expressive and efficient could be pretty tricky. Maybe one could add a bunch of xml-alike notations for more advanced stuff - e.g. `<tripplet>(C4,4)(D4,4)(C4,4)</trpplet>`. This would be less fast to write but maybe better understandable than `(C4,4tr)(D4,4tr)(C4,4tr)` or `[tr:(C4,4,C),(C4,4,C),(C4,4,C)]`. Thinking all of this through would take quite a lot of time and experience.
+
 ### Functional Programming
 
 # Programming issues
 
 * mapping of keyboard keys on linux and windows different (and also for different layouts / languages) => one would need a option to adjust the mapping in the settings / in an external file
-* text on buttons should be property of button as it's color should be to chang it on button press as well as the background color
+* text on buttons should be property of button as it's color should be to change it on button press as well as the background color
 
 <style>
 /** LIGHTBOX MARKUP **/

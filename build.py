@@ -28,3 +28,4 @@ def set_properties(project):
 
     project.set_property("sonarqube_project_key", "musicsuitmusicsuite:2024e")
     # project.set_property("sonarqube_project_name", "Music Suite")
+    project.set_property("flake8_ignore", "E731,W504")

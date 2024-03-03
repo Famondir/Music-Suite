@@ -74,7 +74,7 @@ async def main():
         settings = get_settings(data)
         # print(settings)
 
-        measure_duration = 60/settings["bpm"]*settings["beat_measure"]  # in seconds
+        measure_duration = 60 / settings["bpm"] * settings["beat_measure"]  # in seconds
         # print(measure_duration)
 
         melody_list = \
@@ -96,10 +96,10 @@ async def main():
             elif len(accord) > 1:
                 raise InvalidAccordLengthException()
 
-            fraction = 1.5/int(denumerator.strip(".")) \
+            fraction = 1.5 / int(denumerator.strip(".")) \
                 if "." in denumerator \
-                else 1/int(denumerator)
-            duration = measure_duration*fraction
+                else 1 / int(denumerator)
+            duration = measure_duration * fraction
 
             await play_tone_aio(int(midi_nr) + transpose, duration)
 

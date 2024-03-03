@@ -45,5 +45,6 @@ jobs:
         with:
           max-line-length: "120"
           path: "src/main/python"
+          ignore: "E731"
   
       

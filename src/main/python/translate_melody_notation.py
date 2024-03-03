@@ -25,6 +25,15 @@ def check_file_structure(tuple_of_strings):
         return tuple_of_strings
 
 
+def split_by_signs_factory(signs):
+    return lambda string: tuple(
+        string for string in string.split(signs) if string != ""
+    )
+
+
+seperate_settings_and_melody_part2 = split_by_signs_factory("}")
+
+
 split_by_signs = lambda string, signs: tuple(
     string for string in string.split(signs) if string != ""
 )

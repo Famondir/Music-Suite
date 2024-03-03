@@ -788,6 +788,107 @@ It should be marked that there are a lot of special notations for music sheets a
 
 ### Functional Programming
 
+Functional programming is a programming paradigm that features:
+1. final data structures only.
+2. no state dependency.
+3. side effect free functions.
+4. higher order functions.
+5. lambda expressions.
+
+Since there are no constants in Python one has to make sure that a variable does not get reassigned. This can be a bit cumbersome if one has not completely dived into functional programming because on creates a lot of variables with new names each holding the result of a function used on data. It can look like this:
+
+```python
+measure_tuple = split_by_measure(melody_string)
+
+tone_tuple = map(split_by_tone, measure_tuple)
+flattened_tone_tuple = functools.reduce(operator.concat, tone_tuple)
+clenaed_tone_tuple = remove_opening_parenthesis(flattened_tone_tuple)
+converted_tone_tuple = convert_midi_to_tone(clenaed_tone_tuple)
+converted_melody_string = functools.reduce(operator.concat, tuple(map(
+    lambda iterable: "("+functools.reduce(join_for_reduce, iterable)+")", 
+    converted_tone_tuple
+)))
+```
+
+If one does not need intermediate results (using those could possibly violate the no-side-effect and the stateless rules anyhow) a common pattern seen is piping. This can be done in Python as well - especially if one uses a package like `functional` that provides chainable `ma` and `reduce` functions:
+
+```python
+measure_tuple = seq(split_by_measure(melody_string))\
+    .map(split_by_tone)\
+    .reduce(operator.concat)\
+    .map(remove_opening_parenthesis)\
+    .map(convert_midi_to_tone)\
+    .map(lambda iterable: "(" + functools.reduce(join_for_reduce, iterable) + ")")\
+    .reduce(operator.concat)
+```
+
+Using tuples instead of lists can also help preventing to change the value of a variable later on. Using a list one could be tempted to use `append`. With tuples one has to create a new tuple.
+
+Using lamda functions instead of `def` at many places helped me to create realy small functions (one-liner) and use higher order functions to create more specialised functions. Because PEP8 discourages to use lambda functions I had to adjust my flake8 script for GitHub Actions and ignore error E731.
+
+Using higher order functions in Python is possible with e.g. `functools.partial()` where one can derive specialised functions from a gereral one by presetting some of the arguments (returns a function) and `map` which accepts a function as an argument and executes it on every entry of an iterable piece of data. Instead of using `functools.partial()` like this:
+
+```python
+split_by_signs = lambda string, signs: tuple(
+    string for string in string.split(signs) if string != ""
+)
+seperate_settings_and_melody_part = functools.partial(split_by_signs, signs="}")
+```
+
+I could have build a (much less general) function factory like this:
+
+```python
+def split_by_signs_factory(signs):
+    return lambda string: tuple(
+        string for string in string.split(signs) if string != ""
+    )
+seperate_settings_and_melody_part2 = split_by_signs_factory("}")
+```
+
+A question that is still unclear for me is how to use helpful custom error classes when raising an error counts as side effect. I think the side effects *raising errors* and *printing to console (for development)* are less sever than changing some global variables from within a function. I ended up with using:
+
+```python
+# this is the side effect: potentially raising an error
+def check_file_structure(tuple_of_strings):
+    if len(tuple_of_strings) != 2:
+        raise InvalidFileStructureException()
+    else:
+        return tuple_of_strings
+
+
+split_by_signs = lambda string, signs: tuple(
+    string for string in string.split(signs) if string != ""
+)
+seperate_settings_and_melody_part = functools.partial(split_by_signs, signs="}")
+
+settings_string, melody_string = check_file_structure(
+    seperate_settings_and_melody_part(data)
+)
+```
+
+instead of:
+
+```python
+# this function has a side effect described in its name
+def seperate_settings_and_melody_part_and_check_file_structure(string):
+    parts = tuple(string.split("}"))
+    return check_file_structure(parts)
+
+
+# this is the side effect: potentially raising an error
+def check_file_structure(tuple_of_strings):
+    if len(tuple_of_strings) != 2:
+        raise InvalidFileStructureException()
+    else:
+        return tuple_of_strings
+
+settings_string, melody_string = seperate_settings_and_melody_part_and_check_file_structure(data)
+```
+
+but I don't know if this is better (clearer by names or less of a side effect).
+
+One of the biggest advantages of functional programming is that one creates many small functions that can be tested independently easily. Then these functions can be combined to solve more complex tasks. Easy testing is also possible because the result of a function should not rely on some state variables defined somewhere and somewhen. If we use state variables it gets hard to remember what value it might has right now and to write test for all possibilities. Especially in interactive programms this can be hard to predict.
+
 # Programming issues
 
 * mapping of keyboard keys on linux and windows different (and also for different layouts / languages) => one would need a option to adjust the mapping in the settings / in an external file

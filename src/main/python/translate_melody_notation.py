@@ -1,6 +1,7 @@
 import functools, operator
 import pandas as pd
 from os.path import exists
+from functional import seq
 
 
 class InvalidFileStructureException(Exception):
@@ -27,19 +28,23 @@ seperate_settings_and_melody_part = functools.partial(split_by_signs, signs = "}
 split_by_measure = functools.partial(split_by_signs, signs = "|")
 split_by_tone = functools.partial(split_by_signs, signs = ")")
 split_tone_group = functools.partial(split_by_signs, signs = ",")
-remove_opening_parenthesis = lambda iterable: tuple(map(lambda string: string.strip("("), iterable))
+remove_opening_parenthesis = lambda string: string.strip("(")
 
 def get_tone_by_midi_nr(number, midi_to_tones_df):
     return midi_to_tones_df[midi_to_tones_df["midi"] == int(number)].iloc[0]["tone"]
 
 def convert_midi_to_tone(iterable):
     midi_to_tones_df = pd.read_csv("./src/main/data/MIDI_to_tones_long.csv")
-    splitted_tones = tuple(map(split_tone_group, iterable))
-    return tuple(map(
-        lambda tpl: tuple([get_tone_by_midi_nr(entry, midi_to_tones_df) if idx == 0
-                     else entry for idx, entry in enumerate(tpl)]),
-        splitted_tones)
-    )
+    # print(iterable)
+    splitted_tones = tuple(split_tone_group(iterable))
+    # print(splitted_tones)
+    return tuple(
+        [get_tone_by_midi_nr(entry, midi_to_tones_df) 
+         if idx == 0
+         else entry 
+         for idx, entry in enumerate(splitted_tones)
+    ])
+
 
 join_for_reduce = lambda a, b: a+","+b
 
@@ -51,19 +56,17 @@ def translate_melody_midi2tone(file_path, new_file_path):
         )
         # print(settings_string)
 
-        measure_tuple = split_by_measure(melody_string)
-        # print(measure_tuple)
+        measure_tuple = seq(split_by_measure(melody_string))\
+            .map(split_by_tone)\
+            .reduce(operator.concat)\
+            .map(remove_opening_parenthesis)\
+            .map(convert_midi_to_tone)\
+            .map(lambda iterable: "("+functools.reduce(join_for_reduce, iterable)+")")\
+            .reduce(operator.concat)
 
-        tone_tuple = map(split_by_tone, measure_tuple)
-        flattened_tone_tuple = functools.reduce(operator.concat, tone_tuple)
-        clenaed_tone_tuple = remove_opening_parenthesis(flattened_tone_tuple)
-        converted_tone_tuple = convert_midi_to_tone(clenaed_tone_tuple)
-        converted_melody_string = functools.reduce(operator.concat, tuple(map(
-            lambda iterable: "("+functools.reduce(join_for_reduce, iterable)+")", 
-            converted_tone_tuple
-        )))
+        # print(measure_tuple)
         
-        final_string = settings_string+"}\n"+converted_melody_string
+        final_string = settings_string+"}\n"+measure_tuple
         file_mode = "w" if exists(new_file_path) else "x"
         with open(new_file_path, file_mode) as new_file:
             new_file.write(final_string)

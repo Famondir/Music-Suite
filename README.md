@@ -16,77 +16,92 @@
 
 ## Todo-List
 
-1. Write text on Functional Programming
-   1. final data structures / don't reassign <-- pipeing?
-   2. no state dependency
-   3. side effect free functions
-   4. higher order functions
-      1. function factory build in and custom (funtions as return parameters)
-      2. map (functions as arguments)
-   5. lambda expressions
-2. Finish Functional Programming code
-3. Redo the UML diagrams
-4. Finish the DDD diagram
-5. Extend the clean code cheat sheet
-6. Change order of text according tesk order
-7. add a red thread
+1. Redo the UML diagrams
+2. Finish the DDD diagram
+3. Extend the clean code cheat sheet
+4. Change order of text according tesk order
+5. add a red thread
 
 ## Pet project
 
 ### Setting up the environment and about programming language choice
 
-In the task it is recommended to use Python as a programming language since it is important for the data scientists. Since I'm most fluently with R and JS right now I try to bridge Python code (to learn something new) with JS to use my skills in GUI design.
+In the task it is recommended to use Python as a programming language since it is important for the data scientists. Since I'm most fluently with R and JS I decided (at the beginning of the project) trying to bridge Python code (to learn something new) with JS to use my skills in GUI design.
 
-Pyglet seems to be a proper framework to catch multiple key presses and play multiple sounds at once so it might be useful for the live music app part of this project. But can it be integrated in the browsers view port? I will try Pyodide for this.
+Pyglet seemed to be a proper framework to catch multiple key presses and play multiple sounds at once so it might be useful for the live music app part of this project and it turned out that it is realy a sufficient framework. But the objective to integrate it in the browsers view port (e.g. via Pyodide) was not met. Thus, I decided not to use a JS-Python bridge for easyness since it felt more like becoming an architectural burden. In the end I decided to go with the pyglet framework for the accordion simulator and don't tackle the task of building an online dashboard structure because the accordion simulator might become handy for my hobby. The web app part is left for the [UML](#uml-diagrams) and [DDD](#ddd) tasks.
 
-It might be better to not use a JS-Python bridge for easyness. Maybe this is just a architectural burden. The data processing and visualisation part might be low in this project and so data science related Python benefits might be not used at all.
+The data processing and data visualisation tasks in the imlemented software is pretty low. Thus data science related Python benefits (from libraries like pandas and numpy) have not been used a lot. But since Python is a very flexible language with a large variety of libraries it was a good choice anyhow. Achiving the same with Java or C++ would probably have brought greater obstacles.
 
-In the end I decided to go with the pyglet framework for the accordion simulator and don't use Pyodide for building the online dashboard structure because the accordion simulator might become handy for my hobby.
+For the tasks about [Build](#build) and [Continuous Delivery](#continuous-delivery) writing in C or C++ might have been interesting as well. But I realy have super low experiecne with those two languages. Java would be good there too. But to be honest I like that Python, R, JS are not so strict about types. Furthermore, it turned out that there is enough one can do regarding those two topics beside compiling the source code. Thus I don't regret picking Python as the language for this project.
 
-For the tasks about **Build** and **Continuous Delivery** writing in C or C++ might have been interesting as well. But there I realy have super low experiecne. Java would be good thee too. But to be honest I like that Python, R, JS are not so cumbersome about types.
-
-But I have to admit that I haven't worked on realy big projects and most of the time without object orientation. In the *Programmierung II* module from *Medieninformatik* study program here at BHT I started to get a glimpse on how Java can be benefitial for (larger) object oriented projects (like creating a sheduler app or music database).
+I have to admit that I haven't worked on realy big projects and most of the time without object orientation. In the *Programmierung II* module from *Medieninformatik* study program here at BHT I started to get a glimpse on how Java can be benefitial for (larger) object oriented projects (like creating a sheduler app or music database).
 
 ### Accordion Simulator
 
-Right now you can press buttons on your computer keyboard which are mapped to the buttons of an button accordion with b-grip. The correct tone - sampled from a VST instrument - will get played while a button is pressed.
+At the end of this project a pretty simple accordion simultaor was created ([accordion.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/accordion.py) and [instrument_simulator.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/instrument_simulator.py)). One can press buttons on your computer keyboard which are mapped to the buttons of an button accordion with b-grip arranged keyboard. The correct tone - sampled from a VST instrument - will get played while a button is pressed. One can play multiple tones ata time to play accords. Additionally one can read music sheets written in an own DSL to let it be played ([melodyplayer.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/melodyplayer.py)).
 
-Things to add:
+Things I had in my mind to implement as well:
 
-* display which notes are played on the staff
-* show how the accord is named that is played when pressing multiple buttons
-* import a music sheet and 
-    * play it
-    * color the button that should be pressed right now (help to learning play)
+* displaying which tones are played on the classical staff
+* show how the accord is named that is played when multiple buttons are pressed on top of the staff
+* import a music sheet and color the button that should be pressed right now (help to learning play)
 
-It would be aesome if there could be something like in Guitar Hero where notes move toward a play area and have to be pressed at the right time.
+It would have been awesome if there was something like in Guitar Hero where notes move toward a play area and have to be pressed at the right time.
 
-## The big idea
+## Music Suite - the big idea
 
-With the Music Suite one should be able to find music teacher, find learning material, rent MIDI instruments and practice online as one would in the same room. Also one could play as a band together. Especially useful for less common instruments (like Great Highland Bagpipe or button accordion) and in far-distance-travel nations (like USA) where a possible teacher might be hours of car driving away.
+The big vison is to create a web based Music Suite. Within this Music Suite one should be able to find a music teacher, find learning material and music sheets for songs to play, being able to rent MIDI instruments and practice online as one would be doing in the same room. Also one could play as a band together. This would be especially useful for less common instruments (like Great Highland Bagpipe or button accordion) and regions with a low population density (like countryside of the USA or Canada) where a possible teacher might be hours of car driving away.
 
-A direct competitor would be [Yousician](https://yousician.com/) from whom I just found an Black Friday offer in my mailbox. But I think they just support MIDI instruments for piano till now and have no real one-to-one music teacher placement service. A better stand alone [accordion app](https://play.google.com/store/apps/details?id=com.egert.buttonaccordion&pli=1) can be found in the playstore already.
+A direct competitor would be [Yousician](https://yousician.com/) from whom I just found an Black Friday offer in my mailbox. But I think they just support MIDI instruments for piano until now and have no real one-to-one music teacher placement service. A better stand alone [accordion app](https://play.google.com/store/apps/details?id=com.egert.buttonaccordion&pli=1) can be found in the playstore already.
 
 Another interesting feature shows the [moises app](https://moises.ai/de/). It claims being able to record music and to show when to play which chord. I tried it with the theme of *Der Pate* and it did not work correctly mixing up if a chord is Dur or mol. For some songs it can seperate the different instruments. An extension would be not only getting the chords but the whole sheet music.
 
+Some month passed and rethinking the vision I'ld probably drop the MIDI instruments and strive for renting / selling good microphons and creating a good implementation of audio analysis software to get what one is playing by Fast Fourier transformation and play a synthezised version of the detected tones at the other peoples homes.
+
 ### Buisness model
 
-The core idea is to create a platform where people can learn to play an instrument. The music suite should provide possibilites to support the learning on your own and the learning phases between the lessons with a real music teacher. It is the core software product (for managing and creating learning courses we probably can adjust a ready learn content management system).
+The core idea is to create a platform where people can learn to play an instrument. The Music Suite should provide great possibilites to support the learning on your own and during the learning phases between the lessons with a real music teacher with the instrument simulator. This is the core software product. For managing and creating learning courses we probably can adjust a ready learn content management system.
 
-People can suscribe for different plans. A cheaper **learning on your own** version where you get access to the music suite and self study learning material. But there are also add on plans like **music lessons** with real teachers and maybe **band sessions** for excessive online meet-up times. So the core bussiness model ides is **subscription**.
+People could suscribe for different plans. A cheaper **learning on your own** version where you get access to the Music Suite and self-study learning material. But there are also add on plans like **music lessons** with real teachers and maybe **band sessions** for excessive online meet-up times. So the core bussiness model idea is **subscription**.
 
-Alternative bussinessmodels might be: 
-* **freemium**: get some music time for free, maybe even extend the free time with sharing content on social media or by achieving goals
-* **rent instead of buy**: rent the MIDI instrument and get the music suite for free
-* **razor and blade**: sell the MIDI instrument pretty cheap but require the music suite subscription to use it
+Alternative bussinessmodels might be:
+
+* **freemium**: get some music time for free, maybe even extend the free time with sharing content on social media or by achieving other objectives that make our product more popular
+* **rent instead of buy**: rent the MIDI instrument and get access to the Music Suite for free
+* **razor and blade**: sell the MIDI instrument pretty cheap but require a Music Suite subscription to use it
 
 To increase their engagement with the platform it should be free to share your progression, compositions and sound samples with other people. Inside and outside the platform (since we might attract new customers this way).
 
-Later one we want ot **leverage customer data** to create better self learning material to attract more customers and reduce dependency from music teachers.
+Later one we want to **leverage customer data** to create better self-learning material to attract more customers and reduce dependency from music teachers. It would be great (from a education scientists point of view) to ge t a model of how people learn to play an instrument most effient and how to keep them on track based on their personal likings and learning history. In the worst case scenario (from a music teachers point of view) this could replace all human dependencies.
 
-Also part of our bussiness are:
+Also parts of the bussiness strategy are:
+
 * **virtualisation**: getting paid for the possibility for high quality music lessons for rare instruments due to MIDI instruments instead of homebrew camera / mic set-ups
 * **affiliation**: music teachers can promote their lessons on our platform and reach more students
+
+## Tasks and Learnings
+
+### Git
+
+Git is a system for version control one can use to keep track of code changes and to undo non-working changes. It can be used in a team to collaborate and team mates can work on different code sections in different branches until they got their stuff working and ready to merge it into the main branch.
+
+I used git already in advance but almost all the time with the *GitHub Desktop* app. I had a look in command line git commands becaue of this module and *Computer Science for Big Data*. But I just rarely use those. Nowadays I use the git functionality directly from IDEs like Visual Studio Code and RStudio.
+
+Until today I had no group work project where I coulkd have get used to work with git in a team efficiently. In *Machine Learning 2* I set up a git project but we never used branches but told each other when we are working on the project and we worked on seperate parts most of the time. We only had some minor conflicts but were able to solve most of the differences by automatic merging.
+
+But when I wanted to upload our work for *Machine Learning 2* I was faced with the problem that the project folder archive was 1 GB big but I only saw 50 MB of data. It took until last weeks lecture in *Computer Science for Big Data* that we learned how git works in the background (not how to use it). I always thought it saves only changes. But it saves new copies of the whole file every time. Thus changes to our data base was saved in the hidden .git folder multiple times - and included in the archive as well. Finnaly I understoond why it could be interesting to use something else to versionise data instead of git. I didn't get the point in the lecture at all.
+
+In *Data Science Platforms* we also used a git system (inside Dataiku) but here the possibility to handle differences was missing. Working in parallel it just overwrote all changes made from the team mate without updating or alerting him about those changes. When the team mate saved its local verision again all changes made by the other person got overwritten. At least one could see in the history what was overwritten and restore changes by copying those back into the live version.
+
+The command to rename or move a file is one of the few commands I use on the terminal:
+```
+git mv OLD-FILENAME NEW-FILENAME
+```
+
+Sometimes I make a commit but forget to add all the files I wrote about in the commit message. Often I'm pretty sloppy and make another commit with those files and a message like "see commit message before". It would be better to undo the last (not already pushed) commit and redo it with all files and the appropriate message. The command to use would be:
+```
+git reset --soft HEAD~1
+```
 
 ### UML diagrams
 
@@ -402,28 +417,6 @@ I included SonarQube into my PyBuilder pipeline. To get the same results from Py
 <a href="#metrics_original" class="lightbox" id="metrics">
   <span style="background-image: url('./docs/sonarqube_images/four_metrics.png')"></span>
 </a>
-
-### Git
-
-Git is a system for version control you can use to keep track of your code changes and undo non-working changes. It can be used in a team to collaborate and team mates can work on different code sections in different branches until they got their stuff working and ready to merge it into the main branch.
-
-I knew git before but almost all the time used it with *GitHub Desktop*. I had a look in command line git commands becaue of this module and *Computer Science for Big Data*. But I just rarely use those. But nowadays I use the git functionality directly from IDEs like Visual Studio Code and RStudio.
-
-Until now I still miss a team project where I get used to working with git in a team efficiently. In *Machine Learning 2* I set up a git project but we never used branches but told each other when we are working on the project. Had some minor diffeences to merge though.
-
-When I wanted to upload our work I was faced with the problem that the archive was 1 GB but we only saw 50 MB. It took until last weeks lecture in *Computer Science for Big Data* that we learned how git works in the background (not how to use it). I always thought it saves only changes. But it changes new copies of the whole file every time. NOW I understand why it could be interesting to use something else to versionise data instead of git. I didn't get the point before at all.
-
-In *Data Science Platforms* we used a git system inside Dataiku but here one can't handle differences. It just overwrotes all changes from the other one. At least one could see in the history what was overwritten.
-
-Most often the rename command is used on the terminal:
-```
-git mv OLD-FILENAME NEW-FILENAME
-```
-
-Sometimes I make a commit but forgot to add all the files I wrote about in the commit message. Often I was pretty sloppy and made another commit with those files and a message like "see commit message before". It would be better to undo the last (not already pushed) commit and redo it with all files and the appropriate message. The command to use is:
-```
-git reset --soft HEAD~1
-```
 
 ### Clean Code Developement
 
@@ -795,6 +788,8 @@ Functional programming is a programming paradigm that features:
 4. higher order functions.
 5. lambda expressions.
 
+#### final data structures only
+
 Since there are no constants in Python one has to make sure that a variable does not get reassigned. This can be a bit cumbersome if one has not completely dived into functional programming because on creates a lot of variables with new names each holding the result of a function used on data. It can look like this:
 
 ```python
@@ -824,6 +819,8 @@ measure_tuple = seq(split_by_measure(melody_string))\
 
 Using tuples instead of lists can also help preventing to change the value of a variable later on. Using a list one could be tempted to use `append`. With tuples one has to create a new tuple.
 
+#### higher order functions and lambda expressions
+
 Using lamda functions instead of `def` at many places helped me to create realy small functions (one-liner) and use higher order functions to create more specialised functions. Because PEP8 discourages to use lambda functions I had to adjust my flake8 script for GitHub Actions and ignore error E731.
 
 Using higher order functions in Python is possible with e.g. `functools.partial()` where one can derive specialised functions from a gereral one by presetting some of the arguments (returns a function) and `map` which accepts a function as an argument and executes it on every entry of an iterable piece of data. Instead of using `functools.partial()` like this:
@@ -844,6 +841,8 @@ def split_by_signs_factory(signs):
     )
 seperate_settings_and_melody_part2 = split_by_signs_factory("}")
 ```
+
+#### side effect free functions
 
 A question that is still unclear for me is how to use helpful custom error classes when raising an error counts as side effect. I think the side effects *raising errors* and *printing to console (for development)* are less sever than changing some global variables from within a function. I ended up with using:
 
@@ -889,7 +888,7 @@ but I don't know if this is better (clearer by names or less of a side effect).
 
 One of the biggest advantages of functional programming is that one creates many small functions that can be tested independently easily. Then these functions can be combined to solve more complex tasks. Easy testing is also possible because the result of a function should not rely on some state variables defined somewhere and somewhen. If we use state variables it gets hard to remember what value it might has right now and to write test for all possibilities. Especially in interactive programms this can be hard to predict.
 
-# Programming issues
+## Programming issues
 
 * mapping of keyboard keys on linux and windows different (and also for different layouts / languages) => one would need a option to adjust the mapping in the settings / in an external file
 * text on buttons should be property of button as it's color should be to change it on button press as well as the background color

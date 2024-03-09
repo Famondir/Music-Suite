@@ -5,7 +5,7 @@
 1. [Git](#git)
 2. [UML](#uml-diagrams)
 3. [DDD](#ddd)
-4. [Metrics](#metrics)
+4. [Metrics](#metrics4)
 5. [Clean Code Developement](#clean-code-developement)
 6. [Build](#build)
 7. [Continuous Delivery](#continuous-delivery)
@@ -38,7 +38,7 @@ I have to admit that I haven't worked on realy big projects and most of the time
 
 ### Accordion Simulator
 
-At the end of this project a pretty simple accordion simultaor was created ([accordion.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/accordion.py) and [instrument_simulator.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/instrument_simulator.py)). One can press buttons on your computer keyboard which are mapped to the buttons of an button accordion with b-grip arranged keyboard. The correct tone - sampled from a VST instrument - will get played while a button is pressed. One can play multiple tones ata time to play accords. Additionally one can read music sheets written in an own DSL to let it be played ([melodyplayer.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/melodyplayer.py)).
+At the end of this project a pretty simple accordion simultaor was created ([accordion.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/accordion.py) and [instrument_simulator.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/instrument_simulator.py)). One can press buttons on your computer keyboard which are mapped to the buttons of an button accordion with b-grip arranged keyboard. The correct tone - sampled from a VST instrument - will get played while a button is pressed. One can play multiple tones ata time to play accords. Please have a look at the [demo video](https://github.com/Famondir/Music-Suite/raw/main/docs/accordion_simulator_example.mkv). Additionally one can read music sheets written in an own DSL to let it be played ([melodyplayer.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/melodyplayer.py)).
 
 Things I had in my mind to implement as well:
 
@@ -105,18 +105,13 @@ git reset --soft HEAD~1
 
 ### UML diagrams
 
-UML diagrams are used to communicate among programmers (and with managers). There are a lot of different types and they have all a bunch of details one probably don't memorises if one doesn't use it frequently. You pretty sure have to explain the diagram to the manager again and again but maybe he can keep track in complex systems.
+UML diagrams are used to communicate among programmers (and with managers). There are a lot of different types and they have all a bunch of details one probably don't memorises if one doesn't use them frequently. One pretty sure has to explain the diagram to the manager again and again but maybe they help them to better keep track in complex systems. For people who are used to UML diagrams it pretty sure is a more efficient way to check if one has common understanding about a problem than using text or speech. Programmers can orientate their work with those diagrams and e.g. check which interfaces / APIs a module should implement / provide.
 
-For people who are used to UML diagrams it pretty sure is a more efficient way to check if one has common understanding about a problem than using text or speech. Programmers can orientate their work with those diagrams and e.g. check which interfaces / APIs a module should implement / provide.
+I started to create the UML diagrams with Mermaid because I have heared of it in a web development context as it uses JS at a Moodle Stack conference. But since it does not support a wide range of diagram types I used plantuml later which Prof. Edlich showed me during the lecture. Right now I use the public server for rendering the diagrams but coming to the end of this semester I realized that one could easily set up a [docker container](https://hub.docker.com/r/plantuml/plantuml-server/) for this.
 
-I started to create the UML diagrams with Mermaid because I have heared of it in a web development context as it uses JS at a Moodle Stack conference. But since it does not support a wide range of diagram types I used plantuml later which you have shown us. Right now I use the public server for rendering the diagrams but coming to the end of this semester I could easily set up a [docker container](https://hub.docker.com/r/plantuml/plantuml-server/) for this as well.
+#### Use case diagram
 
-This use case diagram shows the whole music suite. The accordion simulator should be one of many simulators and should be used to
-
-* practice
-* play music together
-* compose music
-* analyse music
+One of the most intuitive diagrams is the use case diagram. Here one can think about who should be able to do what using the software to develope without getting distracted by thoughts about the implementation. Using inheritance among the actors can help to build a good set of user roles setting proper right to access specific parts of the system. This use case diagram shows the use cases for the whole Music Suite.
 
 ```plantuml
 @startuml
@@ -157,39 +152,111 @@ rectangle "Music Learning Suite" as MLS {
 @enduml
 ```
 
-Beside the simulator a LMS would be handy to organize learning material by music teachers. Also a backend dashboard for accounting, business insights etc. is needed. Everything might be accessed by a unified dashboard where you have to log in first before accessing the services your role grants you access to or start a instrument simulator. A first draft is shown in this component diagram:
+#### Component diagram
+
+The accordion simulator should be one of many instrument simulators and should be used to
+
+* practice
+* play music together
+* compose music
+* analyse music
+
+It is only a part of the Music Suite and in the use case diagram neither is visible as a seperate piece of the system because we don't present any of many posssible implemenations for a system there.
+
+Beside the instrument simulator app a LMS would be handy to organize learning material by music teachers. Also a backend dashboard for accounting, business insights etc. is needed. To use one of the services it will be necessary to log in in advance.
+
+A first draft for a possible implementation of the system is shown the following component diagram (a draft). In a component diagram one can identify components that shoulöd interact to solve the problem and define if and how they should interact amon each other. They can be grouped to faster get a better understanding of the interactions.
+
+Unfortunatetly the components positions and arrow pathes can't be controlled in a amount I'ld found necessary to create for an easy to understand diagram. The main message here should be that there is a server with some services and a SQL database. The other components use the authentification service provided and query the database. There is no interaction among the other components:
 
 ```plantuml
 @startuml
-database "MySQL" {
-    [user data]
-    [course data]
-    [lessons]
+component "Server" {
+    database "SQL" {
+        [user data]
+        [course data]
+        [lessons sheduler data]
+    }
+
+    [Authentification Server]
+    [Database Manager]
+    [Learning Activity Analyzer]
+
+    () "checkLoginData"
+    checkLoginData -- [Authentification Server]
+
+    port p443
+    checkLoginData .> p443
+
+    () "SQLinterface"
+    SQLinterface -- SQL
+
+    port pSQL
+    SQLinterface .> pSQL
+    [Database Manager] --> SQLinterface
+    [Authentification Server] --> SQLinterface
+    [Learning Activity Analyzer] --> SQLinterface
 }
+
+() "authentificate"
+p443 -up- authentificate
+
+() "query"
+pSQL -up- query
 
 component "Music Suite" {
     [Music Analyser]
     [Instrument Simulator]
+    [Music Player]
+    [Activity Logger]
 }
 
-[Accountmanagement] --> [user data]
-[Authentification] --> [user data]
-[Authentification] -- [Customer Dashboard GUI]
-[Authentification] -- [Staff Dashboard GUI]
-[Lesson Booking] -- [Customer Dashboard GUI]
-[Learning Package] -- [Customer Dashboard GUI]
-[Learning Package] --> [course data]
-[Learning Package] -- [lessons]
-[Buisness Inteligence] -- [Staff Dashboard GUI]
-[Accountmanagement] -- [Staff Dashboard GUI]
-[Database Manager] -- [Staff Dashboard GUI]
-[Accounting] -- [Staff Dashboard GUI]
+component "Customer LMS" {
+    [Lesson Booking Tool]
+    [Learning Package]
+    [Course]
+    [Learning Activiy]
 
-[Music Suite] -- [Customer Dashboard GUI]
+    () "activity"
+    activity - [Learning Activiy]
+
+    () "package"
+    package - [Learning Package]
+
+    [Learning Package] --> activity
+    [Course] --> package
+}
+
+component "Staff Dashboard" {
+    [Accountmanagement]
+    [Accounting]
+    [Buisness Inteligence]
+}
+
+[Customer LMS] --> authentificate
+[Staff Dashboard] --> authentificate
+[Music Suite] --> authentificate
+[Customer LMS] --> query
+[Staff Dashboard] --> query
+[Music Suite] --> query
+
+[Music Suite] -[hidden]-> [Customer LMS]
+[Staff Dashboard] -[hidden]> [Server]
+[Server] -[hidden]> [Customer LMS]
 @enduml
 ```
 
-In the class diagram you find the classes of the accordion simulator and the used classes from pyglet and their depenencies:
+To use the Music Suite with the instrument simulator one has to log in in order to prevent usage without active subscription. The activitly logger should send information about the usage of the instrument simulator to the server that can be analyzed later to find the best learning pathes for any user.
+
+In the LMS the user finds courses composed of learning activities which can be bundles into learning packages for easier useage by music teachers when they desing a new course. Over the same GUI the lesson booking system is accessed even though it is not an integral part of the LMS. Learning activities data are stored in the database (maybe in xml stlye) and the information when a music teacher is available is sored there as well.
+
+The staff dashboard also queries data from the database after successful login.
+
+#### Class diagram
+
+In the following class diagram you find the classes of the accordion simulator and the used classes from pyglet and their depenencies. The classes of the arrordion simulator are used to create the button keyboard graphics buildung on pyglet components. It handles the recoloring of a component if a key on the computer keyboard is pressed. It also hold the `TonePlayer` class wich handles the sound playing of accordion tones. If the software would be generalized to simulate other instruments as wel it should get its own file and the path to the .wav files should be an passed argument so it can be altered for different instruments.
+
+The class diagram does not cover all the code. Just the code in [accordion.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/accordion.py) because the remaining code does not contain classes.
 
 ```mermaid
 ---
@@ -326,6 +393,58 @@ classDiagram
     }
 ```
 
+#### Activity diagram
+
+In the following activity diagram one can see how a user could interact with the Music Suites instrument simulator. After logging in and choosing an instrument to simulate the program waits for input to process as playing a tone (keyboard) or the pressing of menu buttons (mouse) to - e.g. load sheet music for silent playback, recording free improvisations for later analysis or just exiting the program.
+
+Of course there should be more like logging out and choosing a different instrument. But the `goto` feature of plantuml is currently experimental and it did not work for me. Such a diagram can get pretty complicated pretty fast.
+
+```plantuml
+@startuml
+start
+:Login;
+:Choose Instrument;
+repeat
+    switch (Wait for input)
+    case (MenuButton)
+        switch (MenuButton) 
+            case (Recording)
+                :SaveTonesInTempFile;
+                :RecordingStopped;
+                if (SaveRecording) then (yes)
+                    :OpenFileExplorerToSave;
+                endif
+                :ClearTempFile;
+            case (OpenSheetMusic)
+                :OpenFileExplorerToLoad;
+                :Show Sheet Music;
+                switch (SubMenuButton)
+                    case (SilentPlayback)
+                        :Color Buttons;  
+                    case (Play Song)
+                        fork
+                            :Play sound(s);
+                        fork again
+                            :Color Button(s);
+                        end fork
+                endswitch
+            case (Exit)
+                stop
+        endswitch
+    case (Keyboard key(s) pressed)
+        if (EscapePressed) then (yes)
+            stop
+        else (no)
+            fork
+                :Play sound(s);
+            fork again
+                :Color Button(s);
+            end fork
+        endif
+    endswitch
+@enduml
+```
+
 ### DDD
 
 It was difficult for me to distinguish sharply between a component UML diagram and the DDD-mapping. They still feel somewhat similar to me. A point where they differ is the question where the database for the LMS is placed (physically) and which team is responsible for it. Probably it will be in the same place as the other databases but there probably is a special team for the LMS database and one more general for managing the user information and accounting stuff.
@@ -381,7 +500,7 @@ I also installed the SinoarCubeLint plugin to connect the Sonar Cube Server and 
 13. Alt+Shift+Up/Down: create copy of line above / below
 14. Ctrl+Pos1/End: Go to first/last line of code
 
-### Metrics
+### Metrics4
 
 I pulled a docker image of sonar cube and run it. From the first round it told me to:
 

@@ -158,10 +158,7 @@
 </ol>
 <h2 id="todo-list">Todo-List</h2>
 <ol>
-<li>Redo the UML diagrams</li>
-<li>Finish the DDD diagram</li>
 <li>Extend the clean code cheat sheet</li>
-<li>Change order of text according tesk order</li>
 <li>add a red thread</li>
 </ol>
 <h2 id="pet-project">Pet project</h2>
@@ -412,27 +409,6 @@ classDiagram
   <span style="background-image: url('./docs/miro_images/Event Storming - Context Mapping.jpg')"></span>
 </a>
 <p>Please find my <a href="https://miro.com/app/board/uXjVNS_z_ZA=/?share_link_id=232588702866">DDD process documentation on Miro</a> as well.</p>
-<h3 id="visual-studio-code">Visual Studio Code</h3>
-<p>I already used Visual Studio Code when I was working with JavaScript. I used it for Java a bit but also NetBeans. For my Python preject I decided to go with Visual Studio Code as well. I never liked PyCharm but needed something different than Jupyter Labs. I also installed the SonarCubeLint plugin to connect the Sonar Cube Server and Visual Studio Code.</p>
-<p>VSC was also promoted at the <em>Big Data</em> module where we learned that you can connect right into Docker Containers. I found out that there is a Plugin for R as well which I tired out a little bit. But I still tend to use RStudio here. VSC is realy flexible. But for daily data science work Spyder could be a nice alternative with Python because it offers the possibility to have a look into the created data structures and execute code line by line (just as RStudio does for R). But since I found the R plugin for VSC ther might be something comparable to Spyder and one can do everything in VSC in future?</p>
-<p>Follwing is a list of shortcuts I use with VSC.</p>
-<h4 id="shortcuts">Shortcuts</h4>
-<ol>
-<li>Ctrl+Shift+P: Execute stuff (e.g. like saving HTML version of Markdown)</li>
-<li>Ctrl+B: Toggle side bar OR <strong>fat text in .md</strong></li>
-<li>Ctrl+Shift+F: Search all documents</li>
-<li>Ctrl+Shift+G: Source Control</li>
-<li>Ctrl+Shift+E: File view</li>
-<li>Ctrl+P: find a file and open it</li>
-<li>Ctrl+Shift+7: comment line (on other languages easily Ctrl+/)</li>
-<li>Ctrl+Shift+A: block comment</li>
-<li>Shift+F12: find occurancies of variable</li>
-<li>F12: go to variable definition</li>
-<li>F2: rename variable everywhere in scope</li>
-<li>Alt+Up/Down: swap lines</li>
-<li>Alt+Shift+Up/Down: create copy of line above / below</li>
-<li>Ctrl+Pos1/End: Go to first/last line of code</li>
-</ol>
 <h3 id="metrics4">Metrics4</h3>
 <p>I pulled a docker image of sonar cube and created a container with it. At the first check of my code it told me to:</p>
 <ul>
@@ -629,21 +605,52 @@ position = values.index(i+self.starting_tone) <span class="hljs-comment"># get t
   
   self.button_list.append((button1, button2))
 </code></pre>
-<h4 id="clean-code-cheat-sheet">Clean Code Cheat Sheet</h4>
+<div>
+<h1  class="cheatsheetheading">Clean Code Cheat Sheet</h1>
+<p>I know your flaws, Simon. But you are a scout. So follow the scouts rule in the digital world as you do in the real worls: <em>Leave the campground cleaner than you found it.</em></p>
+<p>Here are some useful shortcuts that will help you cleaning up the mess your future self produced:</p>
+<ol start="10">
+<li>F12: go to variable definition</li>
+<li>F2: rename variable everywhere in scope</li>
+</ol>
+<div class="cheatsheetcolumn" style="margin-right: 0.5%;">
+<h2 class="cheatsheetheading">Naming</h2>
+<p>Names should make comments as redundant as possible. Names are used in multiple places and you don't want to copy the comment over again and again or scroll up to the definition of the name.</p>
 <ul>
-<li>decide to use either camel or snake case for each type (class, variable, function, ...)</li>
-<li>use clear naming
+<li><strong>variable:</strong> what does it hold (noun)</li>
+<li><strong>functions:</strong> what does it do (verb)</li>
+<li><strong>class:</strong> what does it represent (noun)</li>
+<li>don't get sloppy for index variables when iterating</li>
+<li>name sideeffects in a functions name if you can't drop those</li>
+<li>give numbers a meaningful name and use the name instead (no magic numbers)</li>
+<li>don't encode type information in the name
 <ul>
-<li>verbs for functions</li>
-<li>nouns for variables</li>
-<li>especially in for loops</li>
+<li>add documentation for methods</li>
+<li>exception for distinguishing list and tuple of similar elements?</li>
 </ul>
 </li>
+</ul>
+<p>Use consistent casing for variables. Vary the casing for variables, constants, functions and classes to make clear what the name is refering to.</p>
+</div>
+<div class="cheatsheetcolumn" style="margin-left: 0.5%; position: absolute;">
+<h2 class="cheatsheetheading">Visual structuring</h2>
+<ul>
 <li>use indentation</li>
 <li>use spare lines to group code on the same indentation level</li>
-<li>use intermediate variables instead of very nested structures (and comment them if necessary)</li>
-<li>give meaningful eror messages by handling those explicitly</li>
+<li>keep line length low
+<ul>
+<li>use linebreaks if appropriate</li>
+<li>define intermediate variables that hold a part of the calculation and combine those</li>
+<li>encupsulate multipart conditionals in a function with meaningful name and call it instead</li>
 </ul>
+</li>
+<li>don't have trailing spaces</li>
+<li>have enough spaces before an inline comment</li>
+</ul>
+<h2 class="cheatsheetheading">Meaningful errors</h2>
+<p>Give meaningful eror messages by handling those explicitly instead of falling back to default exceptions.</p>
+</div>
+</div>
 <h3 id="build">Build</h3>
 <p>A build tool is used to create executable code from the ource scode. Furthermore one can include tests and more in the pipeline. Even though Python code does not to be compiled to execute it one could use a build tool e.g. to create a executable file for usage without Pyton environment or an installer.</p>
 <p>The things done with a build tool might be a subset of the tasks done in the CI/CD pipeline. But most often some more advanced tests like integration tests are done mainly in the CI/CD pipeline in a common system to check all developers code against.</p>
@@ -774,6 +781,27 @@ Build took 2 seconds (2972 ms)
 <a href="#coverage_original" class="lightbox" id="coverage">
   <span style="background-image: url('./docs/sonarqube_images/coverage.png')"></span>
 </a>
+<h3 id="visual-studio-code">Visual Studio Code</h3>
+<p>I already used Visual Studio Code when I was working with JavaScript. I used it for Java a bit but also NetBeans. For my Python preject I decided to go with Visual Studio Code as well. I never liked PyCharm but needed something different than Jupyter Labs. I also installed the SonarCubeLint plugin to connect the Sonar Cube Server and Visual Studio Code.</p>
+<p>VSC was also promoted at the <em>Big Data</em> module where we learned that you can connect right into Docker Containers. I found out that there is a Plugin for R as well which I tired out a little bit. But I still tend to use RStudio here. VSC is realy flexible. But for daily data science work Spyder could be a nice alternative with Python because it offers the possibility to have a look into the created data structures and execute code line by line (just as RStudio does for R). But since I found the R plugin for VSC ther might be something comparable to Spyder and one can do everything in VSC in future?</p>
+<p>Follwing is a list of shortcuts I use with VSC.</p>
+<h4 id="shortcuts">Shortcuts</h4>
+<ol>
+<li>Ctrl+Shift+P: Execute stuff (e.g. like saving HTML version of Markdown)</li>
+<li>Ctrl+B: Toggle side bar OR <strong>fat text in .md</strong></li>
+<li>Ctrl+Shift+F: Search all documents</li>
+<li>Ctrl+Shift+G: Source Control</li>
+<li>Ctrl+Shift+E: File view</li>
+<li>Ctrl+P: find a file and open it</li>
+<li>Ctrl+Shift+7: comment line (on other languages easily Ctrl+/)</li>
+<li>Ctrl+Shift+A: block comment</li>
+<li>Shift+F12: find occurancies of variable</li>
+<li>F12: go to variable definition</li>
+<li>F2: rename variable everywhere in scope</li>
+<li>Alt+Up/Down: swap lines</li>
+<li>Alt+Shift+Up/Down: create copy of line above / below</li>
+<li>Ctrl+Pos1/End: Go to first/last line of code</li>
+</ol>
 <h3 id="dsl">DSL</h3>
 <p>A domain specific language (DSL) is used to efficiently communicate inside a specific domain.</p>
 <p>For this project I created two versions of an external DSL that can be used to encode the tones and accords that have to be played for simple songs. Simple means that a lot of features are not implemented yet like triplets, tones that continue over the borders of a measure and so on. Right now only songs in C major are supported in the dialect where one writes down the tone name. A simple song in this version looks like this:</p>
@@ -908,6 +936,17 @@ settings_string, melody_string = seperate_settings_and_melody_part_and_check_fil
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+.cheatsheetheading {
+  background-color: #3377FF;
+  color: white;
+  padding-left: 0.5rem;
+}
+
+.cheatsheetcolumn {
+  width: 49%; 
+  display: inline-block;
 }
 </style>
 

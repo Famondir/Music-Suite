@@ -16,11 +16,8 @@
 
 ## Todo-List
 
-1. Redo the UML diagrams
-2. Finish the DDD diagram
-3. Extend the clean code cheat sheet
-4. Change order of text according tesk order
-5. add a red thread
+1. Extend the clean code cheat sheet
+2. add a red thread
 
 ## Pet project
 
@@ -492,31 +489,6 @@ It was difficult for me to distinguish sharply between a component UML diagram a
 
 Please find my [DDD process documentation on Miro](https://miro.com/app/board/uXjVNS_z_ZA=/?share_link_id=232588702866) as well.
 
-### Visual Studio Code
-
-I already used Visual Studio Code when I was working with JavaScript. I used it for Java a bit but also NetBeans. For my Python preject I decided to go with Visual Studio Code as well. I never liked PyCharm but needed something different than Jupyter Labs. I also installed the SonarCubeLint plugin to connect the Sonar Cube Server and Visual Studio Code.
-
-VSC was also promoted at the *Big Data* module where we learned that you can connect right into Docker Containers. I found out that there is a Plugin for R as well which I tired out a little bit. But I still tend to use RStudio here. VSC is realy flexible. But for daily data science work Spyder could be a nice alternative with Python because it offers the possibility to have a look into the created data structures and execute code line by line (just as RStudio does for R). But since I found the R plugin for VSC ther might be something comparable to Spyder and one can do everything in VSC in future?
-
-Follwing is a list of shortcuts I use with VSC.
-
-#### Shortcuts
-
-1. Ctrl+Shift+P: Execute stuff (e.g. like saving HTML version of Markdown)
-2. Ctrl+B: Toggle side bar OR **fat text in .md**
-3. Ctrl+Shift+F: Search all documents
-4. Ctrl+Shift+G: Source Control
-5. Ctrl+Shift+E: File view
-6. Ctrl+P: find a file and open it
-7. Ctrl+Shift+7: comment line (on other languages easily Ctrl+/)
-8. Ctrl+Shift+A: block comment
-9. Shift+F12: find occurancies of variable
-10. F12: go to variable definition
-11. F2: rename variable everywhere in scope
-12. Alt+Up/Down: swap lines
-13. Alt+Shift+Up/Down: create copy of line above / below
-14. Ctrl+Pos1/End: Go to first/last line of code
-
 ### Metrics4
 
 I pulled a docker image of sonar cube and created a container with it. At the first check of my code it told me to:
@@ -756,17 +728,51 @@ if tone % 3 == 2:
   self.button_list.append((button1, button2))
 ```
 
-#### Clean Code Cheat Sheet
+<div>
+<h1  class="cheatsheetheading">Clean Code Cheat Sheet</h1>
 
-* decide to use either camel or snake case for each type (class, variable, function, ...)
-* use clear naming
-  * verbs for functions
-  * nouns for variables
-  * especially in for loops
+I know your flaws, Simon. But you are a scout. So follow the scouts rule in the digital world as you do in the real worls: *Leave the campground cleaner than you found it.*
+
+Here are some useful shortcuts that will help you cleaning up the mess your future self produced:
+
+10. F12: go to variable definition
+11. F2: rename variable everywhere in scope
+
+<div class="cheatsheetcolumn" style="margin-right: 0.5%;">
+<h2 class="cheatsheetheading">Naming</h2>
+
+Names should make comments as redundant as possible. Names are used in multiple places and you don't want to copy the comment over again and again or scroll up to the definition of the name.
+
+* **variable:** what does it hold (noun)
+* **functions:** what does it do (verb)
+* **class:** what does it represent (noun)
+* don't get sloppy for index variables when iterating
+* name sideeffects in a functions name if you can't drop those
+* give numbers a meaningful name and use the name instead (no magic numbers)
+* don't encode type information in the name
+  * add documentation for methods
+  * exception for distinguishing list and tuple of similar elements?
+
+Use consistent casing for variables. Vary the casing for variables, constants, functions and classes to make clear what the name is refering to.
+
+</div>
+<div class="cheatsheetcolumn" style="margin-left: 0.5%; position: absolute;">
+<h2 class="cheatsheetheading">Visual structuring</h2>
+
 * use indentation
 * use spare lines to group code on the same indentation level
-* use intermediate variables instead of very nested structures (and comment them if necessary)
-* give meaningful eror messages by handling those explicitly
+* keep line length low
+  * use linebreaks if appropriate
+  * define intermediate variables that hold a part of the calculation and combine those
+  * encupsulate multipart conditionals in a function with meaningful name and call it instead
+* don't have trailing spaces
+* have enough spaces before an inline comment
+
+<h2 class="cheatsheetheading">Meaningful errors</h2>
+
+Give meaningful eror messages by handling those explicitly instead of falling back to default exceptions.
+</div>
+</div>
 
 ### Build
 
@@ -925,6 +931,31 @@ Please find the written [unit tests on Github](https://github.com/Famondir/Music
 <a href="#coverage_original" class="lightbox" id="coverage">
   <span style="background-image: url('./docs/sonarqube_images/coverage.png')"></span>
 </a>
+
+### Visual Studio Code
+
+I already used Visual Studio Code when I was working with JavaScript. I used it for Java a bit but also NetBeans. For my Python preject I decided to go with Visual Studio Code as well. I never liked PyCharm but needed something different than Jupyter Labs. I also installed the SonarCubeLint plugin to connect the Sonar Cube Server and Visual Studio Code.
+
+VSC was also promoted at the *Big Data* module where we learned that you can connect right into Docker Containers. I found out that there is a Plugin for R as well which I tired out a little bit. But I still tend to use RStudio here. VSC is realy flexible. But for daily data science work Spyder could be a nice alternative with Python because it offers the possibility to have a look into the created data structures and execute code line by line (just as RStudio does for R). But since I found the R plugin for VSC ther might be something comparable to Spyder and one can do everything in VSC in future?
+
+Follwing is a list of shortcuts I use with VSC.
+
+#### Shortcuts
+
+1. Ctrl+Shift+P: Execute stuff (e.g. like saving HTML version of Markdown)
+2. Ctrl+B: Toggle side bar OR **fat text in .md**
+3. Ctrl+Shift+F: Search all documents
+4. Ctrl+Shift+G: Source Control
+5. Ctrl+Shift+E: File view
+6. Ctrl+P: find a file and open it
+7. Ctrl+Shift+7: comment line (on other languages easily Ctrl+/)
+8. Ctrl+Shift+A: block comment
+9. Shift+F12: find occurancies of variable
+10. F12: go to variable definition
+11. F2: rename variable everywhere in scope
+12. Alt+Up/Down: swap lines
+13. Alt+Shift+Up/Down: create copy of line above / below
+14. Ctrl+Pos1/End: Go to first/last line of code
 
 ### DSL
 
@@ -1096,5 +1127,16 @@ One of the biggest advantages of functional programming is that one creates many
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+}
+
+.cheatsheetheading {
+  background-color: #3377FF;
+  color: white;
+  padding-left: 0.5rem;
+}
+
+.cheatsheetcolumn {
+  width: 49%; 
+  display: inline-block;
 }
 </style>

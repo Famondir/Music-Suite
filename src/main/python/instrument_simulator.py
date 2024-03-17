@@ -23,7 +23,7 @@ buttonBoard = accordion.ButtonBoard(
 )
 
 keymapping = accordion.keymapping
-playerlist = []
+players = []
 
 
 @window.event
@@ -38,7 +38,7 @@ def on_key_press(symbol, modifiers):
         print(f'The key {symbol} was pressed -> MIDI tone {keymapping[symbol]}.')
         # adds an audio player corresponding to the pressed key
         player = accordion.TonePlayer(keymapping[symbol])
-        playerlist.append(player)
+        players.append(player)
         player.play_tone()
         # highlights button corresponding to the pressed key
         buttonBoard.press_button(accordion.keymapping[symbol])
@@ -51,7 +51,7 @@ def on_key_release(symbol, modifiers):
     print(f'The key {symbol} was released')
     if symbol in keymapping:
         # removes the audio player corresponding to the released key
-        for player in playerlist:
+        for player in players:
             if keymapping[symbol] == player.get_midi_tone():
                 player.stop_tone()
                 del player

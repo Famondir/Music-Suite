@@ -54,7 +54,7 @@ class ButtonBoard:
         self.width = width
         self.height = height
         self.starting_tone = 53
-        self.button_list = []
+        self.buttons = []
 
         scale = [
             "c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "h"
@@ -108,7 +108,7 @@ class ButtonBoard:
                     self.y - 0 * y_shift, radius, borderwidth, color, fill, batch
                 )
 
-                self.button_list.append((button1, button2))
+                self.buttons.append((button1, button2))
 
             elif tone % 3 == 1:
                 button1 = Button(
@@ -117,7 +117,7 @@ class ButtonBoard:
                     self.y - 2 * y_shift, radius, borderwidth, color, fill, batch
                 )
 
-                self.button_list.append((button1,))
+                self.buttons.append((button1,))
 
             elif tone % 3 == 0:
                 button1 = Button(
@@ -126,16 +126,16 @@ class ButtonBoard:
                     self.y - 1 * y_shift, radius, borderwidth, color, fill, batch
                 )
 
-                self.button_list.append((button1,))
+                self.buttons.append((button1,))
 
-        self.button_list[-1] = (self.button_list[-1][1],)
+        self.buttons[-1] = (self.buttons[-1][1],)
 
     def press_button(self, tone):
-        for button in self.button_list[tone - self.starting_tone]:
+        for button in self.buttons[tone - self.starting_tone]:
             button.press_button()
 
     def release_button(self, tone):
-        for button in self.button_list[tone - self.starting_tone]:
+        for button in self.buttons[tone - self.starting_tone]:
             button.release_button()
 
 

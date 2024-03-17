@@ -755,6 +755,41 @@ Names should make comments as redundant as possible. Names are used in multiple 
 
 Use consistent casing for variables. Vary the casing for variables, constants, functions and classes to make clear what the name is refering to.
 
+Don't call variables `df` or `temp` even though you think you are just in the process of bug fixing! You will probably not rename it in near future when the problem is solved.
+
+<h3>Examples</h3>
+Based on <a href="https://www.softensity.com/blog/clean-code-cheat-sheet/">this cheat sheet</a>.
+
+```
+X   int d; // elapsed time in days
+✓   int elapsedTimeInDays;
+
+X   string sd, ed;
+X   string date1, date2;
+✓   string startDate, endDate;
+
+X   function calc (int num1, int num2)
+✓   function multiply (int num1, int num2)
+
+X   function accounts() {…}
+✓   function getAccounts() {…}
+
+X   class HandleAccounts {…}
+✓   class AccountsHandler {…}
+
+X   7
+✓   int MAX_CLASSES_PER_STUDENT = 7
+
+X   User[] activeUsersArray;
+✓  User[] activeUsers;
+```
+
+<h2 class="cheatsheetheading">Errors</h2>
+
+Give meaningful eror messages by handling those explicitly instead of falling back to default exceptions.
+
+Use explicit functions to handle errors instead of including this in a function (function should only do one thing).
+
 </div>
 <div class="cheatsheetcolumn" style="margin-left: 0.5%; position: absolute;">
 <h2 class="cheatsheetheading">Visual structuring</h2>
@@ -767,10 +802,39 @@ Use consistent casing for variables. Vary the casing for variables, constants, f
   * encupsulate multipart conditionals in a function with meaningful name and call it instead
 * don't have trailing spaces
 * have enough spaces before an inline comment
+* declare temporary variables close to usage
+* haverelated functions close to each other
 
-<h2 class="cheatsheetheading">Meaningful errors</h2>
+<h2 class="cheatsheetheading">Functions</h2>
 
-Give meaningful eror messages by handling those explicitly instead of falling back to default exceptions.
+* think functional
+  * small functions (4-60 lines; fit on one screen)
+  * compose functions
+  * build specialised functions instead of single function with many configuration parameters (similar to "polymorphism over if/else")
+  * no side effects
+
+If you copy lines of code, better make a function out of it and call this in both places. If there are sublte changes to make create a more abstract function and derive new functions from it.
+
+Have a look ar common data science example on [Github](https://github.com/davified/clean-code-ml/blob/master/docs/cheat-sheet.md#functions).
+
+<h2 class="cheatsheetheading">Commenting</h2>
+
+One of the most painful rule for yourself: Delete code instead of commenting it out. Use git to get access to deleted code if it is needed. At least do this after new code problem solving capability is proved by tests. Be brave!
+
+```
+X   string requestId;
+✓   string requestId; // must be unique
+```
+
+Try to not need comments. Otherwise keep comments up to date. If code is changed comments might have to be changed as well. This can become a real burden.
+
+<h2 class="cheatsheetheading">Testing</h2>
+
+* test for null, NA, undefined and so on
+* test edge cases
+* test positive cases
+* test negative cases
+
 </div>
 </div>
 

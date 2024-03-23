@@ -142,12 +142,13 @@
                     data-dark-mode-theme="dark"
                     data-light-mode-theme="default"></span>
                 <h1 id="music-suite">Music Suite</h1>
+<p>Please read my report in the <a href="https://raw.githubusercontent.com/Famondir/Music-Suite/main/README.html">HTML version</a> (right click --&gt; save link as) so all images are included in the the right place.</p>
 <h2 id="links-to-the-sections-to-assess">Links to the sections to assess</h2>
 <ol>
 <li><a href="#git">Git</a></li>
 <li><a href="#uml-diagrams">UML</a></li>
 <li><a href="#ddd">DDD</a></li>
-<li><a href="#metrics4">Metrics</a></li>
+<li><a href="#metrics">Metrics</a></li>
 <li><a href="#clean-code-developement">Clean Code Developement</a></li>
 <li><a href="#build">Build</a></li>
 <li><a href="#continuous-delivery">Continuous Delivery</a></li>
@@ -158,33 +159,52 @@
 </ol>
 <h2 id="todo-list">Todo-List</h2>
 <ol>
-<li>Extend the clean code cheat sheet</li>
 <li>add a red thread</li>
 </ol>
 <h2 id="pet-project">Pet project</h2>
-<h3 id="setting-up-the-environment-and-about-programming-language-choice">Setting up the environment and about programming language choice</h3>
-<p>In the task it is recommended to use Python as a programming language since it is important for the data scientists. Since I'm most fluently with R and JS I decided (at the beginning of the project) trying to bridge Python code (to learn something new) with JS to use my skills in GUI design.</p>
-<p>Pyglet seemed to be a proper framework to catch multiple key presses and play multiple sounds at once so it might be useful for the live music app part of this project and it turned out that it is realy a sufficient framework. But the objective to integrate it in the browsers view port (e.g. via Pyodide) was not met. Thus, I decided not to use a JS-Python bridge for easyness since it felt more like becoming an architectural burden. In the end I decided to go with the pyglet framework for the accordion simulator and don't tackle the task of building an online dashboard structure because the accordion simulator might become handy for my hobby. The web app part is left for the <a href="#uml-diagrams">UML</a> and <a href="#ddd">DDD</a> tasks.</p>
-<p>The data processing and data visualisation tasks in the imlemented software is pretty low. Thus data science related Python benefits (from libraries like pandas and numpy) have not been used a lot. But since Python is a very flexible language with a large variety of libraries it was a good choice anyhow. Achiving the same with Java or C++ would probably have brought greater obstacles.</p>
-<p>For the tasks about <a href="#build">Build</a> and <a href="#continuous-delivery">Continuous Delivery</a> writing in C or C++ might have been interesting as well. But I realy have super low experiecne with those two languages. Java would be good there too. But to be honest I like that Python, R, JS are not so strict about types. Furthermore, it turned out that there is enough one can do regarding those two topics beside compiling the source code. Thus I don't regret picking Python as the language for this project.</p>
+<h3 id="setting-up-the-environment-and-programming-language-choice">Setting up the environment and programming language choice</h3>
+<p>In the task it was recommended to use Python as a programming language since it is important for data scientists. Since I'm most fluent with R and JS I decided (at the beginning of the project) trying to bridge Python code (to learn something new) with JS to use my skills in GUI/dashboard design.</p>
+<p><strong>Pyglet</strong> seemed to be a proper framework to catch multiple key presses and play multiple sounds at once. Thus it was a candidate for the live music app part of this project and it turned out that it is realy a sufficient framework. But the objective to integrate it in the browsers view port (e.g. via <strong>Pyodide</strong>) was not met. Thus, I decided not to use a JS-Python bridge because it felt more and more like becoming an architectural burden. In the end I decided to go with the <strong>pyglet</strong> framework for the accordion simulator and not to code an additional online dashboard structure because the accordion simulator might become handy for my hobby. The web app part is left for the imaginary tasks on <a href="#uml-diagrams">UML</a> and <a href="#ddd">DDD</a>.</p>
+<p>The data processing and data visualisation tasks in the imlemented software is quite low. Thus data science related Python benefits (from libraries like pandas and numpy) have not been used a lot. It was mainly used for the <a href="#dsl">DSL</a> task. But since Python is a very flexible language with a large variety of libraries it was a good choice anyhow. Achiving the same with Java or C++ would probably have brought greater obstacles.</p>
+<p>For the tasks about <a href="#build">Build</a> and <a href="#continuous-delivery">Continuous Delivery</a> writing in C or C++ might have been interesting. But I have super low experiecne with those two languages. Java would be good there too. But to be honest I like that Python, R and JS are not so strict about types. Furthermore, it turned out that there is enough one can do regarding those two topics beside compiling the source code. Thus I don't regret picking Python as the language for this project.</p>
 <p>I have to admit that I haven't worked on realy big projects and most of the time without object orientation. In the <em>Programmierung II</em> module from <em>Medieninformatik</em> study program here at BHT I started to get a glimpse on how Java can be benefitial for (larger) object oriented projects (like creating a sheduler app or music database).</p>
 <h3 id="accordion-simulator">Accordion Simulator</h3>
-<p>At the end of this project a pretty simple accordion simultaor was created (<a href="https://github.com/Famondir/Music-Suite/blob/main/src/main/python/accordion.py">accordion.py</a> and <a href="https://github.com/Famondir/Music-Suite/blob/main/src/main/python/instrument_simulator.py">instrument_simulator.py</a>). One can press buttons on your computer keyboard which are mapped to the buttons of an button accordion with b-grip arranged keyboard. The correct tone - sampled from a VST instrument - will get played while a button is pressed. One can play multiple tones ata time to play accords. Please have a look at the <a href="https://github.com/Famondir/Music-Suite/raw/main/docs/accordion_simulator_example.mkv">demo video</a>. Additionally one can read music sheets written in an own DSL to let it be played (<a href="https://github.com/Famondir/Music-Suite/blob/main/src/main/python/melodyplayer.py">melodyplayer.py</a>).</p>
-<p>Things I had in my mind to implement as well:</p>
+<div style="float: right; width: 33%;">
+<figure>
+<img src="https://asset.museum-digital.org/westfalen/images/201211/27110749522.jpg">
+<caption>Young man playing on a chromatic button accordeon</caption>
+</figure>
+</div>
+<p>At the end of this project a pretty simple accordion simultaor was created (<a href="https://github.com/Famondir/Music-Suite/blob/main/src/main/python/accordion.py">accordion.py</a> and <a href="https://github.com/Famondir/Music-Suite/blob/main/src/main/python/instrument_simulator.py">instrument_simulator.py</a>). One can press buttons on the computer keyboard which are mapped to the buttons on a virtual button accordion (with b-grip arranged keyboard). The correct tone - sampled from a VST instrument - gets played while a button is pressed. One can play multiple tones at a time to play accords. Please have a look at the <a href="https://github.com/Famondir/Music-Suite/raw/main/docs/accordion_simulator_example.mkv">demo video</a>. Additionally one can import music sheets written in an own DSL for playback (<a href="https://github.com/Famondir/Music-Suite/blob/main/src/main/python/melodyplayer.py">melodyplayer.py</a>).</p>
+<p>Things I had in my mind to implement as well but not finished:</p>
 <ul>
 <li>displaying which tones are played on the classical staff</li>
-<li>show how the accord is named that is played when multiple buttons are pressed on top of the staff</li>
+<li>show how a accord is named that is played when multiple buttons are pressed on top of the staff</li>
 <li>import a music sheet and color the button that should be pressed right now (help to learning play)</li>
+<li>implement a gamification component where one earns points by pressing the button at the correct time (like in Guitar Hero)</li>
 </ul>
-<p>It would have been awesome if there was something like in Guitar Hero where notes move toward a play area and have to be pressed at the right time.</p>
 <h2 id="music-suite---the-big-idea">Music Suite - the big idea</h2>
-<p>The big vison is to create a web based Music Suite. Within this Music Suite one should be able to find a music teacher, find learning material and music sheets for songs to play, being able to rent MIDI instruments and practice online as one would be doing in the same room. Also one could play as a band together. This would be especially useful for less common instruments (like Great Highland Bagpipe or button accordion) and regions with a low population density (like countryside of the USA or Canada) where a possible teacher might be hours of car driving away.</p>
-<p>A direct competitor would be <a href="https://yousician.com/">Yousician</a> from whom I just found an Black Friday offer in my mailbox. But I think they just support MIDI instruments for piano until now and have no real one-to-one music teacher placement service. A better stand alone <a href="https://play.google.com/store/apps/details?id=com.egert.buttonaccordion&amp;pli=1">accordion app</a> can be found in the playstore already.</p>
-<p>Another interesting feature shows the <a href="https://moises.ai/de/">moises app</a>. It claims being able to record music and to show when to play which chord. I tried it with the theme of <em>Der Pate</em> and it did not work correctly mixing up if a chord is Dur or mol. For some songs it can seperate the different instruments. An extension would be not only getting the chords but the whole sheet music.</p>
-<p>Some month passed and rethinking the vision I'ld probably drop the MIDI instruments and strive for renting / selling good microphons and creating a good implementation of audio analysis software to get what one is playing by Fast Fourier transformation and play a synthezised version of the detected tones at the other peoples homes.</p>
+<div style="float: right; width: 25%;">
+<figure>
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Pipe_table.gif">
+<caption>Picture of a Great Highland Bagpipe</caption>
+</figure>
+</div>
+<p>The big vison is to create a web based Music Suite. Within this Music Suite one should be able to...</p>
+<ul>
+<li>find a music teacher,</li>
+<li>find learning material and music sheets for songs to play,</li>
+<li>rent MIDI instruments,</li>
+<li>practice online as one would do being in the same room and</li>
+<li>playing as a band together virtually.</li>
+</ul>
+<p>This would be especially useful for less common instruments (like Great Highland Bagpipe or button accordion) and regions with a low population density (like countryside of the USA or Canada) where a possible teacher might be hours of car driving away.</p>
+<p>A direct competitor would be <a href="https://yousician.com/">Yousician</a> from whom I just found an Black Friday offer in my mailbox. But I think they just support MIDI instruments for piano until now and have no real one-to-one music teacher placement service. A stand alone <a href="https://play.google.com/store/apps/details?id=com.egert.buttonaccordion&amp;pli=1">accordion app</a> (for touch devices) can be found in the playstore already.</p>
+<p>Another interesting feature shows the <a href="https://moises.ai/de/">moises app</a>. It claims being able to record music and to transcribe when which chord was played. I tried it with the theme of <a href="https://www.youtube.com/watch?v=kDjFsUN-QN0">Der Pate</a> and it did not work correctly mixing up if a chord is major or minor. For some songs it can seperate different instruments. An extension would be not only getting the chords but the whole sheet music. <a href="https://klang.io/de/api/">Klang.io</a> claims to being capable of this. But my test with a song by <a href="https://www.youtube.com/watch?v=9t_2BxXQDK8">Zupfgeigenhansel</a> was pretty unsatisfying.</p>
+<p>When I revised this section after some month passed I'ld probably drop the MIDI instrument renting from the vision and strive for renting / selling good microphons and creating a good implementation of audio analysis software to get what one is playing by Fast Fourier transformation maybe spiced with some AI fed with a lot of music sheets to learn something about composition and maybe play a synthezised version of the detected tones at the other peoples homes.</p>
 <h3 id="buisness-model">Buisness model</h3>
-<p>The core idea is to create a platform where people can learn to play an instrument. The Music Suite should provide great possibilites to support the learning on your own and during the learning phases between the lessons with a real music teacher with the instrument simulator. This is the core software product. For managing and creating learning courses we probably can adjust a ready learn content management system.</p>
-<p>People could suscribe for different plans. A cheaper <strong>learning on your own</strong> version where you get access to the Music Suite and self-study learning material. But there are also add on plans like <strong>music lessons</strong> with real teachers and maybe <strong>band sessions</strong> for excessive online meet-up times. So the core bussiness model idea is <strong>subscription</strong>.</p>
+<p>The core idea is to create a platform where people can learn to play an instrument. The Music Suite should provide great possibilites to support the students on learn from a recommander based build tutorial and during the self learning phases between the lessons with a real music teacher using the instrument simulator. This is the core software product. For managing and creating learning courses we probably can adjust a learning content management system like Moodle.</p>
+<p>One buisness plan might be <strong>subscription</strong>: People can suscribe for different plans. A cheaper <strong>learning on your own</strong> version where you get access to the Music Suite and self-study learning material. But there are also add on plans like <strong>music lessons</strong> with real teachers and maybe <strong>band sessions</strong> for excessive online meet-up times.</p>
 <p>Alternative bussinessmodels might be:</p>
 <ul>
 <li><strong>freemium</strong>: get some music time for free, maybe even extend the free time with sharing content on social media or by achieving other objectives that make our product more popular</li>
@@ -192,7 +212,7 @@
 <li><strong>razor and blade</strong>: sell the MIDI instrument pretty cheap but require a Music Suite subscription to use it</li>
 </ul>
 <p>To increase their engagement with the platform it should be free to share your progression, compositions and sound samples with other people. Inside and outside the platform (since we might attract new customers this way).</p>
-<p>Later one we want to <strong>leverage customer data</strong> to create better self-learning material to attract more customers and reduce dependency from music teachers. It would be great (from a education scientists point of view) to ge t a model of how people learn to play an instrument most effient and how to keep them on track based on their personal likings and learning history. In the worst case scenario (from a music teachers point of view) this could replace all human dependencies.</p>
+<p>Later on we want to <strong>leverage customer data</strong> to create better self-learning material to attract more customers and reduce dependency from music teachers. It would be great (from an education scientists point of view) to get a model of how people learn to play an instrument most effient and how to keep them on track based on their personal likings and learning history. In the worst case scenario (from a music teachers point of view) this could replace all human dependencies.</p>
 <p>Also parts of the bussiness strategy are:</p>
 <ul>
 <li><strong>virtualisation</strong>: getting paid for the possibility for high quality music lessons for rare instruments due to MIDI instruments instead of homebrew camera / mic set-ups</li>
@@ -202,9 +222,9 @@
 <h3 id="git">Git</h3>
 <p>Git is a system for version control one can use to keep track of code changes and to undo non-working changes. It can be used in a team to collaborate and team mates can work on different code sections in different branches until they got their stuff working and ready to merge it into the main branch.</p>
 <p>I used git already in advance but almost all the time with the <em>GitHub Desktop</em> app. I had a look in command line git commands becaue of this module and <em>Computer Science for Big Data</em>. But I just rarely use those. Nowadays I use the git functionality directly from IDEs like Visual Studio Code and RStudio.</p>
-<p>Until today I had no group work project where I coulkd have get used to work with git in a team efficiently. In <em>Machine Learning 2</em> I set up a git project but we never used branches but told each other when we are working on the project and we worked on seperate parts most of the time. We only had some minor conflicts but were able to solve most of the differences by automatic merging.</p>
-<p>But when I wanted to upload our work for <em>Machine Learning 2</em> I was faced with the problem that the project folder archive was 1 GB big but I only saw 50 MB of data. It took until last weeks lecture in <em>Computer Science for Big Data</em> that we learned how git works in the background (not how to use it). I always thought it saves only changes. But it saves new copies of the whole file every time. Thus changes to our data base was saved in the hidden .git folder multiple times - and included in the archive as well. Finnaly I understoond why it could be interesting to use something else to versionise data instead of git. I didn't get the point in the lecture at all.</p>
-<p>In <em>Data Science Platforms</em> we also used a git system (inside Dataiku) but here the possibility to handle differences was missing. Working in parallel it just overwrote all changes made from the team mate without updating or alerting him about those changes. When the team mate saved its local verision again all changes made by the other person got overwritten. At least one could see in the history what was overwritten and restore changes by copying those back into the live version.</p>
+<p>Until today I had no group work project where I could have get used to work with git in a team efficiently. In <em>Machine Learning 2</em> I set up a git project but we never used branches but told each other when we are working on the project and we worked on seperate parts most of the time. We only had some minor conflicts but were able to solve most of the differences by automatic merging.</p>
+<p>When I wanted to upload our work for <em>Machine Learning 2</em> I was faced with the problem that the project folder archive was 1 GB big even though I've only seen 50 MB of data. It took until the last lecture in <em>Computer Science for Big Data</em> that we learned how git works in the background (not how to use it). I always thought it saves only changes. But it saves new copies of the whole file every time. Thus changes to our data base were saved in the hidden <em>.git</em> folder multiple times - and included in the archive as well. Finnaly I understood why it could be interesting to use something else to versionize data files instead of git. I didn't get the point in the lecture at all.</p>
+<p>In <em>Data Science Platforms</em> we also used a git system (inside Dataiku) but here the possibility to handle differences was missing. Working in parallel it just overwrote all changes made from the team mate without updating or alerting him about those changes. When the team mate saved its local verision again all changes made by the other person got overwritten. At least we were able to see in the history what was overwritten and restore changes by copying those back into the live version.</p>
 <p>The command to rename or move a file is one of the few commands I use on the terminal:</p>
 <pre><code>git mv OLD-FILENAME NEW-FILENAME
 </code></pre>
@@ -212,29 +232,27 @@
 <pre><code>git reset --soft HEAD~1
 </code></pre>
 <h3 id="uml-diagrams">UML diagrams</h3>
-<p>UML diagrams are used to communicate among programmers (and with managers). There are a lot of different types and they have all a bunch of details one probably don't memorises if one doesn't use them frequently. One pretty sure has to explain the diagram to the manager again and again but maybe they help them to better keep track in complex systems. For people who are used to UML diagrams it pretty sure is a more efficient way to check if one has common understanding about a problem than using text or speech. Programmers can orientate their work with those diagrams and e.g. check which interfaces / APIs a module should implement / provide.</p>
-<p>I started to create the UML diagrams with Mermaid because I have heared of it in a web development context as it uses JS at a Moodle Stack conference. But since it does not support a wide range of diagram types I used plantuml later which Prof. Edlich showed me during the lecture. Right now I use the public server for rendering the diagrams but coming to the end of this semester I realized that one could easily set up a <a href="https://hub.docker.com/r/plantuml/plantuml-server/">docker container</a> for this.</p>
+<p>UML diagrams are used to communicate among programmers (and with managers). There are a lot of different types and they all have a bunch of details one probably don't memorises if one doesn't use them frequently. One pretty sure has to explain the diagram to the manager again and again but maybe they help them to better keep track in complex systems. For people who are used to UML diagrams it pretty sure is a more efficient way to check if one has common understanding about a problem than using text or speech. Programmers can orientate their work with those diagrams and e.g. check which interfaces / APIs a module should implement / provide.</p>
+<p>I started to create the UML diagrams with Mermaid because I have heared of it at a <em>Moodle Stack</em> conference because it is based on JS and thus could be used in STACk questions in Moodle. But since it does not support a wide range of diagram types I used plantuml later which Prof. Edlich showed us during the lecture. Right now I use the public server for rendering the diagrams but at the end of this semester I realized that one could also set up a <a href="https://hub.docker.com/r/plantuml/plantuml-server/">docker container</a> for this. Unfortunately I couldn't get VS Code to use the server provided by the docker container even though I could reach it within the web browser.</p>
 <h4 id="use-case-diagram">Use case diagram</h4>
-<p>One of the most intuitive diagrams is the use case diagram. Here one can think about who should be able to do what using the software to develope without getting distracted by thoughts about the implementation. Using inheritance among the actors can help to build a good set of user roles setting proper right to access specific parts of the system. This use case diagram shows the use cases for the whole Music Suite.</p>
+<p>One of the most intuitive diagrams is the use case diagram. Here one can think about who should be able to do what (using the software to develope) without getting distracted by implementation details. Using inheritance among the actors can help to build a good set of user roles setting proper rights to access specific parts of the system. This use case diagram shows the use cases for the whole Music Suite.</p>
 
 <img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/RLExSiCW4Epr5JUkx49_uCdu0-pAPPBYZ4uIOnuQE9BH9Fxt049MBBi3RjdTMuw3PtGSjAeKjGnimSckPsYa8y7IcifVfHdGeOO1nHKxElEe258PJQUeGi7MGV3aoj9pQCXmsMrqy5804ugUt0RGp-i2q6WYwxnhw8kK7HQoC0pMSPNuOVzRr_VRoyaiUFS4crCMFH8w8qq7vo2PilRfU8QV2cAd7N6aoHl8zg6kts0RtQZH4sJRkrLHM3tOns8Hd-eg2KBfk2VhnZM3IrW4BHi9qdXsGSUJDShtw0WcDPcUmRyGkrXx1KNUtyiBmU1YV5BGqxd2SVPN4fWW9TN2B9MAiRsesBQDomVHXxfmX4oWvk25DLpwkrNFiMzHYCYLaFELZpXjtCTiMkiqfjvti8-Fl0p6TB5fmD3t_mnVmV9m9VeSmHFfF5qPwuaIyXAaDz5K31lPJxXvHaiNgo61-hsNJNoOp_gbiUfM7SWqwPVz0G00"><h4 id="component-diagram">Component diagram</h4>
-<p>The accordion simulator should be one of many instrument simulators and should be used to</p>
+<p>A first draft for a possible implementation of the system is shown in the following component diagram. In a component diagram one can identify components that should interact to solve the problem and define if and how they should interact amon each other. They can be grouped to get a better understanding of the interactions quickly.</p>
+<p>Unfortunatetly the components positions and arrow pathes can't be controlled in a way I'ld found necessary to create an easy to understand diagram in this case with <em>plantuml</em>. The main message here should be that there is a server with some services and a SQL database. The other components use the authentification service provided and query the database. There is no interaction among the other components:</p>
+
+<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/VLHDRvmm4Btlhx3sr1xe9Jb7sIINIAoKYjxG7YR6krWBDlL795hbltVyWOk1B1VaDs_cZMSUF6e3ojY-sr7P3r8mOSY-Okg3gJtvkoFuD63W7JH3_6SvWUwfhMRAXq__CIgjGku2xPZMKcYYMzROBilwtFbNVR2cHNL-vXGCbuA4BWAfVfcQE8A0Iu9B1afmSI47QlW7DoCv2EZ6FuxW6T--aprj6RsMyiA5gxBtU8wHehZHW4yOf39akB-_sqh_yH12IH8dnOLXwWoK1S4vukJmF2_iZYkQApi5rXF0AWyP__OSlw3VcE0w0tVbRWTp2RoVkpifx52GF1BOlorJ8vAmKY1vO3SttD5gJabbELQB1gi3vflHQT-lGXjbUvTKyTvsOEGK2lot3iR4JbV2JNdFV6QgprORsQCPosELP4llLF8avTLDvPUKtT9hRq2lk848Ftl3R_jndBaGOZF13jE953UJXY0LSk8XIqczVD6Zt-4abZNi8x7aOZ2LWVEPl81ktoMe9itcGF7h5gRt1dHBE6KuwaRWoN8jS93a5QtJyGiJbFdfr_EPn-PoozGByMtIp33RXBLESDrs-HXRLOrENGJgbZSD4oSav3fRrISoSgV_IPs-o5amB_J8HED-oly0"><p>To use the Music Suite with the instrument simulator one has to log in in order to prevent usage without active subscription. The activitly logger should send information about the usage of the instrument simulator to the server that can be analyzed later to find the best learning pathes for any user. The accordion simulator should be one of many instrument simulators and should be used to</p>
 <ul>
 <li>practice</li>
 <li>play music together</li>
 <li>compose music</li>
 <li>analyse music</li>
 </ul>
-<p>It is only a part of the Music Suite and in the use case diagram neither is visible as a seperate piece of the system because we don't present any of many posssible implemenations for a system there.</p>
-<p>Beside the instrument simulator app a LMS would be handy to organize learning material by music teachers. Also a backend dashboard for accounting, business insights etc. is needed. To use one of the services it will be necessary to log in in advance.</p>
-<p>A first draft for a possible implementation of the system is shown the following component diagram (a draft). In a component diagram one can identify components that shoulöd interact to solve the problem and define if and how they should interact amon each other. They can be grouped to faster get a better understanding of the interactions.</p>
-<p>Unfortunatetly the components positions and arrow pathes can't be controlled in a amount I'ld found necessary to create for an easy to understand diagram. The main message here should be that there is a server with some services and a SQL database. The other components use the authentification service provided and query the database. There is no interaction among the other components:</p>
-
-<img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/VLHDRvmm4Btlhx3sr1xe9Jb7sIINIAoKYjxG7YR6krWBDlL795hbltVyWOk1B1VaDs_cZMSUF6e3ojY-sr7P3r8mOSY-Okg3gJtvkoFuD63W7JH3_6SvWUwfhMRAXq__CIgjGku2xPZMKcYYMzROBilwtFbNVR2cHNL-vXGCbuA4BWAfVfcQE8A0Iu9B1afmSI47QlW7DoCv2EZ6FuxW6T--aprj6RsMyiA5gxBtU8wHehZHW4yOf39akB-_sqh_yH12IH8dnOLXwWoK1S4vukJmF2_iZYkQApi5rXF0AWyP__OSlw3VcE0w0tVbRWTp2RoVkpifx52GF1BOlorJ8vAmKY1vO3SttD5gJabbELQB1gi3vflHQT-lGXjbUvTKyTvsOEGK2lot3iR4JbV2JNdFV6QgprORsQCPosELP4llLF8avTLDvPUKtT9hRq2lk848Ftl3R_jndBaGOZF13jE953UJXY0LSk8XIqczVD6Zt-4abZNi8x7aOZ2LWVEPl81ktoMe9itcGF7h5gRt1dHBE6KuwaRWoN8jS93a5QtJyGiJbFdfr_EPn-PoozGByMtIp33RXBLESDrs-HXRLOrENGJgbZSD4oSav3fRrISoSgV_IPs-o5amB_J8HED-oly0"><p>To use the Music Suite with the instrument simulator one has to log in in order to prevent usage without active subscription. The activitly logger should send information about the usage of the instrument simulator to the server that can be analyzed later to find the best learning pathes for any user.</p>
+<p>It is only a small part of the Music Suite. Beside the instrument simulator application a LMS would be handy to organize learning material by music teachers. Also a backend dashboard for accounting, business insights etc. is needed. To use one of the services it will be necessary to log in in advance.</p>
 <p>In the LMS the user finds courses composed of learning activities which can be bundles into learning packages for easier useage by music teachers when they desing a new course. Over the same GUI the lesson booking system is accessed even though it is not an integral part of the LMS. Learning activities data are stored in the database (maybe in xml stlye) and the information when a music teacher is available is sored there as well.</p>
 <p>The staff dashboard also queries data from the database after successful login.</p>
 <h4 id="class-diagram">Class diagram</h4>
-<p>In the following class diagram you find the classes of the accordion simulator and the used classes from pyglet and their depenencies. The classes of the arrordion simulator are used to create the button keyboard graphics buildung on pyglet components. It handles the recoloring of a component if a key on the computer keyboard is pressed. It also hold the <code>TonePlayer</code> class wich handles the sound playing of accordion tones. If the software would be generalized to simulate other instruments as wel it should get its own file and the path to the .wav files should be an passed argument so it can be altered for different instruments.</p>
+<p>In the following class diagram you find the classes of the accordion simulator and the used classes from pyglet and their depenencies. The classes of the accordion simulator are used to create the button keyboard graphics building on pyglet components. It handles the recoloring of a component if a key on the computer keyboard is pressed. It also holds the <code>TonePlayer</code> class wich handles the sound playing of accordion tones. If the software would be generalized to simulate other instruments as well teh <code>TonePlayer</code> class should get its own file and the path to the .wav files should be an passed argument so it can be altered for different instruments.</p>
 <p>The class diagram does not cover all the code. Just the code in <a href="https://github.com/Famondir/Music-Suite/blob/main/src/main/python/accordion.py">accordion.py</a> because the remaining code does not contain classes.</p>
 <pre style="all:unset;"><div class="mermaid">---
 title: Accordion Simulator
@@ -370,11 +388,12 @@ classDiagram
     }</div></pre>
 <h4 id="activity-diagram">Activity diagram</h4>
 <p>In the following activity diagram one can see how a user could interact with the Music Suites instrument simulator. After logging in and choosing an instrument to simulate the program waits for input to process as playing a tone (keyboard) or the pressing of menu buttons (mouse) to - e.g. load sheet music for silent playback, recording free improvisations for later analysis or just exiting the program.</p>
-<p>Of course there should be more like logging out and choosing a different instrument. But the <code>goto</code> feature of plantuml is currently experimental and it did not work for me. Such a diagram can get pretty complicated pretty fast.</p>
+<p>Of course there should be more like logging out and choosing a different instrument. But the <code>goto</code> feature of plantuml is currently experimental and it did not work for me. And creating new loop structures can lead to pretty complicated uml code pretty fast.</p>
 
 <img style="background-color:#FFF;" src="https://www.plantuml.com/plantuml/svg/VPJDRi8m3CVlVGeVoolGopJ493JGq8gqSsWDZIXsb8z1ttv9EoWeeJb5jVtptn_fcx52MtTki_wIpTTyb5HayqN3R11MPAnsPoHRP1eL2fk1F-OYRTL0_YEaXGDhaAISdVMsIlYuV8FatfsrJCFNnwW76zoDO-WtLgnhISVPap6SUIb-SSU4PaKxFAiFsM8HUzq9fMMbi8vTv07om1fpWMsG8E_Gn6bxw9T22lcMLzMoHhtZ08ZHIBKyn9eMBGgTrZoK7VXbWsWtpiWgKNiiOCqYKTkyRFW2FGfwLknocqJfzgb1nU9AdvVijXNTNbIdjETG9djjC01D0J3133GeEJNds_6hTNffxFFr4CEEwjpCYaaGYAEGD8rxb3y9z5DEg_E6eRk94I-lqiR56h-aMJfy2Fl4Riz2rt32pei2fT4Oh4TIsEQbgOJ2xR_frJO_vse3dVZP9LdLL9ydUZlTpwY7uzCPs_3ch-7_z0S0"><h3 id="ddd">DDD</h3>
-<p>Domain Driven Design is a software architecture approach where software is neither developed as a monolith nor as a legion of micro services but splitted up into (problem) domains. The team for each domain should contain experts for this domain. The parts of software get developed seperated (in own repositories) and the interaction between the domains is described in the context mapping.</p>
-<p>It was difficult for me to distinguish sharply between a component UML diagram and the DDD context mapping. They still feel somewhat similar to me. A point where they differ is the question where the database for the LMS is placed (physically) and which team is responsible for it. Probably it will be in the same place as the other databases but there probably is a special team for the LMS database and one more general for managing the user information and accounting stuff. In general the component diagram is probably more focussed on the implementation details than the context map.</p>
+<p>Domain Driven Design is a software architecture approach where software is neither developed as a monolith nor as a legion of micro services but splitted up into (problem) domains. The team for each domain should contain experts for this domain. The parts of software get developed seperated (in own repositories) and the interaction between the domains is described in the context mapping. One can identify such contexts with a method called event storming and they can be categorized using the core domain chart to identify the most important / unique context one wants to provide.</p>
+<p>In the beginning it was difficult for me to distinguish between a component UML diagram and the DDD context mapping. They still feel somewhat similar to me. A point where they differ is the question where the database for the LMS is placed (physically) and which team is responsible for it. Probably it will be in the same place as the other databases but there probably is a special team for the LMS database and one more general for managing the user information and accounting stuff. In general the component diagram is probably more focussed on the implementation details than the context map.</p>
+<p>If the DDD graphs don't get displayed below you can find them <a href="https://miro.com/app/board/uXjVNS_z_ZA=/?share_link_id=232588702866">on Miro</a>.</p>
 <!-- thumbnail image wrapped in a link -->
 <div id="eventstorming_original" style="width: 100%; max-width: 800px; margin: auto;">
     <a href="#eventstorming">
@@ -408,7 +427,6 @@ classDiagram
 <a href="#contextmap_original" class="lightbox" id="contextmap">
   <span style="background-image: url('./docs/miro_images/Event Storming - Context Mapping.jpg')"></span>
 </a>
-<p>Please find my <a href="https://miro.com/app/board/uXjVNS_z_ZA=/?share_link_id=232588702866">DDD process documentation on Miro</a> as well.</p>
 <h3 id="metrics4">Metrics4</h3>
 <p>I pulled a docker image of sonar cube and created a container with it. At the first check of my code it told me to:</p>
 <ul>
@@ -427,7 +445,7 @@ classDiagram
 <a href="#issues_original" class="lightbox" id="issues">
   <span style="background-image: url('./docs/sonarqube_images/issues.png')"></span>
 </a>
-<p>I included SonarQube into my PyBuilder pipeline. To get the same results from PyBuilder and a manual sonar-scanner run I needed to specify the path to the sources to check in the <code>sonar-project.properties</code> file by adding <code>sonar.sources=src/main/python/</code>. Thus I didn't get bothered with the messages on the auto generated HTML code anymore. The vertical drop in complexity and jump in coverage resulted in specifing which documents to check and which not.</p>
+<p>I included SonarQube into my PyBuilder pipeline. To get the same results from PyBuilder and a manual call of <em>sonar-scanner</em> I needed to specify the path to the sources to check in the <code>sonar-project.properties</code> file by adding <code>sonar.sources=src/main/python/</code>. Thus I didn't get bothered with the messages on the auto generated HTML code anymore. The vertical drop in complexity and jump in coverage resulted in specifing which documents to check and which not.</p>
 <!-- thumbnail image wrapped in a link -->
 <div id="metrics_original" style="width: 100%; max-width: 800px; margin: auto;">
     <a href="#metrics">
@@ -439,11 +457,11 @@ classDiagram
 <a href="#metrics_original" class="lightbox" id="metrics">
   <span style="background-image: url('./docs/sonarqube_images/four_metrics.png')"></span>
 </a>
-<p>It is important to mention that the SonarCube results and warnings are focussing on new code. On the first run it seems that it does not expect test coverage. Later on it checks if there is high test coverage for new code but ignores the old code. In PyBuilder the test coverage is shown for any file a test file exists for. Old and new code.</p>
+<p>It is important to mention that the SonarCube results and warnings are focussing on new code. On the first run it seems that it does not expect test coverage at all. Later on it checks if there is high test coverage for new code but ignores the old code when deciding if it should display a warning. In PyBuilder the test coverage is shown for any file a test file exists for. Old and new code. But code wihout a coreesponding testfile is ignored.</p>
 <h3 id="clean-code-developement">Clean Code Developement</h3>
-<p>Clean code is important because not only computers have to be able to interpret code - but so do humans. This might be you in near or far future or a team member. Therefore, one should follow some clean code guidelines.</p>
+<p>Clean code is important because not only computers have to be able to interpret code - but so do humans. This might be you in near or far future or team members. Therefore, one should follow some clean code guidelines.</p>
 <h4 id="indentation">Indentation</h4>
-<p>Using Python you are forced to use helpful intendation. I think this is one of the easiest points to follow. Thus it is not possible to write things like (dummy code for bad practice one might find possible in JS and so on):</p>
+<p>Using Python you are forced to use helpful intendation. I think this is one of the easiest points to follow. Thus it is not possible to write things like (dummy code for bad practice one might find possibly in JS and so on):</p>
 <pre><code class="language-python"><span class="hljs-comment"># bad</span>
 <span class="hljs-keyword">def</span> <span class="hljs-title function_">test</span>(<span class="hljs-params">x</span>):
 <span class="hljs-keyword">if</span> (x &gt; <span class="hljs-number">3</span>):
@@ -469,7 +487,7 @@ classDiagram
   <span class="hljs-keyword">return</span>(y+<span class="hljs-number">2</span>)
 </code></pre>
 <h4 id="seperation-by-spare-lines">Seperation by spare lines</h4>
-<p>In my opinion it is harder to build a common grounding at the question where one should use a spare line or not. I like to group code sections with this technique. But I often come back later and rearrange the groupings. I'm not very consistent there - not even with my self. To continue the previous example there should be a spare line between the two <code>def</code>s. (Following <em>PEP8</em> there even should be two after class definitions / on top level definitions.) I'm undecided if the spare line after the for loop helps to see where the return statement is placed.</p>
+<p>In my opinion it is harder to build a common grounding at the question where one should use a spare line or not. I like to group code sections with this technique. But I often come back later and rearrange the groupings. I'm not very consistent there. To continue the previous example there should be a spare line between the two <code>def</code>s. (Following <em>PEP8</em> there even should be two after class definitions / on top level definitions.) I'm undecided if the spare line after the for loop helps to see that the return statement is placed outside the loop.</p>
 <pre><code class="language-python"><span class="hljs-comment"># even better</span>
 <span class="hljs-keyword">def</span> <span class="hljs-title function_">test</span>(<span class="hljs-params">x</span>):
   <span class="hljs-keyword">if</span> (x &gt; <span class="hljs-number">3</span>):
@@ -507,7 +525,7 @@ batch2 = pyglet.graphics.Batch() <span class="hljs-comment"># batch to pass to t
 accordion_batch = pyglet.graphics.Batch()
 staff_batch = pyglet.graphics.Batch()
 </code></pre>
-<p>Another place where I like to use not so clear variables isin loops. For simple integer variables I like to use <code>i</code>, <code>j</code>, <code>k</code>. But then it comes to an end and <code>i</code> and <code>j</code> look somewhat similar. And I used <code>s</code> for a string iterator. Lets fix this right now:</p>
+<p>Another place where I tend to use variable names which don't show a clear intention is in loops. For simple integer variables I like to use <code>i</code>, <code>j</code>, <code>k</code>. But then it comes to an end and <code>i</code> and <code>j</code> look somewhat similar. And I used <code>s</code> for a string iterator in my code. Lets fix this right now:</p>
 <pre><code class="language-python"><span class="hljs-comment"># bad</span>
 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>,<span class="hljs-number">7</span>): <span class="hljs-comment"># scale covers tones from octave 3 to 7</span>
   <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> [s + <span class="hljs-built_in">str</span>(i) <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> scale]:
@@ -582,7 +600,7 @@ position = values.index(i+self.starting_tone) <span class="hljs-comment"># get t
             <span class="hljs-keyword">raise</span> FileNotFoundError(<span class="hljs-string">f&quot;The wav file for midi tone number <span class="hljs-subst">{self.midi_tone}</span> is missing.\nIt should be placed at: <span class="hljs-subst">{path_to_file}</span>&quot;</span>)
 </code></pre>
 <h4 id="characters-per-line">Characters per line</h4>
-<p>I just fixed all PEP8 issues that flake8 stated and limited the line width to 79 (suggested in PEP8; warning in flake8 for lines longer than 120 characters). I'm not sure if I prefer the resultung line breaks to the longer lines.I ended up adding new blank lines for definitions where I introduced line breaks:</p>
+<p>I just fixed all PEP8 issues that flake8 stated and limited the line width to 79 (suggested in PEP8; warning in flake8 for lines longer than 120 characters). I'm not sure if I prefer the resultung line breaks to the longer lines. I ended up adding new blank lines for definitions where I introduced line breaks:</p>
 <pre><code class="language-python"><span class="hljs-comment"># before</span>
 <span class="hljs-keyword">if</span> tone % <span class="hljs-number">3</span> == <span class="hljs-number">2</span>:
   button1 = Button(tone, label, self.x+x_offset+((tone-self.starting_tone)//<span class="hljs-number">3</span>-<span class="hljs-number">1</span>/<span class="hljs-number">3</span>)*x_shift, self.y-<span class="hljs-number">3</span>*y_shift, radius, borderwidth, color, fill, batch)
@@ -605,17 +623,18 @@ position = values.index(i+self.starting_tone) <span class="hljs-comment"># get t
   
   self.button_list.append((button1, button2))
 </code></pre>
-<div>
+<div style="border: 1px solid; padding: 0.5em;">
 <h1  class="cheatsheetheading">Clean Code Cheat Sheet</h1>
-<p>I know your flaws, Simon. But you are a scout. So follow the scouts rule in the digital world as you do in the real worls: <em>Leave the campground cleaner than you found it.</em></p>
+<p><strong>Simon</strong>: I know your flaws, Simon. But you are a scout. So follow the scouts rule in the digital world as you do in the real world: <em>Leave the campground cleaner than you found it.</em></p>
 <p>Here are some useful shortcuts that will help you cleaning up the mess your future self produced:</p>
-<ol start="10">
+<ul>
 <li>F12: go to variable definition</li>
 <li>F2: rename variable everywhere in scope</li>
-</ol>
-<div class="cheatsheetcolumn" style="margin-right: 0.5%;">
+</ul>
+<div style="position: relative;">
+<div class="cheatsheetcolumn">
 <h2 class="cheatsheetheading">Naming</h2>
-<p>Names should make comments as redundant as possible. Names are used in multiple places and you don't want to copy the comment over again and again or scroll up to the definition of the name.</p>
+<p>Names should make comments as redundant as possible. Names are used in multiple places and you don't want to copy the comment over and over again or scroll up to the definition of the variable every time.</p>
 <ul>
 <li><strong>variable:</strong> what does it hold (noun)</li>
 <li><strong>functions:</strong> what does it do (verb)</li>
@@ -629,10 +648,45 @@ position = values.index(i+self.starting_tone) <span class="hljs-comment"># get t
 <li>exception for distinguishing list and tuple of similar elements?</li>
 </ul>
 </li>
+<li>don't mix languages (English xor German)</li>
 </ul>
 <p>Use consistent casing for variables. Vary the casing for variables, constants, functions and classes to make clear what the name is refering to.</p>
+<p>Don't call variables <code>df</code> or <code>temp</code> even though you think you are just in the process of bug fixing! You will probably not rename it in near future when the problem is solved.</p>
+<h3>Examples</h3>
+Based on <a href="https://www.softensity.com/blog/clean-code-cheat-sheet/">this cheat sheet</a>.
+<pre><code>X   int d; // elapsed time in days
+✓   int elapsedTimeInDays;
+
+X   string sd, ed;
+X   string date1, date2;
+✓   string startDate, endDate;
+
+X   function calc (int num1, int num2)
+✓   function multiply (int num1, int num2)
+
+X   function accounts() {…}
+✓   function getAccounts() {…}
+
+X   class HandleAccounts {…}
+✓   class AccountsHandler {…}
+
+X   7
+✓   int MAX_CLASSES_PER_STUDENT = 7
+
+X   User[] activeUsersArray;
+✓  User[] activeUsers;
+</code></pre>
+<h2 class="cheatsheetheading">Testing</h2>
+<ul>
+<li>test for null, NA, undefined and so on</li>
+<li>test edge cases</li>
+<li>test positive cases</li>
+<li>test negative cases</li>
+<li>think about tests before implementing the function</li>
+<li>use mocks for tests in early developement stage</li>
+</ul>
 </div>
-<div class="cheatsheetcolumn" style="margin-left: 0.5%; position: absolute;">
+<div class="cheatsheetcolumn" style="position: absolute; top: 0; right: 0;">
 <h2 class="cheatsheetheading">Visual structuring</h2>
 <ul>
 <li>use indentation</li>
@@ -640,17 +694,43 @@ position = values.index(i+self.starting_tone) <span class="hljs-comment"># get t
 <li>keep line length low
 <ul>
 <li>use linebreaks if appropriate</li>
-<li>define intermediate variables that hold a part of the calculation and combine those</li>
+<li>define intermediate variables that hold a part of the calculation, describe it with a meaningful name and combine those intermediate variables</li>
 <li>encupsulate multipart conditionals in a function with meaningful name and call it instead</li>
 </ul>
 </li>
 <li>don't have trailing spaces</li>
 <li>have enough spaces before an inline comment</li>
+<li>declare temporary variables close to usage</li>
+<li>have related functions close to each other</li>
 </ul>
-<h2 class="cheatsheetheading">Meaningful errors</h2>
-<p>Give meaningful eror messages by handling those explicitly instead of falling back to default exceptions.</p>
+<h2 class="cheatsheetheading">Functions</h2>
+<p>Think functional:</p>
+<ul>
+<li>small functions (4-60 lines; fit on one screen)</li>
+<li>compose functions</li>
+<li>build specialised functions instead of single function with many configuration parameters (similar to &quot;polymorphism over if/else&quot;)</li>
+<li>no side effects</li>
+</ul>
+<p>If you copy lines of code, better make a function out of it and call this in both places. If there are sublte changes to make create a more abstract function and derive new functions from it.</p>
+<p>Have a look at common data science example on <a href="https://github.com/davified/clean-code-ml/blob/master/docs/cheat-sheet.md#functions">Github</a>.</p>
+<h2 class="cheatsheetheading">Commenting</h2>
+<p>One of the most painful rules for yourself: Delete outdated code instead of commenting it out. Use git to get access to deleted code if it is needed in future. At least do this after new code problem solving capability is proved by tests. Be brave!</p>
+<p>Try to not need comments. Otherwise keep comments up to date. If code is changed comments might have to be changed as well. This can become a real burden.</p>
+<pre><code>X   string requestId;
+✓   string requestId; // must be unique
+</code></pre>
+<h2 class="cheatsheetheading">Errors</h2>
+<p>Give meaningful error messages by handling those explicitly instead of falling back to default exceptions.</p>
+<p>Use explicit functions to handle errors instead of including this in a function (a function should only do one thing).</p>
+<ul>
+<li>Fail fast.</li>
+<li>Catch exceptions where you can handle it meaningful (earlier?).</li>
+<li>Don't use exceptions for control flow.</li>
+</ul>
 </div>
 </div>
+</div>
+<p>Find a cheat sheet with a wider scope for software developement at <a href="https://www.planetgeek.ch/wp-content/uploads/2014/11/Clean-Code-V2.4.pdf">plantegeek.ch</a>. I worked through the first two pages and added stuff that was missing before and that I found meaningful for my recent level of coding experience. Much of the interface stuff is not very familiar to me.</p>
 <h3 id="build">Build</h3>
 <p>A build tool is used to create executable code from the ource scode. Furthermore one can include tests and more in the pipeline. Even though Python code does not to be compiled to execute it one could use a build tool e.g. to create a executable file for usage without Pyton environment or an installer.</p>
 <p>The things done with a build tool might be a subset of the tasks done in the CI/CD pipeline. But most often some more advanced tests like integration tests are done mainly in the CI/CD pipeline in a common system to check all developers code against.</p>
@@ -947,6 +1027,10 @@ settings_string, melody_string = seperate_settings_and_melody_part_and_check_fil
 .cheatsheetcolumn {
   width: 49%; 
   display: inline-block;
+}
+
+pre {
+  background-color: light-dark(#EDEDED, #333333);
 }
 </style>
 

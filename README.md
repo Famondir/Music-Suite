@@ -16,10 +16,6 @@ Please read my report in the [HTML version](https://raw.githubusercontent.com/Fa
 10. [DSL](#dsl)
 11. [Functional Programming](#functinal-programming)
 
-## Todo-List
-
-1. add a red thread
-
 ## Pet project
 
 ### Setting up the environment and programming language choice
@@ -506,7 +502,7 @@ If the DDD graphs don't get displayed below you can find them [on Miro](https://
   <span style="background-image: url('./docs/miro_images/Event Storming - Context Mapping.jpg')"></span>
 </a>
 
-### Metrics4
+### Metrics
 
 I pulled a docker image of sonar cube and created a container with it. At the first check of my code it told me to:
 
@@ -869,13 +865,13 @@ Find a cheat sheet with a wider scope for software developement at [plantegeek.c
 
 ### Build
 
-A build tool is used to create executable code from the ource scode. Furthermore one can include tests and more in the pipeline. Even though Python code does not to be compiled to execute it one could use a build tool e.g. to create a executable file for usage without Pyton environment or an installer.
+A build tool is used to create executable code from the source code. Furthermore one can include tests and more in the pipeline. Even though Python code does not to be compiled to execute it one could use a build tool e.g. to create a executable file for usage without Pyton environment or an installer.
 
-The things done with a build tool might be a subset of the tasks done in the CI/CD pipeline. But most often some more advanced tests like integration tests are done mainly in the CI/CD pipeline in a common system to check all developers code against.
+The things done with a build tool might be a subset of the tasks done in the CI/CD pipeline. But most often some more advanced tests like integration tests are done mainly in the CI/CD pipeline in a reference system to check all developers code against.
 
-As a build tool I used PyBuilder to run unit tests and lint tests (flake8). For the unit tests I started with the core `unittest` module. Later I set PyBuilder up to use `pytest` as the testing framework. Because I was new to PyBuilder and not very experienced with pytest it took me some time to find possible sources of problems. In the end it was enough to change the testfile name as commented on [GitHub](https://github.com/AlexeySanko/pybuilder_pytest/issues/24).
+As a build tool I used PyBuilder to run unit tests and lint tests (flake8). For the unit tests I started with the core *unittest* module. Later I set up PyBuilder to use *pytest* as the testing framework. Because I was new to PyBuilder and not very experienced with *pytest* it took me some time to find possible sources of problems. In the end it was enough to change the testfile name as commented on [GitHub](https://github.com/AlexeySanko/pybuilder_pytest/issues/24).
 
-Since pytest can also run tests written for the core testframework I ended up with a file following the naming convention pattern `test_*_tests.py` for test purpurses. `test_*.py` is used by pytest and `*_tests.py` is the default for the core framework in PyBuilder. For production I'ld suggest renaming it to the pattern `test_*.py` if one uses pytest. With both setups you get a report like this:
+Since *pytest* can also run tests written for the core testframework I ended up with a file following the naming convention pattern `test_*_tests.py` for test purpurses. `test_*.py` is used by *pytest* and `*_tests.py` is the default for the core framework in PyBuilder. For production I'ld suggest renaming it to the pattern `test_*.py` if one uses *pytest*. With both setups you get a report like this:
 
 ```bash
 PyBuilder version 0.13.10
@@ -925,7 +921,7 @@ Build finished at 2024-02-11 11:43:55
 Build took 3 seconds (3277 ms)
 ```
 
-With the standard test framework the test results are stored in a new seperate `.xml` file every time the tests ran. The results are not shown in the console. This is different with pytest. Here the test results are printed in the console which makes it faster to investigated what failed. On the other hand you have to configure the `build.py` in order to get a .xml report (that is used to communicate with SonarQube). This file gets overwritten each time. You might end up storing multiple copies when you are versioning the file with git anyway.
+With the standard test framework the test results are stored in a new seperate `.xml` file every time the tests ran. The results are not shown in the console. This is different with pytest. Here the test results are printed in the console which makes it faster to investigated what failed or which lines are not covered yet. For *pytest* you have to configure the `build.py` in order to get a .xml report (that is used to communicate with SonarQube). This file gets overwritten each time. You might end up storing multiple copies when you are versioning the file with git anyway.
 
 ```bash
 PyBuilder version 0.13.10
@@ -978,25 +974,27 @@ After some trouble I was able to link PyBuilder with my local Docker container o
 
 ### Continuous Delivery
 
-Setting up a CI/CD pipeline is important to reduce the cycle time. This is important to enable small and fast fixes / adjustments / addons for software while minimising the thread of introducing new errors since the whole code is tested continuously when checked in. Thus, if there is no error reported (and the testcases are exhaustive) one could use the new code. It also can automate and document (make visible for everyone) a lot of preparation and cleanup processes.
+Setting up a CI/CD pipeline is important to reduce the cycle time. This is important to enable small and fast fixes / adjustments / addons for software while minimising the thread of introducing new errors since the whole code is tested continuously when checked in. Thus, if there is no error reported (and the testcases are exhaustive) one could use the new code in a productive context. It also can automate and document (as in make visible for everyone) a lot of preparation and cleanup processes.
 
 As stated before the actions in a CI/CD pipeline might include all actions in the locally executed build pipeline. This is important to asure noone checks in locally untested code that would have errors e.g. in the unit tests. Within a CI/CD pipeline it is possible to run all tests again but on various OS and with various framework versions.
 
 Please find the [GitHub action file](https://github.com/Famondir/Music-Suite/blob/main/.github/workflows/test_and_lint.yml) in my GitHub repository.
 
-I was unsure if I should set up a local Jenkins server to keep everything local or if I should use GitHub actions. In a productional environment both would not run on your local computer but central so all team members check against the same system. Finally I decided to use GitHub actions because the code should be in a GitHub repository for the final submission anyway.
+I was unsure if I should set up a local Jenkins server to keep everything local or if I should use GitHub actions. In a productive environment both would not run on your local computer but central so all team members check against the same system. Finally I decided to use GitHub actions because the code should be in a GitHub repository for the final submission anyway.
 
-There even was a GitHub action pattern for [PyBuilder](https://github.com/marketplace/actions/pybuilder-action). But instead of trying to use the PyBuilder GitHub action I ended up with manually setting up a testing and a linting action. I seperated those two because the linting result is the same on each OS. But my unit tests should run on Windows and Linux as well as for multiple Python versions. For the unittests `xvfb` is needed because pyglet requires a display. Unfortunately xvfb is not working on Windows machines - thus I could not test my program there easily. Using the GitHub action [setup-xvfb](https://github.com/coactions/setup-xvfb) didn't fix the problems on the virtual Windows servers.
+There even was a GitHub action pattern for [PyBuilder](https://github.com/marketplace/actions/pybuilder-action). But instead of trying to use the PyBuilder GitHub action I decided to manually set up a testing and a linting action. I seperated those two because the linting result is the same on each OS - so there is no need of executing it multiple times. But my unit tests should run on Windows and Linux as well as for multiple Python versions.
 
-During the testing I got a lot of mails informing me that there have been some errors while performing the defined actions. Good for a productive setting. A little bit annoying when you are new to this topic and are tinkering around a lot.
+It turned out taht for the unittests `xvfb` is needed because pyglet requires a display. Unfortunately xvfb is not working on the virtual Windows machines - thus I could not test my program there easily. Using the GitHub action [setup-xvfb](https://github.com/coactions/setup-xvfb) didn't fix the problems on the virtual Windows servers.
 
-The VS Code plugin for Github actoins is handy but would be better if one can see the partial logs locally not only the whole log (for partial logs you have to go to GitHub; though the link is provided as a button). The related [GitHub issue](https://github.com/github/vscode-github-actions/issues/15) was closed.
+During the testing I got a lot of mails informing me that there have been some errors while performing the defined actions. Good for a productive setting. A little bit annoying when you are new to this topic and are tinkering around a lot. Also I configures the test to only run if `.py` files have been changed not the `README.md`.
+
+The VS Code plugin for Github actions is handy but would be better if one can see the partial logs locally not only the whole log. For partial logs you have to go to GitHub; at least the link is provided as a button in VS Code. The related [GitHub issue](https://github.com/github/vscode-github-actions/issues/15) was closed without a result.
 
 ### Unit tests
 
-Unit tests are important for software developement because they eable to continuously test it. In test driven developement it is even standard to think on the test results (and implementing tests - possibly with mockups) before writing the code to test. This is important because it saves time later on when there is not only one thing to test but a thousand and helps to not forget a single bit - and thus reduces technical debt.
+Unit tests are important for software developement because they enable to continuously test it. In test driven developement it is even standard to think on the test results (and implementing tests - possibly with mockups) before writing the function to test. This is important because it saves time later on when there is not only one thing to test but a thousand and helps to not forget a single test - and thus prevents accumulating technical debt.
 
-Writing unit tests is easy if one follows a funcitonal programming paradigm. But the methods of calsses can be tested well as well. It gets harder if a function produces graphics that have to be compared should emulate user input in the GUI or check if sounds are played correctly / in harmony.
+Writing unit tests is easy if one follows a functional programming paradigm. But the methods of calsses can be tested easily as well. It gets harder if a function produces graphics that have to be checked should emulate user input in the GUI or check if sounds are played correctly / in harmony.
 
 While writing unit tests for my project I faced following questions:
 
@@ -1004,7 +1002,7 @@ While writing unit tests for my project I faced following questions:
 2. What about other functions with side effects?
 3. How to test if the button color changes on screen?
 
-For the first question my first attempt was to return an informative string if the function call was successful. But then I found that the player object of pyglet has an attribute `playing` on can check. However this only solved checking if a single sound is played. For the [melodyplayer.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/melodyplayer.py) it would be necessary to check if multiple sounds are played with no hearable delay.
+For the first question my first attempt was to return an informative string if the function call was successful. But then I found that the player object of pyglet has an attribute `playing` on can check. However this only solved checking if a single sound is played. For the [melodyplayer.py](https://github.com/Famondir/Music-Suite/blob/main/src/main/python/melodyplayer.py) it would be necessary to check if multiple sounds are played in parallel with no hearable delay.
 
 In another project I worked with Googles OR tools in Python and wanted to know if the created shedule plan is valid. Since the plan is only printed at console right now I used the `capsys` functionality to check if the messages send to the out stream include the expected phrases or names.
 
@@ -1027,11 +1025,11 @@ Please find the written [unit tests on Github](https://github.com/Famondir/Music
 
 ### Visual Studio Code
 
-I already used Visual Studio Code when I was working with JavaScript. I used it for Java a bit but also NetBeans. For my Python preject I decided to go with Visual Studio Code as well. I never liked PyCharm but needed something different than Jupyter Labs. I also installed the SonarCubeLint plugin to connect the Sonar Cube Server and Visual Studio Code.
+I already used Visual Studio Code when I was working with JavaScript. I used it for Java a bit but also NetBeans. For my Python project I decided to go with Visual Studio Code as well. I never liked PyCharm but needed something different than Jupyter Labs. I also installed the SonarCubeLint plugin to connect the Sonar Cube Server and Visual Studio Code.
 
-VSC was also promoted at the *Big Data* module where we learned that you can connect right into Docker Containers. I found out that there is a Plugin for R as well which I tired out a little bit. But I still tend to use RStudio here. VSC is realy flexible. But for daily data science work Spyder could be a nice alternative with Python because it offers the possibility to have a look into the created data structures and execute code line by line (just as RStudio does for R). But since I found the R plugin for VSC ther might be something comparable to Spyder and one can do everything in VSC in future?
+VS Code was also promoted at the *Big Data* module where we learned that you can connect right into Docker Containers. I found out that there is a Plugin for R as well which I tryed out a little bit. But I still tend to use RStudio here. VS Code is realy flexible. But for daily data science work Spyder could be a nice alternative with Python because it offers the possibility to have a look into the created data structures and execute code line by line (just as RStudio does for R). But since I found the R plugin for VS Code there might be something comparable to Spyder and one can do everything in VS Code in future?
 
-Follwing is a list of shortcuts I use with VSC.
+Follwing is a list of shortcuts I use with VS Code:
 
 #### Shortcuts
 
@@ -1041,7 +1039,7 @@ Follwing is a list of shortcuts I use with VSC.
 4. Ctrl+Shift+G: Source Control
 5. Ctrl+Shift+E: File view
 6. Ctrl+P: find a file and open it
-7. Ctrl+Shift+7: comment line (on other languages easily Ctrl+/)
+7. Ctrl+Shift+7: comment line (on other languages keyboard layouts easily Ctrl+/)
 8. Ctrl+Shift+A: block comment
 9. Shift+F12: find occurancies of variable
 10. F12: go to variable definition
@@ -1049,6 +1047,7 @@ Follwing is a list of shortcuts I use with VSC.
 12. Alt+Up/Down: swap lines
 13. Alt+Shift+Up/Down: create copy of line above / below
 14. Ctrl+Pos1/End: Go to first/last line of code
+15. Alt+left mouse click: choose multiple lines to make identical changes to those
 
 ### DSL
 
@@ -1061,21 +1060,22 @@ For this project I created two versions of an external DSL that can be used to e
 (C4,4,C)(D4,4)(E4,4)(C4,8)(G3,8)|(A3,4,F)(B3,4,G)(C4,2,C)(F4,4,F)|(E4,4)(D4,4,G)(D4,4)(E4,1,C)|(E4,4)(F4,4)(G4,4.)(G4,8)|(F4,4)(E4,4)(D4,2,G)|(G3,4,C)(C4,4)(D4,4,G)(D4,4)|(C4,1,C)
 ```
 
-In curly brackets meta data is given that defines how fast a song should be played what key it is in and so on. Following one finds the notation of tones to play and their duration wrapped in parentheses. If a new accord is to play it is statet as the third element of the tuple. The same accord is played as long as there is no new accord noted but it starts over at the transition from one measure to the next. The border between measures can be noted with a `|`.
+In curly brackets meta data is given that defines how fast a song should be played what key it is in and so on. Following one finds the notation of tones to play and their duration wrapped in parentheses. If a new accord should be played it is statet as the third element of the tuple. The same accord is played as long as there is no new accord noted but it starts over at the transition from one measure to the next. The border between measures can be noted with a `|`.
 
-The duration is noted as the inverse of the usually used fraction. Thus we note `8` instead of `1/8` or <span style="font-size:2em;">♪</span> and a dot is used to add half of the base length `4.` instead of <span style="font-size:2em;">♩</span><span style="margin-left:-1.25rem; margin-right: 0.5rem; font-size:1.5em;">.</span>. One could stick to the easy `F4` notation even in keys other than C major - e.g. C major where one playes `F#4` instead of `F4` - if the melody translator uses the information about the key from the curly bracket part. Thus one only has to use `#` or `b` if one playes a note outside the scale. This makes notation very efficient and human readable.
+The duration is noted as the inverse of the usually used fraction. Thus we note `8` instead of `1/8` or <span style="font-size:2em;">♪</span> and a dot is used to add half of the base length `4.` instead of <span style="font-size:2em;">♩</span><span style="margin-left:-1.25rem; margin-right: 0.5rem; font-size:1.5em;">.</span>. One could stick to the easy `F4` notation even in keys other than C major - e.g. G major where one playes `F#4` instead of `F4` - if the melody translator uses the information about the key from the curly bracket part. Thus one only has to use `#` or `b` if one playes a note outside the scale. This makes notation very efficient and human readable.
 
 The second dialect uses the MIDI numbers of tones instead, e.g. `(60,4)` instead of `(C4,4)`. This is the version that is used by the `melodyplayer.py`. The translation of one dialect into the other is easily possible. Currently the translation from the MIDI version to the tone version is implemented (as an example for [functional programming](#functinal-programming)).
 
-Thus with this DSL one can use to denote simple songs which can be simpley played. For a further evolved program one could implement that the tones that have to be played get colored at the right moment without playing a tone except when the musician presses the key. This could help to learn to play a song - even though one don't understands the DSL used on regular music sheets.
+Thus this DSL can be used to denote simple songs which can be simpley played. For a further evolved program one could implement that the buttons that have to be pushed get colored at the right moment without playing a tone except when the musician presses the key. This could help to learn to play a song - even though one don't understands the DSL used on regular music sheets.
 
 For standard users of the software one would display the notation of a song in the classical way on a stave. But internally one could use this DSL - and advanced users might be faster in digitalizing a song with this DSL directly compared to dragging notes around on the stave (as I did at [MuseScore](https://musescore.org/de) some years ago).
 
-It should be marked that there are a lot of special notations for music sheets and integrating everything into this DSL but keeping it expressive and efficient could be pretty tricky. Maybe one could add a bunch of xml-alike notations for more advanced stuff - e.g. `<tripplet>(C4,4)(D4,4)(C4,4)</trpplet>`. This would be less fast to write but maybe better understandable than `(C4,4tr)(D4,4tr)(C4,4tr)` or `[tr:(C4,4,C),(C4,4,C),(C4,4,C)]`. Thinking all of this through would take quite a lot of time and experience.
+It should be marked that there are a lot of special notations for music sheets and integrating everything into this DSL while keeping it expressive and efficient could be pretty tricky. Maybe one could add a bunch of xml-alike notations for more advanced stuff - e.g. `<tripplet>(C4,4)(D4,4)(C4,4)</trpplet>`. This would be less fast to write but maybe better understandable than `(C4,4tr)(D4,4tr)(C4,4tr)` or `[tr:(C4,4,C),(C4,4,C),(C4,4,C)]`. Thinking all of this through would take quite a lot of time and experience.
 
 ### Functional Programming
 
 Functional programming is a programming paradigm that features:
+
 1. final data structures only.
 2. no state dependency.
 3. side effect free functions.
@@ -1084,7 +1084,7 @@ Functional programming is a programming paradigm that features:
 
 #### final data structures only
 
-Since there are no constants in Python one has to make sure that a variable does not get reassigned. This can be a bit cumbersome if one has not completely dived into functional programming because on creates a lot of variables with new names each holding the result of a function used on data. It can look like this:
+Since there are no constants in Python one has to make sure that a variable does not get reassigned. This can be a bit cumbersome if one has not completely dived into functional programming because one creates a lot of variables with new names each holding the result of a function used on data. It can look like this:
 
 ```python
 measure_tuple = split_by_measure(melody_string)
@@ -1099,7 +1099,7 @@ converted_melody_string = functools.reduce(operator.concat, tuple(map(
 )))
 ```
 
-If one does not need intermediate results (using those could possibly violate the no-side-effect and the stateless rules anyhow) a common pattern seen is piping. This can be done in Python as well - especially if one uses a package like `functional` that provides chainable `ma` and `reduce` functions:
+If one does not need intermediate results (using those could possibly violate the no-side-effect and the stateless rules anyhow) a common pattern seen is piping. This can be done in Python as well - especially if one uses a package like `functional` that provides chainable `map` and `reduce` functions:
 
 ```python
 measure_tuple = seq(split_by_measure(melody_string))\

@@ -157,10 +157,6 @@
 <li><a href="#dsl">DSL</a></li>
 <li><a href="#functinal-programming">Functional Programming</a></li>
 </ol>
-<h2 id="todo-list">Todo-List</h2>
-<ol>
-<li>add a red thread</li>
-</ol>
 <h2 id="pet-project">Pet project</h2>
 <h3 id="setting-up-the-environment-and-programming-language-choice">Setting up the environment and programming language choice</h3>
 <p>In the task it was recommended to use Python as a programming language since it is important for data scientists. Since I'm most fluent with R and JS I decided (at the beginning of the project) trying to bridge Python code (to learn something new) with JS to use my skills in GUI/dashboard design.</p>
@@ -427,7 +423,7 @@ classDiagram
 <a href="#contextmap_original" class="lightbox" id="contextmap">
   <span style="background-image: url('./docs/miro_images/Event Storming - Context Mapping.jpg')"></span>
 </a>
-<h3 id="metrics4">Metrics4</h3>
+<h3 id="metrics">Metrics</h3>
 <p>I pulled a docker image of sonar cube and created a container with it. At the first check of my code it told me to:</p>
 <ul>
 <li>rename my variables to meet a given naming convention. Instead of camel case it suggested snake case.</li>
@@ -732,10 +728,10 @@ X   User[] activeUsersArray;
 </div>
 <p>Find a cheat sheet with a wider scope for software developement at <a href="https://www.planetgeek.ch/wp-content/uploads/2014/11/Clean-Code-V2.4.pdf">plantegeek.ch</a>. I worked through the first two pages and added stuff that was missing before and that I found meaningful for my recent level of coding experience. Much of the interface stuff is not very familiar to me.</p>
 <h3 id="build">Build</h3>
-<p>A build tool is used to create executable code from the ource scode. Furthermore one can include tests and more in the pipeline. Even though Python code does not to be compiled to execute it one could use a build tool e.g. to create a executable file for usage without Pyton environment or an installer.</p>
-<p>The things done with a build tool might be a subset of the tasks done in the CI/CD pipeline. But most often some more advanced tests like integration tests are done mainly in the CI/CD pipeline in a common system to check all developers code against.</p>
-<p>As a build tool I used PyBuilder to run unit tests and lint tests (flake8). For the unit tests I started with the core <code>unittest</code> module. Later I set PyBuilder up to use <code>pytest</code> as the testing framework. Because I was new to PyBuilder and not very experienced with pytest it took me some time to find possible sources of problems. In the end it was enough to change the testfile name as commented on <a href="https://github.com/AlexeySanko/pybuilder_pytest/issues/24">GitHub</a>.</p>
-<p>Since pytest can also run tests written for the core testframework I ended up with a file following the naming convention pattern <code>test_*_tests.py</code> for test purpurses. <code>test_*.py</code> is used by pytest and <code>*_tests.py</code> is the default for the core framework in PyBuilder. For production I'ld suggest renaming it to the pattern <code>test_*.py</code> if one uses pytest. With both setups you get a report like this:</p>
+<p>A build tool is used to create executable code from the source code. Furthermore one can include tests and more in the pipeline. Even though Python code does not to be compiled to execute it one could use a build tool e.g. to create a executable file for usage without Pyton environment or an installer.</p>
+<p>The things done with a build tool might be a subset of the tasks done in the CI/CD pipeline. But most often some more advanced tests like integration tests are done mainly in the CI/CD pipeline in a reference system to check all developers code against.</p>
+<p>As a build tool I used PyBuilder to run unit tests and lint tests (flake8). For the unit tests I started with the core <em>unittest</em> module. Later I set up PyBuilder to use <em>pytest</em> as the testing framework. Because I was new to PyBuilder and not very experienced with <em>pytest</em> it took me some time to find possible sources of problems. In the end it was enough to change the testfile name as commented on <a href="https://github.com/AlexeySanko/pybuilder_pytest/issues/24">GitHub</a>.</p>
+<p>Since <em>pytest</em> can also run tests written for the core testframework I ended up with a file following the naming convention pattern <code>test_*_tests.py</code> for test purpurses. <code>test_*.py</code> is used by <em>pytest</em> and <code>*_tests.py</code> is the default for the core framework in PyBuilder. For production I'ld suggest renaming it to the pattern <code>test_*.py</code> if one uses <em>pytest</em>. With both setups you get a report like this:</p>
 <pre><code class="language-bash">PyBuilder version 0.13.10
 Build started at 2024-02-11 11:43:52
 ------------------------------------------------------------
@@ -782,7 +778,7 @@ BUILD FAILED - Test coverage <span class="hljs-keyword">for</span> at least one 
 Build finished at 2024-02-11 11:43:55
 Build took 3 seconds (3277 ms)
 </code></pre>
-<p>With the standard test framework the test results are stored in a new seperate <code>.xml</code> file every time the tests ran. The results are not shown in the console. This is different with pytest. Here the test results are printed in the console which makes it faster to investigated what failed. On the other hand you have to configure the <code>build.py</code> in order to get a .xml report (that is used to communicate with SonarQube). This file gets overwritten each time. You might end up storing multiple copies when you are versioning the file with git anyway.</p>
+<p>With the standard test framework the test results are stored in a new seperate <code>.xml</code> file every time the tests ran. The results are not shown in the console. This is different with pytest. Here the test results are printed in the console which makes it faster to investigated what failed or which lines are not covered yet. For <em>pytest</em> you have to configure the <code>build.py</code> in order to get a .xml report (that is used to communicate with SonarQube). This file gets overwritten each time. You might end up storing multiple copies when you are versioning the file with git anyway.</p>
 <pre><code class="language-bash">PyBuilder version 0.13.10
 Build started at 2024-02-11 11:18:08
 ------------------------------------------------------------
@@ -830,23 +826,24 @@ Build took 2 seconds (2972 ms)
 </code></pre>
 <p>After some trouble I was able to link PyBuilder with my local Docker container of SonarQube. I posted an explanation on how to do this on <a href="https://github.com/pybuilder/pybuilder/issues/902#issuecomment-1931589831">GitHub</a> because there already have been some open issue tickets on this question. The documentation could need another tutorial about this topic for flawless setup for beginners.</p>
 <h3 id="continuous-delivery">Continuous Delivery</h3>
-<p>Setting up a CI/CD pipeline is important to reduce the cycle time. This is important to enable small and fast fixes / adjustments / addons for software while minimising the thread of introducing new errors since the whole code is tested continuously when checked in. Thus, if there is no error reported (and the testcases are exhaustive) one could use the new code. It also can automate and document (make visible for everyone) a lot of preparation and cleanup processes.</p>
+<p>Setting up a CI/CD pipeline is important to reduce the cycle time. This is important to enable small and fast fixes / adjustments / addons for software while minimising the thread of introducing new errors since the whole code is tested continuously when checked in. Thus, if there is no error reported (and the testcases are exhaustive) one could use the new code in a productive context. It also can automate and document (as in make visible for everyone) a lot of preparation and cleanup processes.</p>
 <p>As stated before the actions in a CI/CD pipeline might include all actions in the locally executed build pipeline. This is important to asure noone checks in locally untested code that would have errors e.g. in the unit tests. Within a CI/CD pipeline it is possible to run all tests again but on various OS and with various framework versions.</p>
 <p>Please find the <a href="https://github.com/Famondir/Music-Suite/blob/main/.github/workflows/test_and_lint.yml">GitHub action file</a> in my GitHub repository.</p>
-<p>I was unsure if I should set up a local Jenkins server to keep everything local or if I should use GitHub actions. In a productional environment both would not run on your local computer but central so all team members check against the same system. Finally I decided to use GitHub actions because the code should be in a GitHub repository for the final submission anyway.</p>
-<p>There even was a GitHub action pattern for <a href="https://github.com/marketplace/actions/pybuilder-action">PyBuilder</a>. But instead of trying to use the PyBuilder GitHub action I ended up with manually setting up a testing and a linting action. I seperated those two because the linting result is the same on each OS. But my unit tests should run on Windows and Linux as well as for multiple Python versions. For the unittests <code>xvfb</code> is needed because pyglet requires a display. Unfortunately xvfb is not working on Windows machines - thus I could not test my program there easily. Using the GitHub action <a href="https://github.com/coactions/setup-xvfb">setup-xvfb</a> didn't fix the problems on the virtual Windows servers.</p>
-<p>During the testing I got a lot of mails informing me that there have been some errors while performing the defined actions. Good for a productive setting. A little bit annoying when you are new to this topic and are tinkering around a lot.</p>
-<p>The VS Code plugin for Github actoins is handy but would be better if one can see the partial logs locally not only the whole log (for partial logs you have to go to GitHub; though the link is provided as a button). The related <a href="https://github.com/github/vscode-github-actions/issues/15">GitHub issue</a> was closed.</p>
+<p>I was unsure if I should set up a local Jenkins server to keep everything local or if I should use GitHub actions. In a productive environment both would not run on your local computer but central so all team members check against the same system. Finally I decided to use GitHub actions because the code should be in a GitHub repository for the final submission anyway.</p>
+<p>There even was a GitHub action pattern for <a href="https://github.com/marketplace/actions/pybuilder-action">PyBuilder</a>. But instead of trying to use the PyBuilder GitHub action I decided to manually set up a testing and a linting action. I seperated those two because the linting result is the same on each OS - so there is no need of executing it multiple times. But my unit tests should run on Windows and Linux as well as for multiple Python versions.</p>
+<p>It turned out taht for the unittests <code>xvfb</code> is needed because pyglet requires a display. Unfortunately xvfb is not working on the virtual Windows machines - thus I could not test my program there easily. Using the GitHub action <a href="https://github.com/coactions/setup-xvfb">setup-xvfb</a> didn't fix the problems on the virtual Windows servers.</p>
+<p>During the testing I got a lot of mails informing me that there have been some errors while performing the defined actions. Good for a productive setting. A little bit annoying when you are new to this topic and are tinkering around a lot. Also I configures the test to only run if <code>.py</code> files have been changed not the <code>README.md</code>.</p>
+<p>The VS Code plugin for Github actions is handy but would be better if one can see the partial logs locally not only the whole log. For partial logs you have to go to GitHub; at least the link is provided as a button in VS Code. The related <a href="https://github.com/github/vscode-github-actions/issues/15">GitHub issue</a> was closed without a result.</p>
 <h3 id="unit-tests">Unit tests</h3>
-<p>Unit tests are important for software developement because they eable to continuously test it. In test driven developement it is even standard to think on the test results (and implementing tests - possibly with mockups) before writing the code to test. This is important because it saves time later on when there is not only one thing to test but a thousand and helps to not forget a single bit - and thus reduces technical debt.</p>
-<p>Writing unit tests is easy if one follows a funcitonal programming paradigm. But the methods of calsses can be tested well as well. It gets harder if a function produces graphics that have to be compared should emulate user input in the GUI or check if sounds are played correctly / in harmony.</p>
+<p>Unit tests are important for software developement because they enable to continuously test it. In test driven developement it is even standard to think on the test results (and implementing tests - possibly with mockups) before writing the function to test. This is important because it saves time later on when there is not only one thing to test but a thousand and helps to not forget a single test - and thus prevents accumulating technical debt.</p>
+<p>Writing unit tests is easy if one follows a functional programming paradigm. But the methods of calsses can be tested easily as well. It gets harder if a function produces graphics that have to be checked should emulate user input in the GUI or check if sounds are played correctly / in harmony.</p>
 <p>While writing unit tests for my project I faced following questions:</p>
 <ol>
 <li>How to test functions that should play a sound? Or multiple in parallel?</li>
 <li>What about other functions with side effects?</li>
 <li>How to test if the button color changes on screen?</li>
 </ol>
-<p>For the first question my first attempt was to return an informative string if the function call was successful. But then I found that the player object of pyglet has an attribute <code>playing</code> on can check. However this only solved checking if a single sound is played. For the <a href="https://github.com/Famondir/Music-Suite/blob/main/src/main/python/melodyplayer.py">melodyplayer.py</a> it would be necessary to check if multiple sounds are played with no hearable delay.</p>
+<p>For the first question my first attempt was to return an informative string if the function call was successful. But then I found that the player object of pyglet has an attribute <code>playing</code> on can check. However this only solved checking if a single sound is played. For the <a href="https://github.com/Famondir/Music-Suite/blob/main/src/main/python/melodyplayer.py">melodyplayer.py</a> it would be necessary to check if multiple sounds are played in parallel with no hearable delay.</p>
 <p>In another project I worked with Googles OR tools in Python and wanted to know if the created shedule plan is valid. Since the plan is only printed at console right now I used the <code>capsys</code> functionality to check if the messages send to the out stream include the expected phrases or names.</p>
 <p>What I have not accomplished was to write unit tests for pyglet elements. A possible thing to check could be if a button is realy displayed in a new color if we change its attribute.</p>
 <p>Please find the written <a href="https://github.com/Famondir/Music-Suite/blob/main/src/unittest/python/test_accordion_tests.py">unit tests on Github</a>.</p>
@@ -862,9 +859,9 @@ Build took 2 seconds (2972 ms)
   <span style="background-image: url('./docs/sonarqube_images/coverage.png')"></span>
 </a>
 <h3 id="visual-studio-code">Visual Studio Code</h3>
-<p>I already used Visual Studio Code when I was working with JavaScript. I used it for Java a bit but also NetBeans. For my Python preject I decided to go with Visual Studio Code as well. I never liked PyCharm but needed something different than Jupyter Labs. I also installed the SonarCubeLint plugin to connect the Sonar Cube Server and Visual Studio Code.</p>
-<p>VSC was also promoted at the <em>Big Data</em> module where we learned that you can connect right into Docker Containers. I found out that there is a Plugin for R as well which I tired out a little bit. But I still tend to use RStudio here. VSC is realy flexible. But for daily data science work Spyder could be a nice alternative with Python because it offers the possibility to have a look into the created data structures and execute code line by line (just as RStudio does for R). But since I found the R plugin for VSC ther might be something comparable to Spyder and one can do everything in VSC in future?</p>
-<p>Follwing is a list of shortcuts I use with VSC.</p>
+<p>I already used Visual Studio Code when I was working with JavaScript. I used it for Java a bit but also NetBeans. For my Python project I decided to go with Visual Studio Code as well. I never liked PyCharm but needed something different than Jupyter Labs. I also installed the SonarCubeLint plugin to connect the Sonar Cube Server and Visual Studio Code.</p>
+<p>VS Code was also promoted at the <em>Big Data</em> module where we learned that you can connect right into Docker Containers. I found out that there is a Plugin for R as well which I tryed out a little bit. But I still tend to use RStudio here. VS Code is realy flexible. But for daily data science work Spyder could be a nice alternative with Python because it offers the possibility to have a look into the created data structures and execute code line by line (just as RStudio does for R). But since I found the R plugin for VS Code there might be something comparable to Spyder and one can do everything in VS Code in future?</p>
+<p>Follwing is a list of shortcuts I use with VS Code:</p>
 <h4 id="shortcuts">Shortcuts</h4>
 <ol>
 <li>Ctrl+Shift+P: Execute stuff (e.g. like saving HTML version of Markdown)</li>
@@ -873,7 +870,7 @@ Build took 2 seconds (2972 ms)
 <li>Ctrl+Shift+G: Source Control</li>
 <li>Ctrl+Shift+E: File view</li>
 <li>Ctrl+P: find a file and open it</li>
-<li>Ctrl+Shift+7: comment line (on other languages easily Ctrl+/)</li>
+<li>Ctrl+Shift+7: comment line (on other languages keyboard layouts easily Ctrl+/)</li>
 <li>Ctrl+Shift+A: block comment</li>
 <li>Shift+F12: find occurancies of variable</li>
 <li>F12: go to variable definition</li>
@@ -881,6 +878,7 @@ Build took 2 seconds (2972 ms)
 <li>Alt+Up/Down: swap lines</li>
 <li>Alt+Shift+Up/Down: create copy of line above / below</li>
 <li>Ctrl+Pos1/End: Go to first/last line of code</li>
+<li>Alt+left mouse click: choose multiple lines to make identical changes to those</li>
 </ol>
 <h3 id="dsl">DSL</h3>
 <p>A domain specific language (DSL) is used to efficiently communicate inside a specific domain.</p>
@@ -888,12 +886,12 @@ Build took 2 seconds (2972 ms)
 <pre><code>{bpm:80,beat_measure:4,time_signature:4/4,scale:Cmajor}
 (C4,4,C)(D4,4)(E4,4)(C4,8)(G3,8)|(A3,4,F)(B3,4,G)(C4,2,C)(F4,4,F)|(E4,4)(D4,4,G)(D4,4)(E4,1,C)|(E4,4)(F4,4)(G4,4.)(G4,8)|(F4,4)(E4,4)(D4,2,G)|(G3,4,C)(C4,4)(D4,4,G)(D4,4)|(C4,1,C)
 </code></pre>
-<p>In curly brackets meta data is given that defines how fast a song should be played what key it is in and so on. Following one finds the notation of tones to play and their duration wrapped in parentheses. If a new accord is to play it is statet as the third element of the tuple. The same accord is played as long as there is no new accord noted but it starts over at the transition from one measure to the next. The border between measures can be noted with a <code>|</code>.</p>
-<p>The duration is noted as the inverse of the usually used fraction. Thus we note <code>8</code> instead of <code>1/8</code> or <span style="font-size:2em;">♪</span> and a dot is used to add half of the base length <code>4.</code> instead of <span style="font-size:2em;">♩</span><span style="margin-left:-1.25rem; margin-right: 0.5rem; font-size:1.5em;">.</span>. One could stick to the easy <code>F4</code> notation even in keys other than C major - e.g. C major where one playes <code>F#4</code> instead of <code>F4</code> - if the melody translator uses the information about the key from the curly bracket part. Thus one only has to use <code>#</code> or <code>b</code> if one playes a note outside the scale. This makes notation very efficient and human readable.</p>
+<p>In curly brackets meta data is given that defines how fast a song should be played what key it is in and so on. Following one finds the notation of tones to play and their duration wrapped in parentheses. If a new accord should be played it is statet as the third element of the tuple. The same accord is played as long as there is no new accord noted but it starts over at the transition from one measure to the next. The border between measures can be noted with a <code>|</code>.</p>
+<p>The duration is noted as the inverse of the usually used fraction. Thus we note <code>8</code> instead of <code>1/8</code> or <span style="font-size:2em;">♪</span> and a dot is used to add half of the base length <code>4.</code> instead of <span style="font-size:2em;">♩</span><span style="margin-left:-1.25rem; margin-right: 0.5rem; font-size:1.5em;">.</span>. One could stick to the easy <code>F4</code> notation even in keys other than C major - e.g. G major where one playes <code>F#4</code> instead of <code>F4</code> - if the melody translator uses the information about the key from the curly bracket part. Thus one only has to use <code>#</code> or <code>b</code> if one playes a note outside the scale. This makes notation very efficient and human readable.</p>
 <p>The second dialect uses the MIDI numbers of tones instead, e.g. <code>(60,4)</code> instead of <code>(C4,4)</code>. This is the version that is used by the <code>melodyplayer.py</code>. The translation of one dialect into the other is easily possible. Currently the translation from the MIDI version to the tone version is implemented (as an example for <a href="#functinal-programming">functional programming</a>).</p>
-<p>Thus with this DSL one can use to denote simple songs which can be simpley played. For a further evolved program one could implement that the tones that have to be played get colored at the right moment without playing a tone except when the musician presses the key. This could help to learn to play a song - even though one don't understands the DSL used on regular music sheets.</p>
+<p>Thus this DSL can be used to denote simple songs which can be simpley played. For a further evolved program one could implement that the buttons that have to be pushed get colored at the right moment without playing a tone except when the musician presses the key. This could help to learn to play a song - even though one don't understands the DSL used on regular music sheets.</p>
 <p>For standard users of the software one would display the notation of a song in the classical way on a stave. But internally one could use this DSL - and advanced users might be faster in digitalizing a song with this DSL directly compared to dragging notes around on the stave (as I did at <a href="https://musescore.org/de">MuseScore</a> some years ago).</p>
-<p>It should be marked that there are a lot of special notations for music sheets and integrating everything into this DSL but keeping it expressive and efficient could be pretty tricky. Maybe one could add a bunch of xml-alike notations for more advanced stuff - e.g. <code>&lt;tripplet&gt;(C4,4)(D4,4)(C4,4)&lt;/trpplet&gt;</code>. This would be less fast to write but maybe better understandable than <code>(C4,4tr)(D4,4tr)(C4,4tr)</code> or <code>[tr:(C4,4,C),(C4,4,C),(C4,4,C)]</code>. Thinking all of this through would take quite a lot of time and experience.</p>
+<p>It should be marked that there are a lot of special notations for music sheets and integrating everything into this DSL while keeping it expressive and efficient could be pretty tricky. Maybe one could add a bunch of xml-alike notations for more advanced stuff - e.g. <code>&lt;tripplet&gt;(C4,4)(D4,4)(C4,4)&lt;/trpplet&gt;</code>. This would be less fast to write but maybe better understandable than <code>(C4,4tr)(D4,4tr)(C4,4tr)</code> or <code>[tr:(C4,4,C),(C4,4,C),(C4,4,C)]</code>. Thinking all of this through would take quite a lot of time and experience.</p>
 <h3 id="functional-programming">Functional Programming</h3>
 <p>Functional programming is a programming paradigm that features:</p>
 <ol>
@@ -904,7 +902,7 @@ Build took 2 seconds (2972 ms)
 <li>lambda expressions.</li>
 </ol>
 <h4 id="final-data-structures-only">final data structures only</h4>
-<p>Since there are no constants in Python one has to make sure that a variable does not get reassigned. This can be a bit cumbersome if one has not completely dived into functional programming because on creates a lot of variables with new names each holding the result of a function used on data. It can look like this:</p>
+<p>Since there are no constants in Python one has to make sure that a variable does not get reassigned. This can be a bit cumbersome if one has not completely dived into functional programming because one creates a lot of variables with new names each holding the result of a function used on data. It can look like this:</p>
 <pre><code class="language-python">measure_tuple = split_by_measure(melody_string)
 
 tone_tuple = <span class="hljs-built_in">map</span>(split_by_tone, measure_tuple)
@@ -916,7 +914,7 @@ converted_melody_string = functools.reduce(operator.concat, <span class="hljs-bu
     converted_tone_tuple
 )))
 </code></pre>
-<p>If one does not need intermediate results (using those could possibly violate the no-side-effect and the stateless rules anyhow) a common pattern seen is piping. This can be done in Python as well - especially if one uses a package like <code>functional</code> that provides chainable <code>ma</code> and <code>reduce</code> functions:</p>
+<p>If one does not need intermediate results (using those could possibly violate the no-side-effect and the stateless rules anyhow) a common pattern seen is piping. This can be done in Python as well - especially if one uses a package like <code>functional</code> that provides chainable <code>map</code> and <code>reduce</code> functions:</p>
 <pre><code class="language-python">measure_tuple = seq(split_by_measure(melody_string))\
     .<span class="hljs-built_in">map</span>(split_by_tone)\
     .reduce(operator.concat)\
